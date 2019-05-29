@@ -1,51 +1,61 @@
 package com.example.testwithfirebase
 
-import android.support.v7.app.AppCompatActivity
+import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.FirebaseApp
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.iid.FirebaseInstanceId
-
+import android.support.v7.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
+    var onPermissionListener: OnPermissionListener? =null
+    var REQUEST_CODE_ASK_PERMISSIONS = 123
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        FirebaseApp.initializeApp(this)
-        val ref= FirebaseDatabase.getInstance().getReference("person")
-        ref.addValueEventListener( object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                Log.e("data", dataSnapshot.child("name").value.toString())
-                ref.child("name").setValue("Boss")
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("=== 0nCeancel ==", "Failed to read value.", error.toException())
-            }
-        })
-        FirebaseInstanceId.getInstance().instanceId
-            .addOnCompleteListener(OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    Log.w( "getInstanceId failed", task.exception)
-                    return@OnCompleteListener
-                }
-
-                // Get new Instance ID token
-                val token = task.result?.token
-
-                // Log and toast
-//                val msg = getString(R.string.msg_token_fmt, token)
-                Log.e("== msg == ", token)
-            })
-        val personAdd = PersonModel(4444, "Adum","maybeK",22)
-        ref.setValue(personAdd)
+        supportFragmentManager.beginTransaction().add(R.id.contentMainFrag,MainFragment()).commit()
     }
+    fun checkPermission(permission: String, onPermissionListener: OnPermissionListener): AppCompatActivity {
+        this.onPermissionListener = onPermissionListener // take stucture edited in MainFragment to this
+        check(permission)
+        return this
+    }
+
+    @SuppressLint("WrongConstant")
+    fun check(permission: String) {
+        val hasPermission: Int
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            hasPermission = checkSelfPermission(permission)
+            if (hasPermission != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(arrayOf(permission), REQUEST_CODE_ASK_PERMISSIONS)
+            } else {
+                if (onPermissionListener != null) {
+                    onPermissionListener?.onGrantedPermission()
+                }
+            }
+        } else {
+            if (onPermissionListener != null) {
+                onPermissionListener?.onGrantedPermission()
+            }
+        }
+    }
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            REQUEST_CODE_ASK_PERMISSIONS -> if (grantResults[0] === PackageManager.PERMISSION_GRANTED) {
+                if (onPermissionListener != null) {
+                    onPermissionListener?.onGrantedPermission()
+                }
+            } else {
+                if (onPermissionListener != null) {
+                    onPermissionListener?.onDeniedPermission()
+                }
+            }
+        }
+    }
+    interface OnPermissionListener{
+        fun onGrantedPermission()
+        fun onDeniedPermission()
+    }
+
 }

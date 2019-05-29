@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
-    var onPermissionListener: OnPermissionListener? =null
-    var REQUEST_CODE_ASK_PERMISSIONS = 123
+    private var onPermissionListener: OnPermissionListener? =null
+    private var REQUEST_CODE_ASK_PERMISSIONS = 123
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -55,13 +55,16 @@ class MainFragment : Fragment() {
             }
         }
         btSentNearBy.setOnClickListener {
-            val message = "Hello World".toByteArray(
-                Charsets.UTF_8
-            )
-            mMessage = object : Message(
-                message
-            ) {}
-            Log.e(" was sent", " ===")
+            activity?.let {
+                val message = "Hello World".toByteArray(
+                    Charsets.UTF_8
+                )
+                mMessage = object : Message(
+                    message
+                ) {}
+                Nearby.getMessagesClient(it).publish(mMessage!!)
+            }
+
         }
         mMessageListener = object : MessageListener() {
             override fun onFound(message: Message?) {
@@ -90,13 +93,6 @@ class MainFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        mMessage?.let { mMS ->
-            activity?.let {
-                Nearby.getMessagesClient(it).publish(mMS)
-                Log.e(" onStart mMessage ==", mMS.content.toString())
-            }
-        }
-
 
         mMessageListener?.let { mML ->
             activity?.let {

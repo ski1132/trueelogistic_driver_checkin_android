@@ -21,4 +21,12 @@
 			android:layout_gravity="center"
 			android:text="@string/sent_nearby"
 			android:textSize="30sp"/>
+	<Button
+			android:id="@+id/btShake"
+			style="@android:style/Animation"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:text="@string/shake_it"
+			android:textSize="30sp"/>
 </LinearLayout>

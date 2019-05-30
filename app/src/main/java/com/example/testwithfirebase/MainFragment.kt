@@ -28,13 +28,11 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        btScan.setOnClickListener {
+        btScanQR.setOnClickListener {
             activity?.let { fragActivity ->
                 KotlinPermissions.with(fragActivity) // where this is an FragmentActivity instance
                     .permissions(
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.CAMERA,
-                        Manifest.permission.BLUETOOTH
+                        Manifest.permission.CAMERA
                     ).onAccepted {
                         Toast.makeText(
                             fragActivity, "Permission Access",
@@ -56,58 +54,74 @@ class MainFragment : Fragment() {
                     .ask()
             }
         }
+        btSentNearBy.setOnClickListener {
+            val message = "Hello World".toByteArray(
+                Charsets.UTF_8
+            )
+            mMessage = object : Message(
+                message
+            ) {}
+            Log.e(" was sent", " ===")
+        }
         mMessageListener = object : MessageListener() {
             override fun onFound(message: Message?) {
                 val content = message?.content?.toString(
                     Charsets.UTF_8
                 )
+                Toast.makeText(
+                    activity, " Found message = $content",
+                    Toast.LENGTH_LONG
+                ).show()
                 Log.e("Found message == : ", content)
             }
 
             override fun onLost(message: Message?) {
-                Log.e("Lost message == : ", message.toString())
+                val content = message?.content?.toString(
+                    Charsets.UTF_8
+                )
+                Toast.makeText(
+                    activity, " Lost message = $content",
+                    Toast.LENGTH_LONG
+                ).show()
+                Log.e("Lost message == : ", content)
             }
         }
-
-        val message = "Hello World".toByteArray(
-            Charsets.UTF_8
-        )
-        mMessage = object : Message(
-            message
-        ){}
     }
 
     override fun onStart() {
         super.onStart()
-        mMessage?.let { mMessage ->
+        mMessage?.let { mMS ->
             activity?.let {
-                Nearby.getMessagesClient(it).publish(mMessage)
-                Log.e(" onStart mMessage ==", mMessage.content.toString())
+                Nearby.getMessagesClient(it).publish(mMS)
+                Log.e(" onStart mMessage ==", mMS.content.toString())
             }
         }
-        mMessageListener?.let { mMessageListener ->
+
+
+        mMessageListener?.let { mML ->
             activity?.let {
-                Nearby.getMessagesClient(it).subscribe(mMessageListener)
-                Log.e("onStart MessageListener", mMessage?.content.toString())
+                Nearby.getMessagesClient(it).subscribe(mML)
+                Log.e("onStart MessageListener", mML.toString())
             }
         }
     }
 
     override fun onStop() {
-        mMessage?.let { mMessage ->
+        mMessage?.let { mMS ->
             activity?.let {
-                Nearby.getMessagesClient(it).unpublish(mMessage)
-                Log.e(" onStop mMessage ==", Nearby.getMessagesClient(it).unpublish(mMessage).toString())
+                Nearby.getMessagesClient(it).unpublish(mMS)
+                Log.e(" onStop mMessage ==", mMS.content.toString())
             }
         }
-        mMessageListener?.let { mMessageListener ->
+        mMessageListener?.let { mML ->
             activity?.let {
-                Nearby.getMessagesClient(it).unsubscribe(mMessageListener)
-                Log.e("onStop mMessageListener", Nearby.getMessagesClient(it).unsubscribe(mMessageListener).toString())
+                Nearby.getMessagesClient(it).unsubscribe(mML)
+                Log.e("onStop mMessageListener", mML.toString())
             }
         }
         super.onStop()
     }
+
     fun scanQR() {
         zXingScannerView = ZXingScannerView(context)
         activity?.setContentView(zXingScannerView)

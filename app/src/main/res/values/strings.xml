@@ -8,4 +8,6 @@
 	<string name="qr_scan">QR Scan</string>
 	<string name="sent_nearby">sent Nearby</string>
 	<string name="shake_it">shake it</string>
+	<string name="this_is_nearby_fragment">This is NearBy Fragment</string>
+	<string name="on_device_found">On Device found</string>
 </resources>

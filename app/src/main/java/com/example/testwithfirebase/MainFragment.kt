@@ -1,6 +1,8 @@
 package com.example.testwithfirebase
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.location.Location
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -8,17 +10,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.github.tbouron.shakedetector.library.ShakeDetector
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.nearby.Nearby
-import com.google.android.gms.nearby.messages.Message
-import com.google.android.gms.nearby.messages.MessageListener
 import com.kotlinpermissions.KotlinPermissions
 import kotlinx.android.synthetic.main.fragment_main.*
-import me.dm7.barcodescanner.zxing.ZXingScannerView
 
 class MainFragment : Fragment() {
-    var mMessageListener: MessageListener? = null
-    var mMessage: Message? = null
-    private var zXingScannerView: ZXingScannerView? = null
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -26,19 +26,21 @@ class MainFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
+    @SuppressLint("MissingPermission")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        activity?.let {
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(it)
+        }
+
         btScanQR.setOnClickListener {
             activity?.let { fragActivity ->
                 KotlinPermissions.with(fragActivity) // where this is an FragmentActivity instance
                     .permissions(
                         Manifest.permission.CAMERA
                     ).onAccepted {
-                        Toast.makeText(
-                            fragActivity, "Permission Access",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        scanQR()
+                        fragActivity.supportFragmentManager.beginTransaction()
+                            .replace(R.id.contentMainFrag, ScanQrFragment()).commit()
                     }.onDenied {
                         Toast.makeText(
                             fragActivity, "Permission Denied",
@@ -55,88 +57,33 @@ class MainFragment : Fragment() {
             }
         }
         btSentNearBy.setOnClickListener {
-            activity?.let {
-                val message = "Hello World".toByteArray(
-                    Charsets.UTF_8
-                )
-                mMessage = object : Message(
-                    message
-                ) {}
-                Nearby.getMessagesClient(it).publish(mMessage!!)
-            }
-
+            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.contentMainFrag, NearByFragment())
+                ?.addToBackStack(null)?.commit()
         }
-        mMessageListener = object : MessageListener() {
-            override fun onFound(message: Message?) {
-                val content = message?.content?.toString(
-                    Charsets.UTF_8
-                )
-                Toast.makeText(
-                    activity, " Found message = $content",
-                    Toast.LENGTH_LONG
-                ).show()
-                Log.e("Found message == : ", content)
+        btShake.setOnClickListener {
+            activity?.let { fragActivity ->
+                KotlinPermissions.with(fragActivity) // where this is an FragmentActivity instance
+                    .permissions(
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ).onAccepted {
+                        ShakeDetector.start()
+                        ShakeDetector.create(fragActivity) {
+                            fusedLocationClient.lastLocation
+                                .addOnSuccessListener { location: Location? ->
+                                    val longitude = location?.latitude.toString()
+                                    Log.e(" location.longitude ==", longitude)
+                                        Toast.makeText(
+                                            fragActivity,
+                                            "location.longitude == $longitude",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                }
+                        }
+                    }.ask()
             }
 
-            override fun onLost(message: Message?) {
-                val content = message?.content?.toString(
-                    Charsets.UTF_8
-                )
-                Toast.makeText(
-                    activity, " Lost message = $content",
-                    Toast.LENGTH_LONG
-                ).show()
-                Log.e("Lost message == : ", content)
-            }
-        }
-    }
+            Log.e(" you can Shake IT ===", " Now !! ")
 
-    override fun onStart() {
-        super.onStart()
-
-        mMessageListener?.let { mML ->
-            activity?.let {
-                Nearby.getMessagesClient(it).subscribe(mML)
-                Log.e("onStart MessageListener", mML.toString())
-            }
-        }
-    }
-
-    override fun onStop() {
-        mMessage?.let { mMS ->
-            activity?.let {
-                Nearby.getMessagesClient(it).unpublish(mMS)
-                Log.e(" onStop mMessage ==", mMS.content.toString())
-            }
-        }
-        mMessageListener?.let { mML ->
-            activity?.let {
-                Nearby.getMessagesClient(it).unsubscribe(mML)
-                Log.e("onStop mMessageListener", mML.toString())
-            }
-        }
-        super.onStop()
-    }
-
-    fun scanQR() {
-        zXingScannerView = ZXingScannerView(context)
-        activity?.setContentView(zXingScannerView)
-        zXingScannerView?.run {
-            startCamera()
-            Log.e("== on click ==", "eiei")
-            setResultHandler {
-                Log.e("=== in Result Handle ==", it.toString())
-                stopCamera()
-                activity!!.setContentView(R.layout.activity_main)
-                val resultString = it.text.toString()
-                Toast.makeText(
-                    activity, "QR code = $resultString",
-                    Toast.LENGTH_LONG
-                ).show()
-                Log.d("12MarchV1", "QR code ==> $resultString")
-                activity!!.supportFragmentManager.beginTransaction()
-                    .replace(R.id.contentMainFrag, MainFragment()).commit()
-            }
         }
     }
 }

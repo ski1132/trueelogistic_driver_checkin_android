@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.github.tbouron.shakedetector.library.ShakeDetector
 import com.google.android.gms.nearby.Nearby
 import com.google.android.gms.nearby.messages.Message
 import com.google.android.gms.nearby.messages.MessageListener
@@ -16,13 +15,12 @@ import com.jaredrummler.android.device.DeviceName
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class NearByFragment : Fragment()  {
-    var mMessageListener: MessageListener? = null
-    var mMessage: Message? = null
+    private var mMessageListener: MessageListener? = null
+    private var mMessage: Message? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_near_by, container, false)
     }
 
@@ -36,8 +34,7 @@ class NearByFragment : Fragment()  {
                 mMessage = object : Message(
                     message
                 ) {}
-                Nearby.getMessagesClient(it).publish(mMessage!!)
-                Log.e("== onClick ==",DeviceName.getDeviceName())
+                Nearby.getMessagesClient(it).publish(mMessage as Message)
             }
         }
         mMessageListener = object : MessageListener() {
@@ -49,7 +46,6 @@ class NearByFragment : Fragment()  {
                     activity, " Found Device === $content",
                     Toast.LENGTH_LONG
                 ).show()
-                Log.e("Found Device ==  ", content)
             }
 
             override fun onLost(message: Message?) {
@@ -60,7 +56,6 @@ class NearByFragment : Fragment()  {
                     activity, " Lost message = $content",
                     Toast.LENGTH_LONG
                 ).show()
-                Log.e("Lost Device ==  ", content)
             }
         }
     }
@@ -70,7 +65,6 @@ class NearByFragment : Fragment()  {
         mMessageListener?.let { mML ->
             activity?.let {
                 Nearby.getMessagesClient(it).subscribe(mML)
-                Log.e("onStart MessageListener", mML.toString())
             }
         }
 
@@ -80,16 +74,13 @@ class NearByFragment : Fragment()  {
         mMessage?.let { mMS ->
             activity?.let {
                 Nearby.getMessagesClient(it).unpublish(mMS)
-                Log.e(" onStop mMessage ==", mMS.content.toString())
             }
         }
         mMessageListener?.let { mML ->
             activity?.let {
                 Nearby.getMessagesClient(it).unsubscribe(mML)
-                Log.e("onStop mMessageListener", mML.toString())
             }
         }
-        ShakeDetector.stop()
         super.onStop()
     }
 }

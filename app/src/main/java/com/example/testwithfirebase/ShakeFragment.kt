@@ -8,7 +8,6 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +21,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.kotlinpermissions.KotlinPermissions
-import kotlinx.android.synthetic.main.fragment_shake.*
 
 class ShakeFragment : Fragment() {
 
@@ -45,58 +43,117 @@ class ShakeFragment : Fragment() {
                     val fusedLocationClient : FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(fragActivity)
                     ShakeDetector.start()
                     ShakeDetector.create(fragActivity) {
-                        shakeText.text = "Searching..."
                         fusedLocationClient.lastLocation
                             .addOnSuccessListener { location: Location? ->
                                 val latitude = location?.latitude.toString()
                                 val longitude = location?.longitude.toString()
-                                Log.e(" location.latitude ==", latitude)
-                                Log.e(" location.longitude ==", longitude)
 
                                 FirebaseApp.initializeApp(fragActivity)
-                                val ref= FirebaseDatabase.getInstance().getReference("location")
+
+                                val ref= FirebaseDatabase.getInstance().getReference("driverLocation")
                                 ref.addValueEventListener( object : ValueEventListener {
                                     override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                                            ref.child("latitude").setValue(latitude)
-//                                            ref.child("longitude").setValue(longitude)
-                                        val latDriver  = dataSnapshot.child("latitude").value.toString()
-                                        val longDriver = dataSnapshot.child("longitude").value.toString()
-                                        Log.e(" distance == ",latDriver)
-                                        val driveLocation = Location(LocationManager.GPS_PROVIDER)
-                                        driveLocation.latitude = latDriver.toDouble()
-                                        driveLocation.longitude = longDriver.toDouble()
-                                        Log.e(" distance.lat == ",driveLocation.latitude.toString())
-                                        val distance : Float = location!!.distanceTo(driveLocation)
-                                        Log.e(" distance == ",distance.toString())
+                                        ref.child("latitude").setValue(latitude)
+                                        ref.child("longitude").setValue(longitude)
                                     }
-
                                     override fun onCancelled(error: DatabaseError) {
-                                        Log.e("=== 0nCeancel ==", "Failed to read value.", error.toException())
+                                        Toast.makeText(
+                                            activity,
+                                            " Fail to set database !!!",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
                                     }
                                 })
-                                Toast.makeText(
-                                    fragActivity,
-                                    "location.longitude = $longitude , latitude = $latitude" ,
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                location?.let{
+                                    getManagerFirebase(it)
+                                }
                             }
-                        object : CountDownTimer(10000, 1000) { // 1 second to onTick & 1 minit to onFinish
+                        object : CountDownTimer(5000, 1000) { // 1 second to onTick & 1 minit to onFinish
 
                             override fun onTick(millisUntilFinished: Long) {
 
                             }
                             override fun onFinish() {
-                                ShakeDetector.destroy()
-                                shakeText.text = "Can't find anything !! Try Again"
+
                             }
                         }.start()
                     }
-
-
+                    ShakeDetector.destroy()
                 }.ask()
         }
-
-        Log.e(" you can Shake IT ===", " Now !! ")
     }
-
+    private fun getManagerFirebase(location: Location)
+    {
+        val managerRef= FirebaseDatabase.getInstance().getReference("managerLocation")
+        managerRef.addValueEventListener( object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val latDriver  = dataSnapshot.child("latitude").value.toString()
+                val longDriver = dataSnapshot.child("longitude").value.toString()
+                val managerLocation = Location(LocationManager.GPS_PROVIDER)
+                managerLocation.latitude = latDriver.toDouble()
+                managerLocation.longitude = longDriver.toDouble()
+                val distance : Float? = location.distanceTo(managerLocation)
+                activity?.let {
+                    if (distance != null) {
+                        if (distance < 500)
+                            Toast.makeText(
+                                it,
+                                " distance so close == $distance",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        else
+                            Toast.makeText(
+                                it,
+                                " out of range == $distance",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                    }
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(
+                    activity,
+                    " Fail to get database !!!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+    }
+    fun getDriverFirebase(location: Location)
+    {
+        val managerRef= FirebaseDatabase.getInstance().getReference("driverLocation")
+        managerRef.addValueEventListener( object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val latDriver  = dataSnapshot.child("latitude").value.toString()
+                val longDriver = dataSnapshot.child("longitude").value.toString()
+                val driverLocation = Location(LocationManager.GPS_PROVIDER)
+                driverLocation.latitude = latDriver.toDouble()
+                driverLocation.longitude = longDriver.toDouble()
+                val distance : Float? = location.distanceTo(driverLocation)
+                activity?.let {
+                    if (distance != null) {
+                        if (distance < 500)
+                            Toast.makeText(
+                                it,
+                                " distance so close == $distance",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        else
+                            Toast.makeText(
+                                it,
+                                " out of range == $distance",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                    }
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(
+                    activity,
+                    " Fail to get database !!!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+    }
 }

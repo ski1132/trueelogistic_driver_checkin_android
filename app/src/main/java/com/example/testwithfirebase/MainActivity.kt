@@ -1,47 +1,37 @@
 package com.example.testwithfirebase
 
-import android.Manifest
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
-import com.kotlinpermissions.KotlinPermissions
+import com.example.checklibrary.Interfaces.CheckInTELCallBack
+import com.example.checklibrary.handler.CheckInTEL
 import kotlinx.android.synthetic.main.fragment_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CheckInTELCallBack {
+    override fun onCheckInSuccess(result: String) {
+
+    }
+
+    override fun onCheckInFailure(message: String) {
+
+    }
+
+    override fun onCancel() {
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        supportFragmentManager.beginTransaction().add(R.id.contentMainFrag, MainFragment()).commit()
-
+        CheckInTEL.initial(this)
+        CheckInTEL.checkInTEL?.checkInTELCallBack = this
         btScanQR.setOnClickListener {
-                KotlinPermissions.with(this) // where this is an FragmentActivity instance
-                    .permissions(
-                        Manifest.permission.CAMERA
-                    ).onAccepted {
-
-                    }.onDenied {
-                        Toast.makeText(
-                            this, "Permission Denied",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                    .onForeverDenied {
-                        Toast.makeText(
-                            this, " Forever Denied",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                    .ask()
-
+            CheckInTEL.checkInTEL?.openScanQRCode()
         }
         btSentNearBy.setOnClickListener {
-            supportFragmentManager?.beginTransaction()?.replace(R.id.contentMainFrag, NearByFragment())
-                ?.addToBackStack(null)?.commit()
+            CheckInTEL.checkInTEL?.openNearBy()
         }
         btShake.setOnClickListener {
-            supportFragmentManager?.beginTransaction()?.replace(R.id.contentMainFrag, ShakeFragment())
-                ?.addToBackStack(null)?.commit()
+            CheckInTEL.checkInTEL?.openShake()
         }
     }
 

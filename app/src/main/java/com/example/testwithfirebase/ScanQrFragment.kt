@@ -20,26 +20,5 @@ class ScanQrFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        scanQR()
-    }
-    private fun scanQR() {
-        zXingScannerView = ZXingScannerView(context)
-        activity?.setContentView(zXingScannerView)
-        zXingScannerView?.run {
-            startCamera()
-            setResultHandler {
-                stopCamera()
-                activity?.let {fragActivity ->
-                    fragActivity.setContentView(R.layout.activity_main)
-                    val resultString = it.text.toString()
-                    Toast.makeText(
-                        activity, "QR code = $resultString",
-                        Toast.LENGTH_LONG
-                    ).show()
-                    fragActivity.supportFragmentManager.beginTransaction()
-                        .replace(R.id.contentMainFrag, MainFragment()).commit()
-                }
-            }
-        }
     }
 }

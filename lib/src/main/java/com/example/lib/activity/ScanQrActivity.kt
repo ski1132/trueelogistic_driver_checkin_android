@@ -15,7 +15,7 @@ class ScanQrActivity : AppCompatActivity() {
         setContentView(R.layout.activity_scan_qr)
 
         val zXingScannerView = ZXingScannerView(this)
-        this.setContentView(zXingScannerView)
+        setContentView(zXingScannerView)
         zXingScannerView.run {
             startCamera()
             setResultHandler {

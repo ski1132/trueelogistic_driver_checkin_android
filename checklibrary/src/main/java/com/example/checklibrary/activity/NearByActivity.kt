@@ -52,6 +52,7 @@ class NearByActivity : AppCompatActivity() {
             }
         }
     }
+
     override fun onStart() {
         super.onStart()
 

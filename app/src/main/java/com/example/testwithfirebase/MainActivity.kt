@@ -1,5 +1,6 @@
 package com.example.testwithfirebase
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.example.checklibrary.Interfaces.CheckInTELCallBack
@@ -7,6 +8,7 @@ import com.example.checklibrary.handler.CheckInTEL
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainActivity : AppCompatActivity(), CheckInTELCallBack {
+
     override fun onCheckInSuccess(result: String) {
 
     }
@@ -22,10 +24,9 @@ class MainActivity : AppCompatActivity(), CheckInTELCallBack {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        CheckInTEL.initial(this)
-        CheckInTEL.checkInTEL?.checkInTELCallBack = this
+        CheckInTEL.checkInTEL? = this
         btScanQR.setOnClickListener {
-            CheckInTEL.checkInTEL?.openScanQRCode()
+            CheckInTEL.checkInTEL?.openScanQRCode(af)
         }
         btSentNearBy.setOnClickListener {
             CheckInTEL.checkInTEL?.openNearBy()

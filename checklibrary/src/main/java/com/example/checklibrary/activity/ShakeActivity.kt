@@ -79,6 +79,7 @@ class ShakeActivity : AppCompatActivity() {
                 " Allow GPS Permission to use !!!",
                 Toast.LENGTH_SHORT
                 ).show()
+                finish()
             }.ask()
 
     }

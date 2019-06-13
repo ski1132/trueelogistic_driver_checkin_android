@@ -17,8 +17,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-
         btScanQR.setOnClickListener {
             CheckInTEL.checkInTEL?.openScanQRCode(this, object : CheckInTELCallBack {
                 override fun onCheckInSuccess(result: String) {

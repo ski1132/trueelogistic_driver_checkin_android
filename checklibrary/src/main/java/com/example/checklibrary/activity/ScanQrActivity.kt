@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.example.checklibrary.Interfaces.CheckInTELCallBack
-import com.example.checklibrary.handler.CheckInTEL.Companion.KEY_INTERFACE_CHECK_IN_TEL
 import com.kotlinpermissions.KotlinPermissions
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 
@@ -17,9 +16,6 @@ class ScanQrActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        intent?.extras?.getSerializable(KEY_INTERFACE_CHECK_IN_TEL)?.also {
-            checkInTELCallBack = it as CheckInTELCallBack
-        }
         setBindingView()
         setBindingData()
     }
@@ -39,11 +35,13 @@ class ScanQrActivity : AppCompatActivity(){
                     startCamera()
                     setResultHandler {
                         stopCamera()
+                        finish()
                         val resultString = it.text.toString()
                         Toast.makeText(
                             this@ScanQrActivity, "QR code = $resultString",
                             Toast.LENGTH_LONG
                         ).show()
+
                     }
                 }
             }.onDenied {

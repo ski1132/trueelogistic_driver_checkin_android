@@ -4,4 +4,5 @@
 	<string name="sent_nearby">sent_nearby</string>
 	<string name="on_device_found">on_device_found</string>
 	<string name="shake_your_phone">shake_your_phone</string>
+	<string name="sent_location">Sent Location</string>
 </resources>

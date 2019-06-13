@@ -1,41 +1,52 @@
 package com.example.checklibrary.handler
 
-import android.annotation.SuppressLint
-import android.content.Context
+import android.Manifest
+import android.app.Activity
 import android.content.Intent
+import android.widget.Toast
 import com.example.checklibrary.Interfaces.CheckInTELCallBack
 import com.example.checklibrary.activity.NearByActivity
 import com.example.checklibrary.activity.ScanQrActivity
 import com.example.checklibrary.activity.ShakeActivity
+import com.kotlinpermissions.KotlinPermissions
 
-class CheckInTEL(private val context: Context? = null) {
+class CheckInTEL {
 
-    companion object {  // another class can call this value
-        const val KEY_INTERFACE_CHECK_IN_TEL = "KEY_INTERFACE_CHECK_IN_TEL"
-        @SuppressLint("StaticFieldLeak")
+    companion object {  // another class can call this value statis
+
         var checkInTEL: CheckInTEL? = null
-
-        fun initial(context: Context) {
-            checkInTEL = CheckInTEL(context)
+        const val KEY_REQUEST_CODE_CHECK_IN_TEL = 1750
+        fun initial() {
+            checkInTEL = CheckInTEL()
         }
     }
+    private var checkInTELCallBack: CheckInTELCallBack? = null // ???
 
-    var checkInTELCallBack: CheckInTELCallBack? = null
-
-    fun openScanQRCode() {
-        val intent = Intent(context, ScanQrActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//        intent.putExtras( Bundle().apply { this.putSerializable(KEY_INTERFACE_CHECK_IN_TEL, checkInTELCallBack)})
-        context?.startActivity(intent)
+    fun openScanQRCode(activity: Activity,checkInTELCallBack: CheckInTELCallBack) {
+        this.checkInTELCallBack = checkInTELCallBack
+        val intent = Intent(activity, ScanQrActivity::class.java)
+        activity.startActivityForResult(intent, KEY_REQUEST_CODE_CHECK_IN_TEL) // confirm you not from other activity
     }
 
-    fun openNearBy() {
-        val intent = Intent(context, NearByActivity::class.java)
-        context?.startActivity(intent)
+    fun openNearBy(activity: Activity,checkInTELCallBack: CheckInTELCallBack) {
+        val intent = Intent(activity, NearByActivity::class.java)
+        activity.startActivity(intent)
+    }
+    fun openShake(activity: Activity,checkInTELCallBack: CheckInTELCallBack) {
+        val intent = Intent(activity, ShakeActivity::class.java)
+        activity.startActivity(intent)
+
+    }
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if(requestCode == KEY_REQUEST_CODE_CHECK_IN_TEL){
+            if (resultCode == Activity.RESULT_OK){
+
+            }
+            else{
+                checkInTELCallBack?.onCancel()
+            }
+        }
+
     }
 
-    fun openShake() {
-        val intent = Intent(context, ShakeActivity::class.java)
-        context?.startActivity(intent)
-    }
 }

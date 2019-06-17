@@ -9,7 +9,10 @@ import android.widget.Toast
 import com.example.checklibrary.Interfaces.CheckInTELCallBack
 import com.example.checklibrary.handler.CheckInTEL
 import com.kotlinpermissions.KotlinPermissions
-import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_main.btScanQR
+import kotlinx.android.synthetic.main.fragment_main.btSentNearBy
+import kotlinx.android.synthetic.main.fragment_main.btShake
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,6 +24,22 @@ class MainActivity : AppCompatActivity() {
             CheckInTEL.checkInTEL?.openScanQRCode(this, object : CheckInTELCallBack {
                 override fun onCheckInSuccess(result: String) {
                     Log.e("on ScanQR , Result == ",result)
+                }
+
+                override fun onCheckInFailure(message: String) {
+                    Log.e("on ScanQR , Message == ",message)
+                }
+
+                override fun onCancel() {
+                    Log.e("on ScanQR , Cancel == "," == ")
+                }
+
+            })
+        }
+        btGenQR.setOnClickListener {
+            CheckInTEL.checkInTEL?.openGenarateQRCode(this, object : CheckInTELCallBack {
+                override fun onCheckInSuccess(result: String) {
+                    Log.e("on GenQR , Result == ",result)
                 }
 
                 override fun onCheckInFailure(message: String) {

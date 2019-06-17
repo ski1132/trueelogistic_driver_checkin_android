@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import com.example.checklibrary.Interfaces.CheckInTELCallBack
+import com.example.checklibrary.activity.GenQrActivity
 import com.example.checklibrary.activity.NearByActivity
 import com.example.checklibrary.activity.ScanQrActivity
 import com.example.checklibrary.activity.ShakeActivity
@@ -26,7 +27,11 @@ class CheckInTEL {
         val intent = Intent(activity, ScanQrActivity::class.java)
         activity.startActivityForResult(intent, KEY_REQUEST_CODE_CHECK_IN_TEL) // confirm you not from other activity
     }
-
+    fun openGenarateQRCode(activity: Activity, checkInTELCallBack: CheckInTELCallBack) {
+        this.checkInTELCallBack = checkInTELCallBack
+        val intent = Intent(activity, GenQrActivity::class.java)
+        activity.startActivityForResult(intent, KEY_REQUEST_CODE_CHECK_IN_TEL) // confirm you not from other activity
+    }
     fun openNearBy(activity: Activity, checkInTELCallBack: CheckInTELCallBack) {
         this.checkInTELCallBack = checkInTELCallBack
         val intent = Intent(activity, NearByActivity::class.java)

@@ -10,6 +10,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
 
+@Suppress("DEPRECATION")
 class MainService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
@@ -17,7 +18,7 @@ class MainService : FirebaseMessagingService() {
 
         if (remoteMessage.data.isNotEmpty()) {
             Log.e("== RM Size ==", "Message data payload: " + remoteMessage.data)
-            val data : Map<String,String> = remoteMessage.data
+//            val data : Map<String,String> = remoteMessage.data
             showNotification("=== DAta == ",remoteMessage.data.toString())
 
         }

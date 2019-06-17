@@ -5,4 +5,6 @@
 	<string name="on_device_found">on_device_found</string>
 	<string name="shake_your_phone">shake_your_phone</string>
 	<string name="sent_location">Sent Location</string>
+	<string name="refresh">Refresh</string>
+	<string name="time">time</string>
 </resources>

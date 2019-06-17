@@ -1,7 +1,7 @@
 package com.example.checklibrary.model
 
 data class RootModel (
-    private var data : DataModel,
-    private var status : String? = null,
-    private var statusCodes : Int? = null
+    var data : DataModel,
+    var status : String? = null,
+    var statusCodes : Int? = null
 )

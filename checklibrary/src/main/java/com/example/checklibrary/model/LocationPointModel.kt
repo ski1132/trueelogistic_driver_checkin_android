@@ -1,6 +1,6 @@
 package com.example.checklibrary.model
 
-data class locationPoint(
+data class LocationPointModel(
     var type : String? = null ,
     var coordinates : ArrayList<Int>
 )

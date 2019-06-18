@@ -48,9 +48,11 @@ class CheckInTEL {
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == KEY_REQUEST_CODE_CHECK_IN_TEL) {
             when (resultCode) {
-                Activity.RESULT_OK -> if (data != null) {
-                    checkInTELCallBack?.onCheckInSuccess(data.getStringExtra("result"))
-                }
+                Activity.RESULT_OK ->
+                    if (data != null) {
+                        checkInTELCallBack?.onCheckInSuccess(data.getStringExtra("result"))
+                    }
+
                 Activity.RESULT_CANCELED -> checkInTELCallBack?.onCancel()
                 else -> Log.e(" ERROR ","!!!!!")
             }

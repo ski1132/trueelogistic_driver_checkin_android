@@ -1,4 +1,4 @@
-package com.example.checklibrary.model
+package com.example.checklibrary.model.generate_qr
 
 data class LocationIdModel (
     var LocationPointModel: LocationPointModel,

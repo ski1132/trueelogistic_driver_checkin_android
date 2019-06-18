@@ -6,10 +6,17 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.Toast
 import com.example.checklibrary.Interfaces.CheckInTELCallBack
+import com.example.checklibrary.model.generate_qr.RootModel
+import com.example.checklibrary.service.GetRetrofit
+import com.example.checklibrary.service.ScanQrService
 import com.kotlinpermissions.KotlinPermissions
 import me.dm7.barcodescanner.zxing.ZXingScannerView
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 @SuppressLint("Registered")
 class ScanQrActivity : AppCompatActivity(){
@@ -39,6 +46,7 @@ class ScanQrActivity : AppCompatActivity(){
                         stopCamera()
 
                         val resultString = it.text.toString()
+                        sentQr(resultString)
                         Toast.makeText(
                             this@ScanQrActivity, "QR code = $resultString",
                             Toast.LENGTH_LONG
@@ -60,5 +68,32 @@ class ScanQrActivity : AppCompatActivity(){
             }
             .ask()
     }
+    private fun sentQr( result : String)
+    {
+        val retrofit = GetRetrofit.build().create(ScanQrService::class.java)
+        val call = retrofit.getData("CHECK_IN",result)
 
+        call.enqueue( object : Callback<RootModel> {
+            override fun onFailure(call: Call<RootModel>, t: Throwable) {
+                Log.e(" onFailure !!"," Something wrong")
+            }
+
+            override fun onResponse(call: Call<RootModel>, response: Response<RootModel>) {
+                if ( response.code() == 200){
+                    val root  = response.body()
+                    if(root?.status == "OK"){
+                        val show = root.data.qrcodeUniqueKey
+                        Log.e(" QR code == ", "$show ...")
+
+                    }
+                    else{
+
+                    }
+                }
+                else{
+                    response.errorBody()
+                }
+            }
+        })
+    }
 }

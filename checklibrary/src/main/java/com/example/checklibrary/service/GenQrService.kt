@@ -1,11 +1,10 @@
 package com.example.checklibrary.service
 
-import com.example.checklibrary.model.RootModel
+import com.example.checklibrary.model.generate_qr.RootModel
 import retrofit2.Call
 import retrofit2.http.*
-import retrofit2.http.Header
 
-interface QrService{
+interface GenQrService{
     @POST("/check-in/v1/qrcode/create")
     @FormUrlEncoded
     fun getData(

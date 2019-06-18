@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
 import com.example.checklibrary.Interfaces.CheckInTELCallBack
+import com.example.checklibrary.activity.menu.MainMenuActivity
 import com.example.checklibrary.handler.CheckInTEL
 import com.kotlinpermissions.KotlinPermissions
 import kotlinx.android.synthetic.main.activity_main.*
@@ -19,7 +20,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        val intent = Intent(this, MainMenuActivity::class.java)
+        this.startActivity(intent)
         btScanQR.setOnClickListener {
             CheckInTEL.checkInTEL?.openScanQRCode(this, object : CheckInTELCallBack {
                 override fun onCheckInSuccess(result: String) {

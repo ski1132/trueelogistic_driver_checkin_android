@@ -7,4 +7,7 @@
 	<string name="sent_location">Sent Location</string>
 	<string name="refresh">Refresh</string>
 	<string name="time">time</string>
+	<string name="check_in">Check In</string>
+	<string name="check_between_day">check Between Day</string>
+	<string name="check_out">check Out</string>
 </resources>

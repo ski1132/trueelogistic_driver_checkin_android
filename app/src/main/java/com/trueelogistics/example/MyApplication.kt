@@ -1,4 +1,4 @@
-package com.trueelogistics.leader
+package com.trueelogistics.example
 
 import android.app.Application
 import com.trueelogistics.checkin.handler.CheckInTEL

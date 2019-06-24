@@ -1,4 +1,4 @@
-package com.trueelogistics.leader
+package com.trueelogistics.example
 
 import android.app.Notification
 import android.app.NotificationManager

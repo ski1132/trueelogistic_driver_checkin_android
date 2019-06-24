@@ -11,8 +11,7 @@ import com.google.android.gms.nearby.Nearby
 import com.google.android.gms.nearby.messages.Message
 import com.google.android.gms.nearby.messages.MessageListener
 import com.jaredrummler.android.device.DeviceName
-import kotlinx.android.synthetic.main.activity_near_by.*
-import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.fragment_near_by.*
 
 class NearByFragment : Fragment()  {
     private var mMessageListener: MessageListener? = null

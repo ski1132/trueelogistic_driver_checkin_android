@@ -7,6 +7,7 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.widget.Toast
+import com.trueelogistics.checkin.activity.GenQrActivity
 import com.trueelogistics.checkin.activity.ScanQrActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main_menu.*
@@ -30,6 +31,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         checkOutBtn.setOnClickListener {
             val intent = Intent(this, ScanQrActivity::class.java)
+            this.startActivity(intent)
+        }
+        genQr.setOnClickListener {
+            val intent = Intent(this, GenQrActivity::class.java)
             this.startActivity(intent)
         }
     }

@@ -21,5 +21,6 @@
 	<string name="nearby_fine">ค้นหาคลังรอบตัว</string>
 	<string name="history_check">ประวัติการเช็คอิน</string>
 	<string name="request_absent">คำขอวันลา</string>
+	<string name="generate_qrcode">Generate QrCode</string>
 
 </resources>

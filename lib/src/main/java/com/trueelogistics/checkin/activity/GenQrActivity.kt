@@ -40,10 +40,10 @@ class GenQrActivity : AppCompatActivity() {
     }
     fun getQr()
     {
-        val retrofit = GetRetrofit.build().create(GenQrService::class.java)
-        val call = retrofit.getData("Leader","5d01d417136e06003c23024e")
+        val retrofit = GetRetrofit.getRetrofit?.build()?.create(GenQrService::class.java)
+        val call = retrofit?.getData("Leader","5d01d417136e06003c23024e")
 
-        call.enqueue( object : Callback<RootModel>{
+        call?.enqueue( object : Callback<RootModel>{
             override fun onFailure(call: Call<RootModel>, t: Throwable) {
                 Log.e(" onFailure !!"," Something wrong")
             }

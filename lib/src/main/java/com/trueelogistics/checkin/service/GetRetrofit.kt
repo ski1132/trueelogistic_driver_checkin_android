@@ -8,14 +8,17 @@ import retrofit2.converter.gson.GsonConverterFactory
 class GetRetrofit {
 
     companion object{
-        fun build() : Retrofit{
-            val interceptor = HttpLoggingInterceptor()
-            interceptor.level = HttpLoggingInterceptor.Level.BODY
-            val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
-            return Retrofit.Builder().baseUrl("http://api.staging.sendit.asia")
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create()).build()
+        var getRetrofit : GetRetrofit? = null
+        fun initial(){
+            getRetrofit = GetRetrofit()
         }
     }
-
+    fun build() : Retrofit{
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
+        val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+        return Retrofit.Builder().baseUrl("http://api.staging.sendit.asia")
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create()).build()
+    }
 }

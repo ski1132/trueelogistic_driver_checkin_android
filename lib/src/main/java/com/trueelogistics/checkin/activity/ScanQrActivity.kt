@@ -49,10 +49,10 @@ class ScanQrActivity : AppCompatActivity() {
     }
 
     private fun sentQr(result: String) {
-        val retrofit = GetRetrofit.build().create(ScanQrService::class.java)
-        val call = retrofit.getData("CHECK_IN", result)
+        val retrofit = GetRetrofit.getRetrofit?.build()?.create(ScanQrService::class.java)
+        val call = retrofit?.getData("CHECK_IN", result)
 
-        call.enqueue(object : Callback<RootModel> {
+        call?.enqueue(object : Callback<RootModel> {
             override fun onFailure(call: Call<RootModel>, t: Throwable) {
                 Log.e(" onFailure !!", " Something wrong")
             }

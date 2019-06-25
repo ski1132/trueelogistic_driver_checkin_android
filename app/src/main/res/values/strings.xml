@@ -12,5 +12,15 @@
 	<string name="on_device_found">On Device found</string>
 	<string name="shake_your_phone">Shake your Phone !!</string>
 	<string name="try_again">Try again</string>
-	<string name="genarate_qr">Genarate Qr</string>
+	<string name="generate_qr">Genarate Qr</string>
+	<string name="check_in">ลงชื่อเข้างาน</string>
+	<string name="check_between">ลงชื่อระหว่างวัน</string>
+	<string name="check_out">ลงชือออกงาน</string>
+	<string name="name_surname">name surname</string>
+	<string name="shake_fine">เขย่าเพื่อค้นหาคลัง</string>
+	<string name="nearby_fine">ค้นหาคลังรอบตัว</string>
+	<string name="history_check">ประวัติการเช็คอิน</string>
+	<string name="request_absent">คำขอวันลา</string>
+	<string name="generate_qrcode">Generate QrCode</string>
+
 </resources>

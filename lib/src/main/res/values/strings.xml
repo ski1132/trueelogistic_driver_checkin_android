@@ -1,0 +1,13 @@
+<resources>
+	<string name="app_name">lib</string>
+	<string name="title_activity_main">MainActivity</string>
+	<string name="sent_nearby">sent_nearby</string>
+	<string name="on_device_found">on_device_found</string>
+	<string name="shake_your_phone">shake_your_phone</string>
+	<string name="sent_location">Sent Location</string>
+	<string name="refresh">Refresh</string>
+	<string name="time">time</string>
+	<string name="scan_check_text">แสกนเพื่อเช็คอิน</string>
+	<string name="problem_text">หากการแสกนมีปัญหา กรุณากด</string>
+	<string name="self_checkin_text">ลงชื่อด้วยตัวเอง</string>
+</resources>

@@ -13,6 +13,7 @@ import com.journeyapps.barcodescanner.CompoundBarcodeView
 import com.kotlinpermissions.KotlinPermissions
 import com.trueelogistics.checkin.Interfaces.CheckInTELCallBack
 import com.trueelogistics.checkin.R
+import com.trueelogistics.checkin.fragment.scanqr.ScanQrFragment
 import com.trueelogistics.checkin.model.generate_qr.RootModel
 import com.trueelogistics.checkin.service.GetRetrofit
 import com.trueelogistics.checkin.service.ScanQrService
@@ -25,7 +26,6 @@ import retrofit2.Response
 class ScanQrActivity : AppCompatActivity() {
 
     private var checkInTELCallBack: CheckInTELCallBack? = null
-    private var barcodeView: CompoundBarcodeView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +35,7 @@ class ScanQrActivity : AppCompatActivity() {
             .permissions(
                 Manifest.permission.CAMERA
             ).onAccepted {
-                barcodeView = scanner_fragment
-                barcodeView?.decodeContinuous(callback)
+                supportFragmentManager.beginTransaction().replace(R.id.fragment,ScanQrFragment()).addToBackStack(null).commit()
             }.onDenied {
                 Toast.makeText(
                     this, "Permission Denied",
@@ -44,55 +43,9 @@ class ScanQrActivity : AppCompatActivity() {
                 ).show()
                 checkInTELCallBack?.onCheckInFailure("Permission Denied") // set
                 finish()
+
             }
             .ask()
-    }
 
-    private fun sentQr(result: String) {
-        val retrofit = GetRetrofit.getRetrofit?.build()?.create(ScanQrService::class.java)
-        val call = retrofit?.getData("CHECK_IN", result)
-
-        call?.enqueue(object : Callback<RootModel> {
-            override fun onFailure(call: Call<RootModel>, t: Throwable) {
-                Log.e(" onFailure !!", " Something wrong")
-            }
-
-            override fun onResponse(call: Call<RootModel>, response: Response<RootModel>) {
-                if (response.code() == 200) {
-                    val root = response.body()
-                    val show = root?.data?.qrcodeUniqueKey
-                    Log.e(" QR code == ", "$show ...")
-
-                } else {
-                    response.errorBody()
-                }
-            }
-        })
-    }
-
-    private val callback = object : BarcodeCallback {
-        override fun barcodeResult(result: BarcodeResult) {
-            result.text.also {
-                sentQr(it)
-                onBackPressed()
-            }
-
-            Toast.makeText(
-                this@ScanQrActivity, "QR code = ?????",
-                Toast.LENGTH_LONG
-            ).show()
-        }
-
-        override fun possibleResultPoints(resultPoints: List<ResultPoint>) {}
-    }
-
-    override fun onResume() {
-        barcodeView?.resume()
-        super.onResume()
-    }
-
-    override fun onPause() {
-        barcodeView?.pause()
-        super.onPause()
     }
 }

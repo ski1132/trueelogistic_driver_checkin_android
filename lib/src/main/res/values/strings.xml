@@ -10,4 +10,10 @@
 	<string name="scan_check_text">แสกนเพื่อเช็คอิน</string>
 	<string name="problem_text">หากการแสกนมีปัญหา กรุณากด</string>
 	<string name="self_checkin_text">ลงชื่อด้วยตัวเอง</string>
+
+	<string name="hello_blank_fragment">Hello blank fragment</string>
+	<string name="checkin_text">ลงชื่อเข้างาน</string>
+	<string name="checkout_text">ลงชื่อออกงาน</string>
+	<string name="between_text">ระหว่างวัน</string>
+	<string name="confirm">ยืนยัน</string>
 </resources>

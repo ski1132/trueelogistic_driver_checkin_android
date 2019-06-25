@@ -1,13 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			 xmlns:tools="http://schemas.android.com/tools"
-			 android:layout_width="match_parent"
-			 android:layout_height="match_parent"
-			 tools:context=".dialog.SuccessDialogFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  xmlns:tools="http://schemas.android.com/tools"
+			  android:layout_width="match_parent"
+			  android:layout_height="match_parent"
+			  tools:context=".dialog.SuccessDialogFragment"
+			  android:orientation="vertical">
 
+	<ImageView
+
+			android:src="@drawable/pic_success_checkin"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content" tools:ignore="ContentDescription"/>
 	<TextView
+			android:gravity="center"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textSize="20sp"
+			android:textColor="@color/black"
+			android:text="@string/checkin_success"/>
+	<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:gravity="center">
+		<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textSize="20sp"
+				android:text="@string/checkin_time_text"/>
+		<TextView
+				android:gravity="center"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textSize="20sp"
+				android:text="@string/example_time_text"/>
+
+	</LinearLayout>
+	<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:text="@string/hello_blank_fragment"/>
+			android:padding="20dp">
+		<Button
+				android:id="@+id/confirm"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="@color/purple"
+				android:textColor="@color/white"
+				android:text="@string/confirm"/>
+	</LinearLayout>
 
-</FrameLayout>
+
+</LinearLayout>

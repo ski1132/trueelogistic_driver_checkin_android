@@ -35,7 +35,7 @@ class ScanQrActivity : AppCompatActivity() {
             .permissions(
                 Manifest.permission.CAMERA
             ).onAccepted {
-                supportFragmentManager.beginTransaction().replace(R.id.fragment,ScanQrFragment()).addToBackStack(null).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.fragment,ScanQrFragment()).commit()
             }.onDenied {
                 Toast.makeText(
                     this, "Permission Denied",

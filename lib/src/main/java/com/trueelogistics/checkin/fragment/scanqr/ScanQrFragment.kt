@@ -10,6 +10,7 @@ import com.google.zxing.ResultPoint
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
 import com.trueelogistics.checkin.R
+import com.trueelogistics.checkin.dialog.SuccessDialogFragment
 import com.trueelogistics.checkin.model.generate_qr.RootModel
 import com.trueelogistics.checkin.service.GetRetrofit
 import com.trueelogistics.checkin.service.ScanQrService
@@ -49,7 +50,10 @@ class ScanQrFragment : Fragment() {
 
     private fun sentQr(result: String) {
         val retrofit = GetRetrofit.getRetrofit?.build()?.create(ScanQrService::class.java)
+
         val call = retrofit?.getData("CHECK_IN", result)
+
+        SuccessDialogFragment().show(activity?.supportFragmentManager,"show")
 
         call?.enqueue(object : Callback<RootModel> {
             override fun onFailure(call: Call<RootModel>, t: Throwable) {
@@ -61,6 +65,7 @@ class ScanQrFragment : Fragment() {
                     val root = response.body()
                     val show = root?.data?.qrcodeUniqueKey
                     Log.e(" QR code == ", "$show ...")
+
 
                 } else {
                     response.errorBody()

@@ -16,4 +16,7 @@
 	<string name="checkout_text">ลงชื่อออกงาน</string>
 	<string name="between_text">ระหว่างวัน</string>
 	<string name="confirm">ยืนยัน</string>
+	<string name="checkin_success">เข้างานเรียบร้อยแล้ว</string>
+	<string name="checkin_time_text">เวลาลงชื่อเข้างาน</string>
+	<string name="example_time_text">9.15 น.</string>
 </resources>

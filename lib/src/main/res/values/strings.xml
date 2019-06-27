@@ -7,16 +7,22 @@
 	<string name="sent_location">Sent Location</string>
 	<string name="refresh">Refresh</string>
 	<string name="time">time</string>
-	<string name="scan_check_text">แสกนเพื่อเช็คอิน</string>
-	<string name="problem_text">หากการแสกนมีปัญหา กรุณากด</string>
-	<string name="self_checkin_text">ลงชื่อด้วยตัวเอง</string>
+
+	<string name="scanCheckInText">แสกนเพื่อเช็คอิน</string>
+	<string name="problemPressText">หากการแสกนมีปัญหา กรุณากด</string>
+	<string name="selfCheckInText">ลงชื่อด้วยตัวเอง</string>
+
+	<string name="checkInText">ลงชื่อเข้างาน</string>
+	<string name="checkOutText">ลงชื่อออกงาน</string>
+	<string name="betweenText">ระหว่างวัน</string>
+	<string name="confirmText">ยืนยัน</string>
+	<string name="checkInSuccessText">เข้างานเรียบร้อยแล้ว</string>
+	<string name="checkInTimeText">เวลาลงชื่อเข้างาน</string>
+	<string name="exampleTimeText">9.15 น.</string>
+	<string name="chackInHub">คลังที่เช็คอิน</string>
 
 	<string name="hello_blank_fragment">Hello blank fragment</string>
-	<string name="checkin_text">ลงชื่อเข้างาน</string>
-	<string name="checkout_text">ลงชื่อออกงาน</string>
-	<string name="between_text">ระหว่างวัน</string>
-	<string name="confirm">ยืนยัน</string>
-	<string name="checkin_success">เข้างานเรียบร้อยแล้ว</string>
-	<string name="checkin_time_text">เวลาลงชื่อเข้างาน</string>
-	<string name="example_time_text">9.15 น.</string>
+	<string name="stockCheckInText">คลังที่ต้องการเช็คอิน</string>
+	<string name="choiceText">เลือก</string>
+	<string name="stockStation">stockStation</string>
 </resources>

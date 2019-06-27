@@ -6,7 +6,7 @@ import android.util.Log
 import com.trueelogistics.checkin.Interfaces.CheckInTELCallBack
 import com.trueelogistics.checkin.activity.GenQrActivity
 import com.trueelogistics.checkin.activity.NearByActivity
-import com.trueelogistics.checkin.activity.ScanQrActivity
+import com.trueelogistics.checkin.scanqr.ScanQrActivity
 import com.trueelogistics.checkin.activity.ShakeActivity
 
 class CheckInTEL {

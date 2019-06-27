@@ -13,17 +13,18 @@
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 	<application
+			android:usesCleartextTraffic="true"
 			android:allowBackup="true"
 			android:supportsRtl="true"
 			android:theme="@style/AppTheme"
-			tools:ignore="AllowBackup,GoogleAppIndexingWarning,MissingApplicationIcon">
+			tools:ignore="AllowBackup,GoogleAppIndexingWarning,MissingApplicationIcon,UnusedAttribute">
 		<activity android:name="com.trueelogistics.checkin.activity.GenQrActivity">
 		</activity>
 		<activity
 				android:name="com.trueelogistics.checkin.activity.NearByActivity"
 				android:screenOrientation="portrait"/>
 		<activity
-				android:name="com.trueelogistics.checkin.activity.ScanQrActivity"
+				android:name="com.trueelogistics.checkin.scanqr.ScanQrActivity"
 				android:screenOrientation="portrait"/>
 		<activity
 				android:name="com.trueelogistics.checkin.activity.ShakeActivity"

@@ -1,4 +1,4 @@
-package com.trueelogistics.checkin.fragment.scanqr
+package com.trueelogistics.checkin.scanqr
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -10,7 +10,6 @@ import com.google.zxing.ResultPoint
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
 import com.trueelogistics.checkin.R
-import com.trueelogistics.checkin.dialog.SuccessDialogFragment
 import com.trueelogistics.checkin.model.generate_qr.RootModel
 import com.trueelogistics.checkin.service.GetRetrofit
 import com.trueelogistics.checkin.service.ScanQrService
@@ -44,7 +43,9 @@ class ScanQrFragment : Fragment() {
         scanner_fragment?.decodeContinuous(callback)
 
         self_checkin.setOnClickListener {
-            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragment,ManualCheckinFragment())?.addToBackStack(null)?.commit()
+            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragment,
+                ManualCheckinFragment()
+            )?.addToBackStack(null)?.commit()
         }
     }
 

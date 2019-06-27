@@ -1,4 +1,4 @@
-package com.trueelogistics.checkin.dialog
+package com.trueelogistics.checkin.scanqr
 
 
 import android.os.Bundle

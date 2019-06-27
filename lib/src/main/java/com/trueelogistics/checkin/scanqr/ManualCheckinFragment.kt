@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.trueelogistics.checkin.R
+import com.trueelogistics.checkin.testretofit.PersonModel
 import kotlinx.android.synthetic.main.fragment_manaul_checkin.*
 
 class ManualCheckinFragment : Fragment() {
@@ -22,7 +23,7 @@ class ManualCheckinFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         back_page.setOnClickListener {
-
+            activity?.onBackPressed()
         }
 
         checkin_pic.setOnClickListener {
@@ -56,12 +57,19 @@ class ManualCheckinFragment : Fragment() {
         checkInHub.setOnClickListener {
             val stockDialogFragment  = StockDialogFragment()
             stockDialogFragment.setOnItemLocationClick {
-                stockName.text = it.firstName
-                stockName.setTextColor(resources.getColor(R.color.black))
-                confirm.setBackgroundColor(resources.getColor(R.color.purple))
-                confirm.setTextColor(resources.getColor(R.color.white))
+                setView(it)
             }
             stockDialogFragment.show(activity?.supportFragmentManager, "show")
         }
+        confirm.setOnClickListener {
+            SuccessDialogFragment().show(activity?.supportFragmentManager,"show")
+        }
+    }
+
+    private fun setView(item:PersonModel){
+        stockName.text = item.firstName
+        stockName.setTextColor(resources.getColor(R.color.black))
+        confirm.setBackgroundColor(resources.getColor(R.color.purple))
+        confirm.setTextColor(resources.getColor(R.color.white))
     }
 }

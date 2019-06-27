@@ -49,7 +49,7 @@ class ScanQrFragment : Fragment() {
         self_checkin.setOnClickListener {
             activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragment,
                 ManualCheckinFragment()
-            )?.addToBackStack(null)?.commit()
+            )?.addToBackStack(ManualCheckinFragment::class.java.name)?.commit()
         }
     }
 

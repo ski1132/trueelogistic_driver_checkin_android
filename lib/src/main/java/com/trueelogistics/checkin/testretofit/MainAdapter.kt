@@ -5,11 +5,15 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import com.trueelogistics.checkin.R
 import kotlinx.android.synthetic.main.item_retrofit.view.*
 
 class MainAdapter(val items: ArrayList<PersonModel>, private val context: Context) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    var onItemLocationClickListener : OnItemLocationClickListener? = null
+    private var oldRadioButton : RadioButton? = null
+
     override fun onBindViewHolder(view: RecyclerView.ViewHolder, position: Int) {
         val viewHolder = view as ViewHolder
         viewHolder.bind(position)
@@ -29,7 +33,21 @@ class MainAdapter(val items: ArrayList<PersonModel>, private val context: Contex
         fun bind(position: Int) {
             val nameText = view.stockBt
             nameText.text = items[position].firstName
+
+            view.layoutItem.setOnClickListener {
+                onItemLocationClickListener?.onItemLocationClick( items[position],oldRadioButton,view.stockBt)
+                oldRadioButton = view.stockBt
+            }
+
+            view.stockBt.setOnClickListener {
+                onItemLocationClickListener?.onItemLocationClick( items[position],oldRadioButton,view.stockBt)
+                oldRadioButton = view.stockBt
+            }
         }
 
+    }
+
+    interface OnItemLocationClickListener{
+        fun onItemLocationClick(item: PersonModel,oldRadioButton : RadioButton?,newRadioButton : RadioButton?)
     }
 }

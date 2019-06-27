@@ -1,17 +1,22 @@
 package com.trueelogistics.checkin.scanqr
 
 
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.design.widget.BottomSheetDialogFragment
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import com.trueelogistics.checkin.R
 import com.trueelogistics.checkin.testretofit.DataService
 import com.trueelogistics.checkin.testretofit.MainAdapter
+import com.trueelogistics.checkin.testretofit.PersonModel
 import com.trueelogistics.checkin.testretofit.ResponseModel
+import kotlinx.android.synthetic.main.fragment_manaul_checkin.*
 import kotlinx.android.synthetic.main.fragment_stock_dialog.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -21,8 +26,10 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+class StockDialogFragment : BottomSheetDialogFragment(), MainAdapter.OnItemLocationClickListener {
 
-class StockDialogFragment : BottomSheetDialogFragment(){
+
+    private var doSomething : ((item: PersonModel)-> Unit) ? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +43,12 @@ class StockDialogFragment : BottomSheetDialogFragment(){
         super.onViewCreated(view, savedInstanceState)
 
         getRrtrofit()
+
+            choiceStock.setOnClickListener {
+                if (choiceStock.background is ColorDrawable)
+
+                    dismiss()
+            }
 
 
     }
@@ -66,8 +79,9 @@ class StockDialogFragment : BottomSheetDialogFragment(){
                     activity?.also {
                         recycleView?.layoutManager = LinearLayoutManager(it)
                         if (logModel != null) {
-                            Log.e("person [1] == ", logModel.person[1].firstName.toString())
-                            recycleView.adapter = MainAdapter(logModel.person, it)
+                            recycleView.adapter = MainAdapter(logModel.person, it).apply {
+                                onItemLocationClickListener = this@StockDialogFragment
+                            }
                         }
                     }
                 } else {
@@ -76,6 +90,22 @@ class StockDialogFragment : BottomSheetDialogFragment(){
             }
 
         })
+    }
+    override fun onItemLocationClick(item: PersonModel, oldRadioButton : RadioButton?, newRadioButton : RadioButton?) {
+
+        oldRadioButton?.isChecked =false
+        newRadioButton?.isChecked = true
+
+        activity?.let{
+            choiceStock.setBackgroundColor(ContextCompat.getColor(it,R.color.purple))
+        }
+        doSomething?.let{
+            it(item)
+        }
+    }
+
+    fun setOnItemLocationClick(doSomething : ((item: PersonModel)-> Unit)?=null ){ // save stucture from stock to value name doSomething
+       this.doSomething = doSomething  //save class who call this function
     }
 
 }

@@ -98,9 +98,11 @@
 			tools:ignore="UseCompoundDrawables">
 
 		<TextView
+				android:id="@+id/stockName"
 				android:layout_weight="1"
 				android:textColor="@color/gray"
 				android:text="@string/chackInHub"
+				android:textSize="25sp"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"/>
 

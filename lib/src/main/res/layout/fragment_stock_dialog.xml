@@ -33,12 +33,13 @@
 			android:padding="20dp">
 
 		<Button
+				android:id="@+id/choiceStock"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:text="@string/choiceText"
 				android:textSize="20sp"
 				android:textColor="@color/white"
-				android:background="@color/purple"
+				android:background="@color/gray"
 		/>
 
 	</LinearLayout>

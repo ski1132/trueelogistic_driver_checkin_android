@@ -28,17 +28,21 @@ class ScanQrFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_scan_qrcode, container, false)
     }
     private val callback = object : BarcodeCallback {
+        override fun possibleResultPoints(resultPoints: MutableList<ResultPoint>?) {
+            // do noting in action
+        }
+
         override fun barcodeResult(result: BarcodeResult) {
             result.text.also {
                 sentQr(it)
             }
         }
 
-        override fun possibleResultPoints(resultPoints: List<ResultPoint>) {}
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         scanner_fragment?.setStatusText("")
         scanner_fragment?.decodeContinuous(callback)
 

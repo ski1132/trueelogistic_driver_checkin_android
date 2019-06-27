@@ -21,6 +21,10 @@ class ManualCheckinFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        back_page.setOnClickListener {
+
+        }
+
         checkin_pic.setOnClickListener {
             if (checkin_pic.drawable.constantState == resources
                     .getDrawable( R.drawable.ic_checkin_gray).constantState)
@@ -50,9 +54,14 @@ class ManualCheckinFragment : Fragment() {
             }
         }
         checkInHub.setOnClickListener {
-            StockDialogFragment().show(activity?.supportFragmentManager, "show")
+            val stockDialogFragment  = StockDialogFragment()
+            stockDialogFragment.setOnItemLocationClick {
+                stockName.text = it.firstName
+                stockName.setTextColor(resources.getColor(R.color.black))
+                confirm.setBackgroundColor(resources.getColor(R.color.purple))
+                confirm.setTextColor(resources.getColor(R.color.white))
+            }
+            stockDialogFragment.show(activity?.supportFragmentManager, "show")
         }
     }
-
-
 }

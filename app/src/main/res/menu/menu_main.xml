@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<group
+			android:checkableBehavior="single">
+		<item android:id="@+id/shake_fine"
+			  android:icon="@drawable/ic_shake"
+			  android:checked="true"
+			  android:title="@string/shake_fine"/>
+
+		<item android:id="@+id/nearby_fine"
+			  android:icon="@drawable/ic_nearby"
+			  android:title="@string/nearby_fine"/>
+
+		<item android:id="@+id/history"
+			  android:icon="@drawable/ic_history"
+			  android:title="@string/history_check"/>
+
+		<item android:id="@+id/absent"
+			  android:icon="@drawable/ic_absent"
+			  android:title="@string/request_absent"/>
+	</group>
+</menu>

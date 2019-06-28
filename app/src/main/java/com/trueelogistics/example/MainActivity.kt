@@ -34,16 +34,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.shake_fine -> {
-
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.frag_main, ScanQrFragment())
+                    .commit()
             }
             R.id.nearby_fine -> {
-
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.frag_main, NearByFragment())
+                    .commit()
             }
             R.id.history -> {
-                Toast.makeText(this, "sideShow", Toast.LENGTH_LONG).show()
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.frag_main, ScanQrFragment())
+                    .commit()
             }
             R.id.absent -> {
-                Toast.makeText(this, "absent show", Toast.LENGTH_LONG).show()
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.frag_main, ScanQrFragment())
+                    .commit()
             }
         }
         drawer_layout.closeDrawer(GravityCompat.START)

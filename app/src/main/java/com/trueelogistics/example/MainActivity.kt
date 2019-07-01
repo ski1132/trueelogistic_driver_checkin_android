@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
             R.id.shake_fine -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.frag_main, ScanQrFragment())
+                    .replace(R.id.frag_main, ShakeFragment())
                     .commit()
             }
             R.id.nearby_fine -> {

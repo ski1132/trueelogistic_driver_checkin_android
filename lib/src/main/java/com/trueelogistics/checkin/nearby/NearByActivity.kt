@@ -1,14 +1,15 @@
 package com.trueelogistics.checkin.nearby
 
 import android.annotation.SuppressLint
-import android.support.v7.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
-import com.trueelogistics.checkin.R
 import com.google.android.gms.nearby.Nearby
 import com.google.android.gms.nearby.messages.Message
 import com.google.android.gms.nearby.messages.MessageListener
 import com.jaredrummler.android.device.DeviceName
+import com.trueelogistics.checkin.R
 import kotlinx.android.synthetic.main.activity_near_by.*
 
 @SuppressLint("Registered")
@@ -19,6 +20,11 @@ class NearByActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_near_by)
 
+        val checkPer = Nearby.zza(this)
+        if (checkPer)
+            Toast.makeText(this, "Comfirm", Toast.LENGTH_SHORT).show()
+        else
+            Toast.makeText(this, "=== Denied ===", Toast.LENGTH_SHORT).show()
         btSentNearBy.setOnClickListener {
             this.let {
                 val message = DeviceName.getDeviceName().toByteArray(
@@ -55,13 +61,9 @@ class NearByActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-
         mMessageListener?.let { mML ->
-            this.let {
-                Nearby.getMessagesClient(it).subscribe(mML)
-            }
+            Nearby.getMessagesClient(this).subscribe(mML)
         }
-
     }
 
     override fun onStop() {
@@ -76,6 +78,15 @@ class NearByActivity : AppCompatActivity() {
             }
         }
         super.onStop()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Toast.makeText(
+            this, " Permission Denied ",
+            Toast.LENGTH_LONG
+        ).show()
+        finish()
     }
 
 }

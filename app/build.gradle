@@ -9,7 +9,7 @@ apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 29
     defaultConfig {
-        applicationId "com.example.testwithfirebase"
+        applicationId "com.trueelogistics.staff"
         minSdkVersion 19 //kitkat
         targetSdkVersion 29
         versionCode 1

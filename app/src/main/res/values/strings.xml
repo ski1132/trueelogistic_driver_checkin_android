@@ -22,9 +22,10 @@
 	<string name="history_check">ประวัติการเช็คอิน</string>
 	<string name="request_absent">คำขอวันลา</string>
 	<string name="generate_qrcode">Generate QrCode</string>
-	<string name="shakePhoneText">เขย่าโทรศัพท์ของคุณ</string>
-	<string name="nearByFine">ค้นหาโทรศัพท์รอบๆตัวคุณด้วย NearBy</string>
-	<string name="finePhone">ค้นหาโทรศัพท์</string>
-	<string name="orPressBt">หรือกดปุ่ม</string>
+	<string name="shake_phone_text">เขย่าโทรศัพท์ของคุณ</string>
+	<string name="near_by_fine">ค้นหาโทรศัพท์รอบๆตัวคุณด้วย NearBy</string>
+	<string name="fine_phone">ค้นหาโทรศัพท์</string>
+	<string name="or_press_bt">หรือกดปุ่ม</string>
+	<string name="absent_sent">คำขอวันลา</string>
 
 </resources>

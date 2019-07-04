@@ -27,5 +27,10 @@
 	<string name="fine_phone">ค้นหาโทรศัพท์</string>
 	<string name="or_press_bt">หรือกดปุ่ม</string>
 	<string name="absent_sent">คำขอวันลา</string>
+	<string name="welcome">ยินดีต้อนรับ</string>
+	<string name="LoginForScanQr">เข้าสู่ระบบเพื่อแสกน QR code</string>
+	<string name="login">เข้าสู่ระบบ</string>
+	<string name="username">ชื่อผู้ใช้งาน</string>
+	<string name="password">รหัสผ่าน</string>
 
 </resources>

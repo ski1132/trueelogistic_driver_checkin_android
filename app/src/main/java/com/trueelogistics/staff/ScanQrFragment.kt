@@ -45,7 +45,7 @@ class ScanQrFragment : Fragment() {
         }
         genQr.setOnClickListener {
             activity?.let {
-                CheckInTEL.checkInTEL?.openGenarateQRCode(it, object : CheckInTELCallBack {
+                CheckInTEL.checkInTEL?.openGenerateQRCode(it, object : CheckInTELCallBack {
                     override fun onCancel() {
                         Toast.makeText(activity, " GenQr.onCancel === ", Toast.LENGTH_SHORT).show()
                     }

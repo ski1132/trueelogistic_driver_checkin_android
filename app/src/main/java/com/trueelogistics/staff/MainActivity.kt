@@ -33,6 +33,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
+            R.id.scanQr -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.frag_main, ScanQrFragment())
+                    .commit()
+            }
             R.id.shake_fine -> {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.frag_main, ShakeFragment())

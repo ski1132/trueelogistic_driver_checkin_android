@@ -5,7 +5,6 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import com.trueelogistics.checkin.handler.CheckInTEL
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -14,7 +13,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        CheckInTEL.packageName(this)
+
         nav_view.setNavigationItemSelectedListener(this)
 
         supportFragmentManager.beginTransaction()
@@ -34,6 +33,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
+            R.id.scan_qr -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.frag_main, ScanQrFragment())
+                    .commit()
+            }
             R.id.shake_fine -> {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.frag_main, ShakeFragment())
@@ -46,7 +50,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.history -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.frag_main, ScanQrFragment())
+                    .replace(R.id.frag_main, HistoryFragment())
                     .commit()
             }
             R.id.absent -> {

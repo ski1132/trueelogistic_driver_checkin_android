@@ -2,14 +2,11 @@ package com.trueelogistics.staff
 
 import android.app.Application
 import com.trueelogistics.checkin.handler.CheckInTEL
-import com.trueelogistics.checkin.service.GetRetrofit
 
-class MyApplication: Application(){ //open this activity name before another
-
+class MyApplication : Application() { //open this activity name before another
     override fun onCreate() {
         super.onCreate()
-        CheckInTEL.initial() // initial 1 time because is use a lot of mem and value
-        GetRetrofit.initial()
+        CheckInTEL.initial(this) // initial 1 time because is use a lot of mem and value
         // can use all class in this app
     }
 }

@@ -27,5 +27,6 @@
 	<string name="fine_phone">ค้นหาโทรศัพท์</string>
 	<string name="or_press_bt">หรือกดปุ่ม</string>
 	<string name="absent_sent">คำขอวันลา</string>
+	<string name="scan_qr">แสกน Qr code</string>
 
 </resources>

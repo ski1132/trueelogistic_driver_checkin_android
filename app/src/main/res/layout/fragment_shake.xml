@@ -4,13 +4,10 @@
 			  android:layout_width="match_parent"
 			  android:layout_height="match_parent"
 			  tools:context=".NearByFragment"
-			  android:orientation="vertical"
->
+			  android:orientation="vertical">
 	<LinearLayout
 			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-	>
-
+			android:layout_width="match_parent">
 		<ImageView
 				android:id="@+id/toolbar"
 				android:src="@drawable/menu_bar"
@@ -58,7 +55,5 @@
 				android:layout_height="wrap_content"
 				android:text="@string/near_by_fine"
 				android:textSize="15sp"/>
-
 	</LinearLayout>
-
 </LinearLayout>

@@ -8,8 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.trueelogistics.checkin.Interfaces.CheckInTELCallBack
 import com.trueelogistics.checkin.handler.CheckInTEL
+import com.trueelogistics.checkin.interfaces.CheckInTELCallBack
 import kotlinx.android.synthetic.main.fragment_scan_qr.*
 
 class ScanQrFragment : Fragment() {
@@ -45,7 +45,7 @@ class ScanQrFragment : Fragment() {
         }
         genQr.setOnClickListener {
             activity?.let {
-                CheckInTEL.checkInTEL?.openGenerateQRCode(it, object : CheckInTELCallBack {
+                CheckInTEL.checkInTEL?.openGenerateQRCode(it, "userId", object : CheckInTELCallBack {
                     override fun onCancel() {
                         Toast.makeText(activity, " GenQr.onCancel === ", Toast.LENGTH_SHORT).show()
                     }
@@ -70,7 +70,7 @@ class ScanQrFragment : Fragment() {
 
     }
     private fun openScanQr( activity: FragmentActivity){
-        CheckInTEL.checkInTEL?.openScanQRCode(activity, object : CheckInTELCallBack {
+        CheckInTEL.checkInTEL?.openScanQRCode(activity , "userId","", object : CheckInTELCallBack {
             override fun onCancel() {
                 Toast.makeText(activity, " ScanQr.onCancel === ", Toast.LENGTH_SHORT).show()
             }

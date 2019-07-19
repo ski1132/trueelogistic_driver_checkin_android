@@ -19,9 +19,8 @@ import com.trueelogistics.checkin.interfaces.TypeCallback
 import com.trueelogistics.checkin.model.HistoryInDataModel
 import kotlinx.android.synthetic.main.fragment_scan_qr.*
 import java.util.*
-import kotlin.collections.ArrayList
 
-class ScanQrFragment :Fragment () {
+class ScanQrFragment : Fragment() {
     private var adapter = HistoryStaffAdapter()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,7 +42,7 @@ class ScanQrFragment :Fragment () {
         val nDay = Date().format("dd")
         val mouth = Date().format("MMM")
         date.text = String.format(this.getString(R.string.date_checkin), day, nDay, mouth)
-        activity?.let {activity ->
+        activity?.let { activity ->
             checkin_btn.setOnClickListener {
                 openScanQr(activity, CheckInTELType.CheckIn.value)
             }
@@ -56,7 +55,7 @@ class ScanQrFragment :Fragment () {
         }
     }
 
-    private fun getHistoryToday(){
+    private fun getHistoryToday() {
         historyRecycle.adapter = adapter
         activity?.let {
             historyRecycle?.layoutManager = LinearLayoutManager(it)
@@ -70,9 +69,9 @@ class ScanQrFragment :Fragment () {
         }
     }
 
-    private fun openScanQr(context: Context, type : String) {
-        activity ?.let {
-            CheckInTEL.checkInTEL?.openScanQRCode(it,"userId",type, object : CheckInTELCallBack {
+    private fun openScanQr(context: Context, type: String) {
+        activity?.let {
+            CheckInTEL.checkInTEL?.openScanQRCode(it, "userId", type, object : CheckInTELCallBack {
                 override fun onCancel() {
                     Toast.makeText(context, " ScanQr.onCancel === ", Toast.LENGTH_SHORT).show()
                 }

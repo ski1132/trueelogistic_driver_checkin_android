@@ -48,9 +48,9 @@ class MainService : FirebaseMessagingService() {
         notificationManager.notify(0, notification)
     }
     override fun onMessageSent(p0: String?) {
-        Log.e("== onMessageSent == ",p0)
+        Log.e("== onMessageSent == ",p0 ?: "")
     }
     override fun onNewToken(token: String?) {
-       Log.e("token == ",token)
+       Log.e("token == ",token ?: "")
     }
 }

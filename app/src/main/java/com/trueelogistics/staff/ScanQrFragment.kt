@@ -19,6 +19,7 @@ import com.trueelogistics.checkin.interfaces.TypeCallback
 import com.trueelogistics.checkin.model.HistoryInDataModel
 import kotlinx.android.synthetic.main.fragment_scan_qr.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 class ScanQrFragment : Fragment() {
     private var adapter = HistoryStaffAdapter()
@@ -60,9 +61,11 @@ class ScanQrFragment : Fragment() {
         activity?.let {
             historyRecycle?.layoutManager = LinearLayoutManager(it)
             CheckInTEL.checkInTEL?.getHistory(object : HistoryCallback {
-                override fun historyGenerate(dataModel: ArrayList<HistoryInDataModel>) {
-                    adapter.items.removeAll(dataModel)
-                    adapter.items.addAll(dataModel)
+                override fun onFailure(message: String?) {
+                }
+                override fun onResponse(dataModel: ArrayList<HistoryInDataModel>?) {
+                    adapter.items.removeAll(dataModel ?: arrayListOf())
+                    adapter.items.addAll(dataModel ?: arrayListOf())
                     adapter.notifyDataSetChanged()
                 }
             })
@@ -75,11 +78,9 @@ class ScanQrFragment : Fragment() {
                 override fun onCancel() {
                     Toast.makeText(context, " ScanQr.onCancel === ", Toast.LENGTH_SHORT).show()
                 }
-
                 override fun onCheckInFailure(message: String) {
                     Toast.makeText(context, " ScanQr.onCheckFail = $message ", Toast.LENGTH_SHORT).show()
                 }
-
                 override fun onCheckInSuccess(result: String) {
                     Toast.makeText(context, " ScanQr.onCheckSuccess = $result", Toast.LENGTH_SHORT).show()
                 }
@@ -95,7 +96,9 @@ class ScanQrFragment : Fragment() {
 
     private fun checkButton() {
         CheckInTEL.checkInTEL?.getLastCheckInHistory(object : TypeCallback {
-            override fun getType(type: String) {
+            override fun onFailure(message: String?) {
+            }
+            override fun onResponse(type: String?) {
                 if (type == CheckInTELType.CheckIn.value || type == CheckInTELType.CheckBetween.value) {
                     checkin_btn.visibility = View.GONE
                     checkBetBtn.visibility = View.VISIBLE

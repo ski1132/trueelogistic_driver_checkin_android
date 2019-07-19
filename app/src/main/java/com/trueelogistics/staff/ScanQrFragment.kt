@@ -8,8 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.trueelogistics.checkin.Interfaces.CheckInTELCallBack
+import com.trueelogistics.checkin.enums.CheckInTELType
 import com.trueelogistics.checkin.handler.CheckInTEL
+import com.trueelogistics.checkin.interfaces.CheckInTELCallBack
 import kotlinx.android.synthetic.main.fragment_scan_qr.*
 
 class ScanQrFragment : Fragment() {
@@ -30,22 +31,22 @@ class ScanQrFragment : Fragment() {
         }
         checkInBtn.setOnClickListener {
             activity?.let {
-                openScanQr(it)
+                openScanQr(it, CheckInTELType.CheckIn.value)
             }
         }
         checkBetBtn.setOnClickListener {
             activity?.let {
-                openScanQr(it)
+                openScanQr(it, CheckInTELType.CheckBetween.value)
             }
         }
         checkOutBtn.setOnClickListener {
             activity?.let {
-                openScanQr(it)
+                openScanQr(it, CheckInTELType.CheckOut.value)
             }
         }
         genQr.setOnClickListener {
             activity?.let {
-                CheckInTEL.checkInTEL?.openGenerateQRCode(it, object : CheckInTELCallBack {
+                CheckInTEL.checkInTEL?.openGenerateQRCode(it, "", object : CheckInTELCallBack {
                     override fun onCancel() {
                         Toast.makeText(activity, " GenQr.onCancel === ", Toast.LENGTH_SHORT).show()
                     }
@@ -66,11 +67,12 @@ class ScanQrFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        CheckInTEL.checkInTEL?.onActivityResult(requestCode,resultCode,data)
+        CheckInTEL.checkInTEL?.onActivityResult(requestCode, resultCode, data)
 
     }
-    private fun openScanQr( activity: FragmentActivity){
-        CheckInTEL.checkInTEL?.openScanQRCode(activity, object : CheckInTELCallBack {
+
+    private fun openScanQr(activity: FragmentActivity, type: String) {
+        CheckInTEL.checkInTEL?.openScanQRCode(activity, "", type, object : CheckInTELCallBack {
             override fun onCancel() {
                 Toast.makeText(activity, " ScanQr.onCancel === ", Toast.LENGTH_SHORT).show()
             }

@@ -20,7 +20,8 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme" tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+            android:theme="@style/AppTheme"
+            tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <service
                 android:name="com.trueelogistics.staff.MainService"
                 android:enabled="true"
@@ -41,13 +42,23 @@
         <meta-data
                 android:name="com.google.android.nearby.messages.AIzaSyBXLec3JoQY_SBJUOLSbDk4XAkSezbc02s"
                 android:value="AIzaSyBXLec3JoQY_SBJUOLSbDk4XAkSezbc02s" />
-        <activity android:name="com.trueelogistics.staff.MainActivity">
+        <meta-data
+                android:name="com.trueelogistics.API_KEY"
+                android:value="SATBUDWEXFZH2J3K5N6P7R9SATCVDWEYGZH2K4M5N7Q8R9TBUCVEXFYGZJ"/>
+        <activity android:name="com.trueelogistics.staff.ScreenLoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+                android:name=".MainActivity"
+                android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>

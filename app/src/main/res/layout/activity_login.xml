@@ -4,7 +4,7 @@
 			  android:layout_height="match_parent"
 			  android:orientation="vertical">
 	<TextView
-			android:layout_marginTop="50dp"
+			android:layout_marginTop="30dp"
 			android:gravity="center"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
@@ -18,8 +18,8 @@
 			android:text="@string/LoginForScanQr"
 			android:textSize="15sp"/>
 	<ImageView
-			android:layout_marginTop="50dp"
-			android:layout_marginBottom="50dp"
+			android:layout_marginTop="30dp"
+			android:layout_marginBottom="30dp"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:src="@drawable/ic_login"/>
@@ -39,6 +39,7 @@
 			android:layout_height="wrap_content"
 			android:layout_below="@id/username_input_layout">
 		<EditText
+				android:inputType="textPassword"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:hint="@string/password"/>
@@ -49,7 +50,7 @@
 			android:gravity="bottom">
 		<Button
 				android:id="@+id/confirmLogin"
-				android:gravity="bottom"
+				android:gravity="center"
 				android:text="@string/login"
 				android:textSize="20sp"
 				android:textColor="@color/white"

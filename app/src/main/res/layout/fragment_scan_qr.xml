@@ -67,7 +67,7 @@
 		</android.support.constraint.ConstraintLayout>
 
 		<Button
-				android:id="@+id/checkin_btn"
+				android:id="@+id/checkInBtn"
 				android:textSize="20sp"
 				android:text="@string/check_in"
 				android:layout_width="300dp"

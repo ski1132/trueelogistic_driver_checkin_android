@@ -13,8 +13,8 @@ import com.trueelogistics.checkin.adapter.HistoryStaffAdapter
 import com.trueelogistics.checkin.enums.CheckInTELType
 import com.trueelogistics.checkin.extensions.format
 import com.trueelogistics.checkin.handler.CheckInTEL
+import com.trueelogistics.checkin.interfaces.ArrayListGenericCallback
 import com.trueelogistics.checkin.interfaces.CheckInTELCallBack
-import com.trueelogistics.checkin.interfaces.HistoryCallback
 import com.trueelogistics.checkin.interfaces.TypeCallback
 import com.trueelogistics.checkin.model.HistoryInDataModel
 import kotlinx.android.synthetic.main.fragment_scan_qr.*
@@ -44,7 +44,7 @@ class ScanQrFragment : Fragment() {
         val mouth = Date().format("MMM")
         date.text = String.format(this.getString(R.string.date_checkin), day, nDay, mouth)
         activity?.let { activity ->
-            checkin_btn.setOnClickListener {
+            checkInBtn.setOnClickListener {
                 openScanQr(activity, CheckInTELType.CheckIn.value)
             }
             checkBetBtn.setOnClickListener {
@@ -60,13 +60,14 @@ class ScanQrFragment : Fragment() {
         historyRecycle.adapter = adapter
         activity?.let {
             historyRecycle?.layoutManager = LinearLayoutManager(it)
-            CheckInTEL.checkInTEL?.getHistory(object : HistoryCallback {
+            CheckInTEL.checkInTEL?.getHistory(object : ArrayListGenericCallback<HistoryInDataModel> {
                 override fun onFailure(message: String?) {
                 }
                 override fun onResponse(dataModel: ArrayList<HistoryInDataModel>?) {
                     adapter.items.removeAll(dataModel ?: arrayListOf())
                     adapter.items.addAll(dataModel ?: arrayListOf())
                     adapter.notifyDataSetChanged()
+                    historyRecycle.scrollToPosition((dataModel?.size)?.minus(1)?:0)
                 }
             })
         }
@@ -94,31 +95,44 @@ class ScanQrFragment : Fragment() {
         checkButton()
     }
 
+    var checkFirstInDay = true
     private fun checkButton() {
         CheckInTEL.checkInTEL?.getLastCheckInHistory(object : TypeCallback {
-            override fun onFailure(message: String?) {
-            }
             override fun onResponse(type: String?) {
                 if (type == CheckInTELType.CheckIn.value || type == CheckInTELType.CheckBetween.value) {
-                    checkin_btn.visibility = View.GONE
+                    checkFirstInDay = false
+                    checkInBtn.visibility = View.GONE
                     checkBetBtn.visibility = View.VISIBLE
                     checkOutBtn.visibility = View.VISIBLE
                     pic_checkin.visibility = View.GONE
                     layoutRecycle.visibility = View.VISIBLE
                 } else if (type == CheckInTELType.CheckOut.value) {
-                    checkin_btn.visibility = View.VISIBLE
+                    if (checkFirstInDay) {
+                        activity?.let {
+                            openScanQr(it, CheckInTELType.CheckIn.value)
+                        }
+                        checkFirstInDay = false
+                    }
+                    checkInBtn.visibility = View.VISIBLE
                     checkBetBtn.visibility = View.GONE
                     checkOutBtn.visibility = View.GONE
                     pic_checkin.visibility = View.VISIBLE
                     layoutRecycle.visibility = View.GONE
 
                 } else {
+                    checkFirstInDay = false
+                    checkInBtn.isEnabled = false
+                    checkBetBtn.isEnabled = false
+                    checkOutBtn.isEnabled = false
                     activity?.let {
-                        checkin_btn.setBackgroundColor(ContextCompat.getColor(it, R.color.gray))
+                        checkInBtn.setBackgroundColor(ContextCompat.getColor(it, R.color.gray))
                         checkBetBtn.setBackgroundColor(ContextCompat.getColor(it, R.color.gray))
                         checkOutBtn.setBackgroundColor(ContextCompat.getColor(it, R.color.gray))
                     }
                 }
+            }
+
+            override fun onFailure(message: String?) {
             }
         })
     }

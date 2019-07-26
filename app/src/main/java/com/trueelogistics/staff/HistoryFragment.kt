@@ -2,26 +2,24 @@ package com.trueelogistics.staff
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.trueelogistics.checkin.adapter.HistoryAdapter
+import com.trueelogistics.checkin.extensions.formatISO
 import com.trueelogistics.checkin.model.HistoryRootModel
 import com.trueelogistics.checkin.service.HistoryService
 import com.trueelogistics.checkin.service.RetrofitGenerater
+import com.trueelogistics.staff.model.ExpandableDataModel
 import kotlinx.android.synthetic.main.fragment_history.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class HistoryFragment : Fragment() {
-    private var adapter = HistoryAdapter()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_history, container, false)
     }
 
@@ -31,7 +29,6 @@ class HistoryFragment : Fragment() {
         toolBar.setOnClickListener{
             mainActivity.actionToolbar()
         }
-        dateRecycleView.adapter = adapter
         val retrofit = RetrofitGenerater().build().create(HistoryService::class.java)
         val call = retrofit?.getData()
         call?.enqueue(object : Callback<HistoryRootModel> {
@@ -40,11 +37,31 @@ class HistoryFragment : Fragment() {
             override fun onResponse(call: Call<HistoryRootModel>, response: Response<HistoryRootModel>) {
                 if (response.code() == 200) {
                     val logModel: HistoryRootModel? = response.body()
-                    dateRecycleView?.layoutManager = LinearLayoutManager(view.context)
+                    val parentList = arrayListOf<ExpandableDataModel>()
                     if (logModel != null) {
-                        adapter.items.addAll(logModel.data.data)
-                        adapter.notifyDataSetChanged()
+                        var lastDate = ""
+                        logModel.data.data.forEach {
+                            val dateFormat = it.updatedAt?.formatISO("yyyy-MMMM-dd")
+                            if( lastDate != dateFormat){
+                                parentList.add(ExpandableDataModel(date = dateFormat.toString()) )
+                                lastDate = dateFormat.toString()
+                            }
+                        }
+
+                        parentList.forEach {parent->
+                            logModel.data.data.forEach {log->
+                                if(parent.date == log.updatedAt?.formatISO("yyyy-MMMM-dd")){
+                                    parent.history.add(log)
+                                }
+                            }
+                        }
+
+                        activity?.let {
+                            val listAdapter = HistoryExpandable(it, parentList)
+                            expandListView.setAdapter(listAdapter)
+                        }
                     }
+
                 } else {
                     response.errorBody()
                 }

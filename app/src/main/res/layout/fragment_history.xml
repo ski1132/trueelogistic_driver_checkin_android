@@ -30,7 +30,8 @@
 				android:layout_width="match_parent"
 				android:layout_height="match_parent">
 			<ImageView
-					android:src="@drawable/ic_checkin_color"
+					android:padding="10dp"
+					android:src="@mipmap/ic_filter"
 					android:layout_width="wrap_content"
 					android:layout_height="match_parent"
 					tools:ignore="ContentDescription"/>
@@ -38,12 +39,14 @@
 	</LinearLayout>
 	<LinearLayout
 			android:layout_margin="20dp"
+			android:orientation="vertical"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">
-		<android.support.v7.widget.RecyclerView
-				android:id="@+id/dateRecycleView"
+		<ExpandableListView
+				android:id="@+id/expandListView"
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content">
-		</android.support.v7.widget.RecyclerView>
+				android:layout_height="match_parent">
+
+		</ExpandableListView>
 	</LinearLayout>
 </LinearLayout>

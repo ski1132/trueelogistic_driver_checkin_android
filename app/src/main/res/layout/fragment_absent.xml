@@ -1,39 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<LinearLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:tools="http://schemas.android.com/tools"
+		android:layout_marginStart="20dp"
+		android:layout_marginEnd="20dp"
+		android:orientation="vertical"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
-
-	<LinearLayout
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent">
-
-		<ImageView
-				android:id="@+id/toolbar"
-				android:src="@drawable/menu_bar"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				tools:ignore="ContentDescription"/>
-
-	</LinearLayout>
-	<LinearLayout
+	<ImageView
+			android:id="@+id/toolbar"
+			android:src="@drawable/menu_bar"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:padding="50dp">
-		<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="@string/absent_sent"
-				android:textSize="30sp"
-				android:textColor="@color/black"/>
-
-	</LinearLayout>
+			tools:ignore="ContentDescription"/>
+	<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/absent_sent"
+			android:textSize="30sp"
+			android:textColor="@color/black"/>
 	<LinearLayout
+			android:baselineAligned="true"
+			android:layout_marginTop="10dp"
+			android:layout_marginBottom="10dp"
+			android:orientation="horizontal"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:orientation="vertical"
-			android:gravity="center">
-
+			android:layout_height="wrap_content">
+		<LinearLayout
+				android:id="@+id/dateStart"
+				android:layout_marginStart="10dp"
+				android:layout_marginEnd="15dp"
+				android:orientation="vertical"
+				android:layout_weight="0.5"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				tools:ignore="UseCompoundDrawables">
+			<LinearLayout
+					android:orientation="horizontal"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content">
+				<TextView
+						android:id="@+id/dateStartShow"
+						android:text="@string/date_absence_start_text"
+						android:textSize="18sp"
+						android:layout_weight="1"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"/>
+				<ImageView
+						android:src="@mipmap/ic_absent"
+						android:layout_width="wrap_content"
+						android:layout_height="match_parent"
+						tools:ignore="ContentDescription"/>
+			</LinearLayout>
+			<View
+					android:layout_width="match_parent"
+					android:layout_height="1dp"
+					android:background="@color/gray"/>
+		</LinearLayout>
+		<TextView
+				android:text="@string/to_text"
+				android:textSize="20sp"
+				android:textColor="@color/black"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"/>
+		<LinearLayout
+				android:id="@+id/dateEnd"
+				android:layout_marginStart="10dp"
+				android:layout_marginEnd="20dp"
+				android:layout_weight="0.5"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				tools:ignore="UseCompoundDrawables">
+			<LinearLayout
+					android:orientation="horizontal"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content">
+				<TextView
+						android:id="@+id/dateEndShow"
+						android:text="@string/date_absence_end_text"
+						android:textSize="18sp"
+						android:layout_weight="1"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"/>
+				<ImageView
+						android:src="@mipmap/ic_absent"
+						android:layout_width="wrap_content"
+						android:layout_height="match_parent"
+						tools:ignore="ContentDescription"/>
+			</LinearLayout>
+			<View
+					android:layout_width="match_parent"
+					android:layout_height="1dp"
+					android:background="@color/gray"/>
+		</LinearLayout>
 	</LinearLayout>
-</android.support.design.widget.CoordinatorLayout>
+	<TextView
+			android:text="@string/absence_type_text"
+			android:textSize="20sp"
+			android:textColor="@color/black"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"/>
+	<RadioGroup
+			android:id="@+id/radio_group"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+		<RadioButton
+				android:id="@+id/personal_absence"
+				android:text="@string/personal_absence"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"/>
+		<RadioButton
+				android:id="@+id/sick_absence"
+				android:text="@string/sick_absence"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"/>
+		<RadioButton
+				android:id="@+id/vacation_absence"
+				android:text="@string/vacation_absence"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"/>
+	</RadioGroup>
+	<TextView
+			android:layout_marginTop="10dp"
+			android:text="@string/reason_text"
+			android:textSize="20sp"
+
+			android:textColor="@color/black"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"/>
+	<EditText
+			android:padding="10dp"
+			android:gravity="top"
+			android:hint="@string/reason_absence"
+			android:layout_width="match_parent"
+			android:layout_height="100dp"
+			android:background="@drawable/edit_text_style"
+			tools:ignore="Autofill,TextFields"/>
+	<LinearLayout
+			android:gravity="bottom"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+		<Button
+				android:text="@string/confirm_text"
+				android:textColor="@color/white"
+				android:layout_marginBottom="10dp"
+				android:background="@color/gray"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"/>
+	</LinearLayout>
+</LinearLayout>

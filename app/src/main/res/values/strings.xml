@@ -33,5 +33,15 @@
 	<string name="username">ชื่อผู้ใช้งาน</string>
 	<string name="password">รหัสผ่าน</string>
 	<string name="scan_qr">แสกน QR Code</string>
-
+	<string name="date_text">วันที่</string>
+	<string name="absence_type_text">ประเภทการลา</string>
+	<string name="personal_absence">ลากิจ</string>
+	<string name="sick_absence">ลาป่วย</string>
+	<string name="vacation_absence">ลาพักร้อน</string>
+	<string name="reason_text">เหตุผล</string>
+	<string name="reason_absence">กรุณาระบุเหตุผลในการลา</string>
+	<string name="date_absence_start_text">วันที่เริ่มลา</string>
+	<string name="date_absence_end_text">วันลาสุดท้าย</string>
+	<string name="show_date_pick"> %1$s / %2$s / %3$s </string>
+	<string name="to_text">ถึง</string>
 </resources>

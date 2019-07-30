@@ -59,6 +59,7 @@ class HistoryFragment : Fragment() {
                         activity?.let {
                             val listAdapter = HistoryExpandable(it, parentList)
                             expandListView.setAdapter(listAdapter)
+                            expandListView.setIndicatorBounds(expandListView.right - 40, expandListView.width)
                         }
                     }
 

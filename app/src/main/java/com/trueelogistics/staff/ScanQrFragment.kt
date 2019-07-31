@@ -60,7 +60,7 @@ class ScanQrFragment : Fragment() {
         historyRecycle.adapter = adapter
         activity?.let {
             historyRecycle?.layoutManager = LinearLayoutManager(it)
-            CheckInTEL.checkInTEL?.getHistory(object : ArrayListGenericCallback<HistoryInDataModel> {
+            CheckInTEL.checkInTEL?.getHistory( object : ArrayListGenericCallback<HistoryInDataModel> {
                 override fun onFailure(message: String?) {
                 }
                 override fun onResponse(dataModel: ArrayList<HistoryInDataModel>?) {

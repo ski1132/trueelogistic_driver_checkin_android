@@ -12,10 +12,15 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         confirmLogin.setOnClickListener {
-            finish()
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            username_input_layout.text.toString()
+            password_input_layout.text.toString()
         }
+    }
+
+    private fun successLogin(){
+        finish()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 }
 

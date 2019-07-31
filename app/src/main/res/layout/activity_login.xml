@@ -19,28 +19,28 @@
 			android:textSize="15sp"/>
 	<ImageView
 			android:layout_marginTop="30dp"
-			android:layout_marginBottom="30dp"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:src="@drawable/ic_login"
 			tools:ignore="ContentDescription"/>
 	<android.support.design.widget.TextInputLayout
-			android:id="@+id/username_input_layout"
-			android:padding="10dp"
+			android:layout_margin="10dp"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content">
 		<EditText
+				android:id="@+id/username_input_layout"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:hint="@string/username"
-				android:inputType="text"
+				android:inputType="textShortMessage"
 				tools:ignore="Autofill" />
 	</android.support.design.widget.TextInputLayout>
 	<android.support.design.widget.TextInputLayout
 			android:layout_width="match_parent"
-			android:padding="10dp"
+			android:layout_margin="10dp"
 			android:layout_height="wrap_content">
 		<EditText
+				android:id="@+id/password_input_layout"
 				android:inputType="textPassword"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"

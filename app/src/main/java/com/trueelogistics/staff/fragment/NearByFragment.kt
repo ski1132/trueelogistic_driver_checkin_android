@@ -1,4 +1,4 @@
-package com.trueelogistics.staff
+package com.trueelogistics.staff.fragment
 
 
 import android.content.Intent
@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.trueelogistics.checkin.activity.NearByActivity
+import com.trueelogistics.staff.R
+import com.trueelogistics.staff.activity.MainActivity
 import kotlinx.android.synthetic.main.fragment_near_by.*
 
 class NearByFragment : Fragment()  {

@@ -1,4 +1,4 @@
-package com.trueelogistics.staff
+package com.trueelogistics.staff.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -9,6 +9,9 @@ import com.trueelogistics.checkin.extensions.formatISO
 import com.trueelogistics.checkin.model.HistoryRootModel
 import com.trueelogistics.checkin.service.HistoryService
 import com.trueelogistics.checkin.service.RetrofitGenerater
+import com.trueelogistics.staff.HistoryExpandable
+import com.trueelogistics.staff.activity.MainActivity
+import com.trueelogistics.staff.R
 import com.trueelogistics.staff.model.ExpandableDataModel
 import kotlinx.android.synthetic.main.fragment_history.*
 import retrofit2.Call
@@ -48,8 +51,8 @@ class HistoryFragment : Fragment() {
                             }
                         }
 
-                        parentList.forEach {parent->
-                            logModel.data.data.forEach {log->
+                        parentList.forEach { parent->
+                            logModel.data.data.forEach { log->
                                 if(parent.date == log.updatedAt?.formatISO("yyyy-MMMM-dd")){
                                     parent.history.add(log)
                                 }

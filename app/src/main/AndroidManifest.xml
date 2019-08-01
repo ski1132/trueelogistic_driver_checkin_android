@@ -45,7 +45,7 @@
         <meta-data
                 android:name="com.trueelogistics.API_KEY"
                 android:value="SATBUDWEXFZH2J3K5N6P7R9SATCVDWEYGZH2K4M5N7Q8R9TBUCVEXFYGZJ"/>
-        <activity android:name="com.trueelogistics.staff.ScreenLoginActivity">
+        <activity android:name="com.trueelogistics.staff.activity.ScreenLoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -53,10 +53,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"/>
         <activity
-                android:name=".MainActivity"
+                android:name=".activity.MainActivity"
                 android:screenOrientation="portrait"/>
 
     </application>

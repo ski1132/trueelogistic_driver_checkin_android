@@ -44,4 +44,5 @@
 	<string name="date_absence_end_text">วันลาสุดท้าย</string>
 	<string name="show_date_pick"> %1$s / %2$s / %3$s </string>
 	<string name="to_text">ถึง</string>
+	<string name="show_location">แสดงตำแหน่งคลัง</string>
 </resources>

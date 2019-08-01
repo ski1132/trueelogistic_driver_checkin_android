@@ -17,7 +17,7 @@
 
 		<item android:id="@+id/showMap"
 			  android:icon="@mipmap/ic_map"
-			  android:title="@string/nearby_fine"/>
+			  android:title="@string/show_location"/>
 
 		<item android:id="@+id/history"
 			  android:icon="@mipmap/ic_history"

@@ -1,10 +1,16 @@
-package com.trueelogistics.staff
+package com.trueelogistics.staff.activity
 
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import com.trueelogistics.staff.fragment.NearByFragment
+import com.trueelogistics.staff.R
+import com.trueelogistics.staff.fragment.ScanQrFragment
+import com.trueelogistics.staff.fragment.ShakeFragment
+import com.trueelogistics.staff.fragment.AbsentFragment
+import com.trueelogistics.staff.fragment.HistoryFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {

@@ -1,4 +1,4 @@
-package com.trueelogistics.staff
+package com.trueelogistics.staff.fragment
 
 
 import android.app.DatePickerDialog
@@ -7,12 +7,11 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
 import android.widget.RadioGroup
-import android.widget.Toast
+import com.trueelogistics.staff.activity.MainActivity
+import com.trueelogistics.staff.R
 import kotlinx.android.synthetic.main.fragment_absent.*
 import java.util.*
-import javax.xml.datatype.DatatypeConstants.MONTHS
 
 class AbsentFragment : Fragment() {
 

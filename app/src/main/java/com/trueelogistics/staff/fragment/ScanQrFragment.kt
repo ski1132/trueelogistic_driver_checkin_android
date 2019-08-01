@@ -1,4 +1,4 @@
-package com.trueelogistics.staff
+package com.trueelogistics.staff.fragment
 
 import android.content.Context
 import android.os.Bundle
@@ -17,6 +17,8 @@ import com.trueelogistics.checkin.interfaces.ArrayListGenericCallback
 import com.trueelogistics.checkin.interfaces.CheckInTELCallBack
 import com.trueelogistics.checkin.interfaces.TypeCallback
 import com.trueelogistics.checkin.model.HistoryInDataModel
+import com.trueelogistics.staff.R
+import com.trueelogistics.staff.activity.MainActivity
 import kotlinx.android.synthetic.main.fragment_scan_qr.*
 import java.util.*
 import kotlin.collections.ArrayList

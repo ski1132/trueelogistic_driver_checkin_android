@@ -69,16 +69,18 @@
 
 		<Button
 				android:id="@+id/checkInBtn"
+				android:visibility="invisible"
+				android:textColor="@color/white"
 				android:textSize="20sp"
 				android:text="@string/check_in"
 				android:layout_width="300dp"
 				android:layout_height="wrap_content"
 				android:layout_margin="10dp"
-				android:textColor="@color/white"
 				android:padding="10sp"
 				android:background="@color/purple"/>
 		<Button
 				android:id="@+id/checkBetBtn"
+				android:visibility="invisible"
 				android:textSize="20sp"
 				android:text="@string/check_between"
 				android:layout_width="300dp"
@@ -89,6 +91,7 @@
 				android:background="@color/purple"/>
 		<Button
 				android:id="@+id/checkOutBtn"
+				android:visibility="invisible"
 				android:textSize="20sp"
 				android:text="@string/check_out"
 				android:layout_width="300dp"

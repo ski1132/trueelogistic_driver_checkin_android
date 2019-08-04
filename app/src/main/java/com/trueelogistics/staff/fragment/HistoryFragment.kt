@@ -5,8 +5,11 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.gson.Gson
 import com.trueelogistics.checkin.extensions.formatISO
+import com.trueelogistics.checkin.handler.CheckInTEL
 import com.trueelogistics.checkin.model.HistoryRootModel
+import com.trueelogistics.checkin.model.SearchCitizenModel
 import com.trueelogistics.checkin.service.HistoryService
 import com.trueelogistics.checkin.service.RetrofitGenerater
 import com.trueelogistics.staff.HistoryExpandable
@@ -33,10 +36,12 @@ class HistoryFragment : Fragment() {
             mainActivity.actionToolbar()
         }
         val retrofit = RetrofitGenerater().build().create(HistoryService::class.java)
-        val call = retrofit?.getData()
+        val call = retrofit?.getData( Gson().toJson( SearchCitizenModel(CheckInTEL.userId.toString()) ) )
         call?.enqueue(object : Callback<HistoryRootModel> {
             override fun onFailure(call: Call<HistoryRootModel>, t: Throwable) {
+                var test = ""
             }
+
             override fun onResponse(call: Call<HistoryRootModel>, response: Response<HistoryRootModel>) {
                 if (response.code() == 200) {
                     val logModel: HistoryRootModel? = response.body()
@@ -50,7 +55,6 @@ class HistoryFragment : Fragment() {
                                 lastDate = dateFormat.toString()
                             }
                         }
-
                         parentList.forEach { parent->
                             logModel.data.data.forEach { log->
                                 if(parent.date == log.updatedAt?.formatISO("yyyy-MMMM-dd")){
@@ -58,7 +62,6 @@ class HistoryFragment : Fragment() {
                                 }
                             }
                         }
-
                         activity?.let {
                             val listAdapter = HistoryExpandable(it, parentList)
                             expandListView.setAdapter(listAdapter)

@@ -3,7 +3,6 @@
 	<string name="start_camera_app">Start camera App</string>
 	<string name="hello_camera">Hello Camera</string>
 
-	<!-- TODO: Remove or change this placeholder text -->
 	<string name="hello_blank_fragment">Hello blank fragment</string>
 	<string name="qr_scan">QR Scan</string>
 	<string name="sent_nearby">sent Nearby</string>
@@ -42,7 +41,13 @@
 	<string name="reason_absence">กรุณาระบุเหตุผลในการลา</string>
 	<string name="date_absence_start_text">วันที่เริ่มลา</string>
 	<string name="date_absence_end_text">วันลาสุดท้าย</string>
-	<string name="show_date_pick"> %1$s / %2$s / %3$s </string>
+	<string name="show_date_pick">%1$s / %2$s / %3$s</string>
 	<string name="to_text">ถึง</string>
 	<string name="show_location">แสดงตำแหน่งคลัง</string>
+	<string name="user_profile">ข้อมูลส่วนตัว</string>
+	<string name="edit">แก้ไข</string>
+	<string name="date_form">วัน / เดือน / ปีเกิด</string>
+	<string name="email">อีเมล</string>
+	<string name="number_phone">เบอร์โทรศัพท์</string>
+	<string name="system_check_out">ออกจากระบบ</string>
 </resources>

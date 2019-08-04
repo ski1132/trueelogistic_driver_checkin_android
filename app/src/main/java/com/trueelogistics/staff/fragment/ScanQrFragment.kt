@@ -62,14 +62,16 @@ class ScanQrFragment : Fragment() {
         historyRecycle.adapter = adapter
         activity?.let {
             historyRecycle?.layoutManager = LinearLayoutManager(it)
-            CheckInTEL.checkInTEL?.getHistory( object : ArrayListGenericCallback<HistoryInDataModel> {
+            CheckInTEL.checkInTEL?.getHistory(object : ArrayListGenericCallback<HistoryInDataModel> {
                 override fun onFailure(message: String?) {
+                    var test = ""
                 }
+
                 override fun onResponse(dataModel: ArrayList<HistoryInDataModel>?) {
                     adapter.items.removeAll(dataModel ?: arrayListOf())
                     adapter.items.addAll(dataModel ?: arrayListOf())
                     adapter.notifyDataSetChanged()
-                    historyRecycle.scrollToPosition((dataModel?.size)?.minus(1)?:0)
+                    historyRecycle.scrollToPosition((dataModel?.size)?.minus(1) ?: 0)
                 }
             })
         }
@@ -77,13 +79,15 @@ class ScanQrFragment : Fragment() {
 
     private fun openScanQr(context: Context, type: String) {
         activity?.let {
-            CheckInTEL.checkInTEL?.openScanQRCode(it, "userId", type, object : CheckInTELCallBack {
+            CheckInTEL.checkInTEL?.openScanQRCode(it, type, object : CheckInTELCallBack {
                 override fun onCancel() {
                     Toast.makeText(context, " ScanQr.onCancel === ", Toast.LENGTH_SHORT).show()
                 }
+
                 override fun onCheckInFailure(message: String) {
                     Toast.makeText(context, " ScanQr.onCheckFail = $message ", Toast.LENGTH_SHORT).show()
                 }
+
                 override fun onCheckInSuccess(result: String) {
                     Toast.makeText(context, " ScanQr.onCheckSuccess = $result", Toast.LENGTH_SHORT).show()
                 }
@@ -135,6 +139,12 @@ class ScanQrFragment : Fragment() {
             }
 
             override fun onFailure(message: String?) {
+                Toast.makeText(context, " ScanQr.onCheckFail = $message ", Toast.LENGTH_SHORT).show()
+                checkInBtn.visibility = View.GONE
+                checkBetBtn.visibility = View.GONE
+                checkOutBtn.visibility = View.GONE
+                pic_checkin.visibility = View.VISIBLE
+                layoutRecycle.visibility = View.GONE
             }
         })
     }

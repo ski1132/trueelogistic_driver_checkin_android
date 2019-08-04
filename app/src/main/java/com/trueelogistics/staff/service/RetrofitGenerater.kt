@@ -13,13 +13,9 @@ class RetrofitGenerater {
         val client = OkHttpClient.Builder().addInterceptor(interceptor)
             .addInterceptor { chain ->
                 val newRequest = chain.request().newBuilder()
+                newRequest.addHeader("Content-Type", "application/json")
                 if(isRequestHeader == true) {
-                    newRequest.addHeader("Content-Type", "application/json")
-                        .addHeader("Token", Hawk.get("TOKEN")?:"")
-                        .addHeader("ReToken", Hawk.get("RETOKEN")?:"")
-                }
-                else{
-                    newRequest.addHeader("Authorization", "")
+                    newRequest.addHeader("Authorization", Hawk.get("TOKEN"))
                 }
                 chain.proceed(newRequest.build())
             }

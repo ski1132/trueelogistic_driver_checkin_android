@@ -5,12 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
+import com.trueelogistics.checkin.enums.CheckInTELType
 import com.trueelogistics.checkin.extensions.formatISO
 import com.trueelogistics.staff.model.ExpandableDataModel
 import kotlinx.android.synthetic.main.item_history_child.view.*
 import kotlinx.android.synthetic.main.item_history_parent.view.*
 
-class HistoryExpandable (private val context: Context ,private val list : ArrayList<ExpandableDataModel>) : BaseExpandableListAdapter() {
+class HistoryExpandable(private val context: Context, private val list: ArrayList<ExpandableDataModel>) :
+    BaseExpandableListAdapter() {
 
     override fun getGroup(groupPosition: Int): String {
         return ""
@@ -24,7 +26,7 @@ class HistoryExpandable (private val context: Context ,private val list : ArrayL
         return false
     }
 
-    override fun getGroupView(groupPosition: Int, isExpanded : Boolean, view : View?, parent: ViewGroup?): View? {
+    override fun getGroupView(groupPosition: Int, isExpanded: Boolean, view: View?, parent: ViewGroup?): View? {
         var convertView = view
         if (convertView == null) {
             val infalInflater = this.context
@@ -47,8 +49,10 @@ class HistoryExpandable (private val context: Context ,private val list : ArrayL
         return groupPosition.toLong()
     }
 
-    override fun getChildView(groupPosition : Int, childPosition : Int, isLastChild : Boolean
-                              , view: View?, parent: ViewGroup?): View? {
+    override fun getChildView(
+        groupPosition: Int, childPosition: Int, isLastChild: Boolean
+        , view: View?, parent: ViewGroup?
+    ): View? {
         var convertView = view
 
         if (convertView == null) {
@@ -57,8 +61,21 @@ class HistoryExpandable (private val context: Context ,private val list : ArrayL
             convertView = infalInflater.inflate(R.layout.item_history_child, null)
         }
         val item = list[groupPosition].history[childPosition]
-        convertView?.typeCheckIn?.text = item.eventType
-        convertView?.hubCheckIn?.text = item.qrcodeId?.locationId ?:" Manual "
+        convertView?.typeCheckIn?.text = when (item.eventType) {
+            CheckInTELType.CheckIn.value -> {
+                "ลงชื่อเข้างาน"
+            }
+            CheckInTELType.CheckBetween.value -> {
+                "ลงชื่อระหว่างวัน"
+            }
+            CheckInTELType.CheckOut.value -> {
+                "ลงชื่อออกงาน"
+            }
+            else -> {
+                "?????"
+            }
+        }
+        convertView?.hubCheckIn?.text = item.locationName
         convertView?.timeCheckIn?.text = item.updatedAt?.formatISO("HH:mm")
 
         return convertView

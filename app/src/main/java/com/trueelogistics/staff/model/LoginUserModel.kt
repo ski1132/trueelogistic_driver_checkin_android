@@ -1,6 +1,6 @@
 package com.trueelogistics.staff.model
 
-data class ProfileUserModel(
+data class LoginUserModel(
     var username : String ?= null ,
     var role : String ?= null
 )

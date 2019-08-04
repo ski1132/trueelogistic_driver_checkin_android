@@ -1,17 +1,18 @@
 package com.trueelogistics.staff.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import com.trueelogistics.staff.fragment.NearByFragment
+import com.orhanobut.hawk.Hawk
 import com.trueelogistics.staff.R
-import com.trueelogistics.staff.fragment.ScanQrFragment
-import com.trueelogistics.staff.fragment.ShakeFragment
-import com.trueelogistics.staff.fragment.AbsentFragment
 import com.trueelogistics.staff.fragment.HistoryFragment
+import com.trueelogistics.staff.fragment.ScanQrFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main_menu_drawer.*
+import kotlinx.android.synthetic.main.activity_main_menu_drawer.view.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -21,10 +22,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
         nav_view.setNavigationItemSelectedListener(this)
-
+        nav_view.getHeaderView(0).nameText.text = Hawk.get("NAME")
         supportFragmentManager.beginTransaction()
             .replace(R.id.frag_main, ScanQrFragment())
             .commit()
+
+        system_check_out.setOnClickListener {
+            Hawk.deleteAll()
+            finish()
+            intent = Intent(this,LoginActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onBackPressed() {
@@ -38,37 +46,42 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
+        nameText.text = Hawk.get("NAME")
         when (item.itemId) {
+            R.id.imageUser -> {
+                val intent = Intent(this,ProfileActivity::class.java)
+                startActivity(intent)
+            }
             R.id.scanQr -> {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.frag_main, ScanQrFragment())
                     .commit()
             }
-            R.id.shakeFine -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.frag_main, ShakeFragment())
-                    .commit()
-            }
-            R.id.nearbyFine -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.frag_main, NearByFragment())
-                    .commit()
-            }
-            R.id.showMap -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.frag_main, NearByFragment())
-                    .commit()
-            }
+//            R.id.shakeFine -> {
+//                supportFragmentManager.beginTransaction()
+//                    .replace(R.id.frag_main, ShakeFragment())
+//                    .commit()
+//            }
+//            R.id.nearbyFine -> {
+//                supportFragmentManager.beginTransaction()
+//                    .replace(R.id.frag_main, NearByFragment())
+//                    .commit()
+//            }
+//            R.id.showMap -> {
+//                supportFragmentManager.beginTransaction()
+//                    .replace(R.id.frag_main, NearByFragment())
+//                    .commit()
+//            }
             R.id.history -> {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.frag_main, HistoryFragment())
                     .commit()
             }
-            R.id.absent -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.frag_main, AbsentFragment())
-                    .commit()
-            }
+//            R.id.absent -> {
+//                supportFragmentManager.beginTransaction()
+//                    .replace(R.id.frag_main, AbsentFragment())
+//                    .commit()
+//            }
         }
         drawer_layout.closeDrawer(GravityCompat.START)
         return true

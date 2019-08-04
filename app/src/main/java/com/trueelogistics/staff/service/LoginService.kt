@@ -1,6 +1,6 @@
 package com.trueelogistics.staff.service
 
-import com.trueelogistics.staff.model.ProfileRootModel
+import com.trueelogistics.staff.model.LoginRootModel
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -12,5 +12,5 @@ interface LoginService{
     fun getData(
         @Field("username") username:String,
         @Field("password")password:String
-    ) : Call<ProfileRootModel>
+    ) : Call<LoginRootModel>
 }

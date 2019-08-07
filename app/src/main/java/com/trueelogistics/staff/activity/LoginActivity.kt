@@ -23,7 +23,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        Hawk.deleteAll()
+        checkToken()
         confirmLogin.setOnClickListener {
             getRetrofit(username_input_layout.text.toString(),password_input_layout.text.toString())
         }
@@ -69,7 +69,13 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
-    private fun successLogin(){
+    private fun checkToken(){
+        if (Hawk.get<String>("TOKEN") != null){
+            successLogin()
+        }
+    }
+
+    fun successLogin(){
         val retrofit = RetrofitGenerater().build(true).create(ProfileService::class.java)
         val call = retrofit?.getData()
         call?.enqueue(object : Callback<ProfileRootModel> {
@@ -80,7 +86,9 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this@LoginActivity, "Correct Username and Password", Toast.LENGTH_SHORT).show()
                 val model : ProfileRootModel? = response.body()
                 CheckInTEL.userId = model?.data?.citizenId
-                Hawk.put("NAME",model?.data?.firstname)
+                val firstName = model?.data?.firstname?:""
+                val lastName = model?.data?.lastname?:""
+                Hawk.put("NAME", "$firstName $lastName")
                 finish()
                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                 startActivity(intent)

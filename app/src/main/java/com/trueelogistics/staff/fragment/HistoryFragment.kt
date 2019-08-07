@@ -2,6 +2,7 @@ package com.trueelogistics.staff.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,7 +40,7 @@ class HistoryFragment : Fragment() {
         val call = retrofit?.getData( Gson().toJson( SearchCitizenModel(CheckInTEL.userId.toString()) ) )
         call?.enqueue(object : Callback<HistoryRootModel> {
             override fun onFailure(call: Call<HistoryRootModel>, t: Throwable) {
-                var test = ""
+                Log.e(" onfail ",t.message)
             }
 
             override fun onResponse(call: Call<HistoryRootModel>, response: Response<HistoryRootModel>) {
@@ -66,6 +67,7 @@ class HistoryFragment : Fragment() {
                             val listAdapter = HistoryExpandable(it, parentList)
                             expandListView.setAdapter(listAdapter)
                             expandListView.setIndicatorBounds(expandListView.right - 40, expandListView.width)
+
                         }
                     }
 

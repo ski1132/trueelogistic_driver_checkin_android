@@ -50,4 +50,5 @@
 	<string name="email">อีเมล</string>
 	<string name="number_phone">เบอร์โทรศัพท์</string>
 	<string name="system_check_out">ออกจากระบบ</string>
+	<string name="title_activity_map">Map</string>
 </resources>

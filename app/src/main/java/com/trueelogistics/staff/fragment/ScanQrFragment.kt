@@ -21,7 +21,6 @@ import com.trueelogistics.staff.R
 import com.trueelogistics.staff.activity.MainActivity
 import kotlinx.android.synthetic.main.fragment_scan_qr.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 class ScanQrFragment : Fragment() {
     private var adapter = HistoryStaffAdapter()
@@ -79,7 +78,7 @@ class ScanQrFragment : Fragment() {
 
     private fun openScanQr(context: Context, type: String) {
         activity?.let {
-            CheckInTEL.checkInTEL?.openScanQRCode(it, type, object : CheckInTELCallBack {
+            CheckInTEL.checkInTEL?.openScanQRCode(it, type, false, object : CheckInTELCallBack {
                 override fun onCancel() {
                     Toast.makeText(context, " ScanQr.onCancel === ", Toast.LENGTH_SHORT).show()
                 }

@@ -8,8 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.orhanobut.hawk.Hawk
 import com.trueelogistics.staff.R
-import com.trueelogistics.staff.fragment.HistoryFragment
-import com.trueelogistics.staff.fragment.ScanQrFragment
+import com.trueelogistics.staff.fragment.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main_menu_drawer.*
 import kotlinx.android.synthetic.main.activity_main_menu_drawer.view.*
@@ -57,21 +56,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .replace(R.id.frag_main, ScanQrFragment())
                     .commit()
             }
-//            R.id.shakeFine -> {
-//                supportFragmentManager.beginTransaction()
-//                    .replace(R.id.frag_main, ShakeFragment())
-//                    .commit()
-//            }
-//            R.id.nearbyFine -> {
-//                supportFragmentManager.beginTransaction()
-//                    .replace(R.id.frag_main, NearByFragment())
-//                    .commit()
-//            }
-//            R.id.showMap -> {
-//                supportFragmentManager.beginTransaction()
-//                    .replace(R.id.frag_main, NearByFragment())
-//                    .commit()
-//            }
+            R.id.shakeFine -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.frag_main, ShakeFragment())
+                    .commit()
+            }
+            R.id.nearbyFine -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.frag_main, NearByFragment())
+                    .commit()
+            }
+            R.id.showMap -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.frag_main, MapFragment())
+                    .commit()
+            }
             R.id.history -> {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.frag_main, HistoryFragment())

@@ -54,7 +54,6 @@ class HistoryExpandable(private val context: Context, private val list: ArrayLis
         , view: View?, parent: ViewGroup?
     ): View? {
         var convertView = view
-
         if (convertView == null) {
             val infalInflater = this.context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -77,6 +76,20 @@ class HistoryExpandable(private val context: Context, private val list: ArrayLis
         }
         convertView?.hubCheckIn?.text = item.locationName
         convertView?.timeCheckIn?.text = item.updatedAt?.formatISO("HH:mm")
+        convertView?.type_scan?.text = when (item.checkinType) {
+            "NORMAL" -> {
+                "Camera"
+            }
+            "MANUAL" -> {
+                "Manual"
+            }
+            "AUTO" -> {
+                "Auto Logout"
+            }
+            else -> {
+                ""
+            }
+        }
 
         return convertView
     }

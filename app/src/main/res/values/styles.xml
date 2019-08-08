@@ -7,7 +7,7 @@
         <item name="colorAccent">@color/purple</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowTranslucentNavigation">false</item> <!-- true == set navigation transparent -->
         <item name="android:actionBarStyle">@style/ThemeActionBar</item>
         <item name="android:windowActionBarOverlay">true</item>

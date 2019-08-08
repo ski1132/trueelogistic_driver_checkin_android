@@ -27,7 +27,6 @@ import com.trueelogistics.staff.R
 import com.trueelogistics.staff.activity.MainActivity
 import kotlinx.android.synthetic.main.fragment_map.*
 
-
 class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap?) {
         // Add a marker in Sydney and move the camera 13.684842, 100.611471
@@ -40,26 +39,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 for (i in 0..(dataModel?.size?.minus(1) ?: 0)) {
                     val latitude = dataModel?.get(i)?.locationPoint?.coordinates?.get(0)
                     val longitude = dataModel?.get(i)?.locationPoint?.coordinates?.get(1)
-                    val work = LatLng(13.684842+i, 100.611471+i)
+                    val work = LatLng(13.684842 + i, 100.611471 + i)
                     googleMap?.addMarker(MarkerOptions().position(work).title(dataModel?.get(i)?.locationName))
                 }
             }
 
         })
-        val locationNow = getLocationNow()
-        val langLong = LatLng(locationNow?.latitude?:0.0,locationNow?.longitude?:0.0)
-        googleMap?.addMarker(MarkerOptions().position(langLong).title("Your Position"))
-        googleMap?.moveCamera(CameraUpdateFactory.newLatLng(langLong))
-        googleMap?.animateCamera(
-            CameraUpdateFactory.newCameraPosition(
-                CameraPosition.builder()
-                    .target(langLong)
-                    .zoom(13F) //zoom level 0 - 20
-                    .bearing(0F)
-                    .tilt(45F)
-                    .build()
-            )
-        )
+        makerLocationNow(googleMap)
 
     }
 
@@ -81,8 +67,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
     }
 
-    fun getLocationNow(): Location? {
-        var hubLocation: Location? = null
+    fun makerLocationNow(googleMap: GoogleMap?){
         var fusedLocationClient: FusedLocationProviderClient
         activity?.let { activity ->
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
@@ -94,20 +79,29 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 fusedLocationClient.lastLocation
                     ?.addOnSuccessListener { location: Location? ->
                         if (location?.isFromMockProvider == false) {
-                            hubLocation = location
-
+                            val langLong = LatLng(location.latitude, location.longitude)
+                            googleMap?.addMarker(MarkerOptions().position(langLong).title("Your Position"))
+                            googleMap?.moveCamera(CameraUpdateFactory.newLatLng(langLong))
+                            googleMap?.animateCamera(
+                                CameraUpdateFactory.newCameraPosition(
+                                    CameraPosition.builder()
+                                        .target(langLong)
+                                        .zoom(13F) //zoom level 0 - 20
+                                        .bearing(0F)
+                                        .tilt(45F)
+                                        .build()
+                                )
+                            )
                         } else {
                             MockDialogFragment().show(activity.supportFragmentManager, "show")
-                            childFragmentManager.beginTransaction()
+                            activity.supportFragmentManager.beginTransaction()
                                 .replace(R.id.frag_main, ScanQrFragment())
                                 .commit()
                         }
                     }
-            }
-            else{
-                Toast.makeText(activity,"Permission denied !!!",Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(activity, "Permission denied !!!", Toast.LENGTH_LONG).show()
             }
         }
-        return hubLocation
     }
 }

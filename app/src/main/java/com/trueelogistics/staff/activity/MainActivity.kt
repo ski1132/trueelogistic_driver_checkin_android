@@ -41,13 +41,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {
-            AlertDialog.Builder(this)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle("Closing Application")
-                .setMessage("Are you sure you want to close ?")
-                .setPositiveButton("Yes") { _, _ -> finish() }
-                .setNegativeButton("No", null)
-                .show()
+            if (supportFragmentManager.backStackEntryCount == 0){
+                AlertDialog.Builder(this)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setTitle("Closing Application")
+                    .setMessage("Are you sure you want to close ?")
+                    .setPositiveButton("Yes") { _, _ -> finish() }
+                    .setNegativeButton("No", null)
+                    .show()
+            }
+            else
+                super.onBackPressed()
         }
     }
 

@@ -3,6 +3,7 @@ package com.trueelogistics.staff.activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.widget.Toast
 import com.orhanobut.hawk.Hawk
 import com.trueelogistics.checkin.handler.CheckInTEL
@@ -93,9 +94,17 @@ class LoginActivity : AppCompatActivity() {
                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                 startActivity(intent)
             }
-
         })
+    }
 
+    override fun onBackPressed() {
+        AlertDialog.Builder(this)
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setTitle("Closing Application")
+            .setMessage("Are you sure you want to close ?")
+            .setPositiveButton("Yes") { _, _ -> finish() }
+            .setNegativeButton("No", null)
+            .show()
     }
 }
 

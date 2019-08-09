@@ -39,11 +39,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 for (i in 0..(dataModel?.size?.minus(1) ?: 0)) {
                     val latitude = dataModel?.get(i)?.locationPoint?.coordinates?.get(0)
                     val longitude = dataModel?.get(i)?.locationPoint?.coordinates?.get(1)
-                    val work = LatLng(13.684842 + i, 100.611471 + i)
+                    val work = LatLng(latitude?:0.0 , longitude?:0.0)
                     googleMap?.addMarker(MarkerOptions().position(work).title(dataModel?.get(i)?.locationName))
                 }
             }
-
         })
         makerLocationNow(googleMap)
 

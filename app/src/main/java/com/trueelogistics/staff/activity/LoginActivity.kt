@@ -84,7 +84,6 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this@LoginActivity, "Fail to get Profile data , ${t.message}", Toast.LENGTH_SHORT).show()
             }
             override fun onResponse(call: Call<ProfileRootModel>, response: Response<ProfileRootModel>) {
-                Toast.makeText(this@LoginActivity, "Correct Username and Password", Toast.LENGTH_SHORT).show()
                 val model : ProfileRootModel? = response.body()
                 CheckInTEL.userId = model?.data?.citizenId
                 val firstName = model?.data?.firstname?:""

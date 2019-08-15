@@ -37,7 +37,8 @@ class HistoryFragment : Fragment() {
             mainActivity.actionToolbar()
         }
         val retrofit = RetrofitGenerater().build().create(HistoryService::class.java)
-        val call = retrofit?.getData( Gson().toJson( SearchCitizenModel(CheckInTEL.userId.toString()) ) )
+        val call = retrofit?.getData("{\"\$or\":["+ Gson().toJson( SearchCitizenModel(CheckInTEL.userId.toString()) ) +"]}" )
+        Log.d("endpoint == ","{\"\$or\":["+ Gson().toJson( SearchCitizenModel(CheckInTEL.userId.toString()) ) +"]}")
         call?.enqueue(object : Callback<HistoryRootModel> {
             override fun onFailure(call: Call<HistoryRootModel>, t: Throwable) {
                 Log.e(" onfail ",t.message)
@@ -67,10 +68,8 @@ class HistoryFragment : Fragment() {
                             val listAdapter = HistoryExpandable(it, parentList)
                             expandListView.setAdapter(listAdapter)
                             expandListView.setIndicatorBounds(expandListView.right - 40, expandListView.width)
-
                         }
                     }
-
                 } else {
                     response.errorBody()
                 }

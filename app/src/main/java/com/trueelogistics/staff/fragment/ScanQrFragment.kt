@@ -46,13 +46,13 @@ class ScanQrFragment : Fragment() {
         date.text = String.format(this.getString(R.string.date_checkin), day, nDay, mouth)
         activity?.let { activity ->
             checkInBtn.setOnClickListener {
-                openScanQr(activity, CheckInTELType.CheckIn.value)
+                openScanQr(activity, CheckInTELType.CheckIn.value,false)
             }
             checkBetBtn.setOnClickListener {
-                openScanQr(activity, CheckInTELType.CheckBetween.value)
+                openScanQr(activity, CheckInTELType.CheckBetween.value,false)
             }
             checkOutBtn.setOnClickListener {
-                openScanQr(activity, CheckInTELType.CheckOut.value)
+                openScanQr(activity, CheckInTELType.CheckOut.value,false)
             }
         }
     }
@@ -63,7 +63,7 @@ class ScanQrFragment : Fragment() {
             historyRecycle?.layoutManager = LinearLayoutManager(it)
             CheckInTEL.checkInTEL?.getHistory(object : ArrayListGenericCallback<HistoryInDataModel> {
                 override fun onFailure(message: String?) {
-                    var test = ""
+
                 }
 
                 override fun onResponse(dataModel: ArrayList<HistoryInDataModel>?) {
@@ -76,9 +76,9 @@ class ScanQrFragment : Fragment() {
         }
     }
 
-    private fun openScanQr(context: Context, type: String) {
+    private fun openScanQr(context: Context, type: String ,disableBack : Boolean) {
         activity?.let {
-            CheckInTEL.checkInTEL?.openScanQRCode(it, type, false, object : CheckInTELCallBack {
+            CheckInTEL.checkInTEL?.openScanQRCode(it, type, disableBack, object : CheckInTELCallBack {
                 override fun onCancel() {
                     Toast.makeText(context, " ScanQr.onCancel === ", Toast.LENGTH_SHORT).show()
                 }
@@ -114,7 +114,7 @@ class ScanQrFragment : Fragment() {
                 } else if (type == CheckInTELType.CheckOut.value) {
                     if (checkFirstInDay) {
                         activity?.let {
-                            openScanQr(it, CheckInTELType.CheckIn.value)
+                            openScanQr(it, CheckInTELType.CheckIn.value,true)
                         }
                         checkFirstInDay = false
                     }

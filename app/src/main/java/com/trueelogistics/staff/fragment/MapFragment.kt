@@ -91,6 +91,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                                         .build()
                                 )
                             )
+                            googleMap?.uiSettings?.isCompassEnabled = false
                         } else {
                             MockDialogFragment().show(activity.supportFragmentManager, "show")
                             activity.supportFragmentManager.beginTransaction()

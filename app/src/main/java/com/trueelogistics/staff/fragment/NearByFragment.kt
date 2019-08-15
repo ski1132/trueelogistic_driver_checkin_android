@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.trueelogistics.checkin.activity.NearByActivity
+import com.trueelogistics.checkin.handler.CheckInTEL
+import com.trueelogistics.checkin.interfaces.CheckInTELCallBack
 import com.trueelogistics.staff.R
 import com.trueelogistics.staff.activity.MainActivity
 import kotlinx.android.synthetic.main.fragment_near_by.*
@@ -28,8 +30,21 @@ class NearByFragment : Fragment()  {
             mainActivity.actionToolbar()
         }
         nearby_phone_fine.setOnClickListener {
-            val intent = Intent(activity, NearByActivity::class.java)
-            this.startActivity(intent)
+            activity?.let {
+                CheckInTEL.checkInTEL?.openNearBy(it, object : CheckInTELCallBack {
+                    override fun onCancel() {
+
+                    }
+
+                    override fun onCheckInFailure(message: String) {
+
+                    }
+
+                    override fun onCheckInSuccess(result: String) {
+
+                    }
+                })
+            }
         }
 
     }

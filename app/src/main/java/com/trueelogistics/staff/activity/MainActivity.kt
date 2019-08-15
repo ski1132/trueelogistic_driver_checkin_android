@@ -1,6 +1,5 @@
 package com.trueelogistics.staff.activity
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView

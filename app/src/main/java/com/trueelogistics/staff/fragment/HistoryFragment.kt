@@ -41,7 +41,7 @@ class HistoryFragment : Fragment() {
         Log.d("endpoint == ","{\"\$or\":["+ Gson().toJson( SearchCitizenModel(CheckInTEL.userId.toString()) ) +"]}")
         call?.enqueue(object : Callback<HistoryRootModel> {
             override fun onFailure(call: Call<HistoryRootModel>, t: Throwable) {
-                Log.e(" onfail ",t.message)
+                Log.e(" onfail ",t.message.toString())
             }
 
             override fun onResponse(call: Call<HistoryRootModel>, response: Response<HistoryRootModel>) {
@@ -50,15 +50,17 @@ class HistoryFragment : Fragment() {
                     val parentList = arrayListOf<ExpandableDataModel>()
                     if (logModel != null) {
                         var lastDate = ""
-                        logModel.data.data.forEach {
-                            val dateFormat = it.updatedAt?.formatISO("yyyy-MMMM-dd")
+                        for (i in logModel.data.data.size-1 downTo 0){
+                            val model = logModel.data.data[i]
+                            val dateFormat = model.updatedAt?.formatISO("yyyy-MMMM-dd")
                             if( lastDate != dateFormat){
                                 parentList.add(ExpandableDataModel(date = dateFormat.toString()) )
                                 lastDate = dateFormat.toString()
                             }
                         }
                         parentList.forEach { parent->
-                            logModel.data.data.forEach { log->
+                            for (i in logModel.data.data.size-1 downTo 0){
+                                val log = logModel.data.data[i]
                                 if(parent.date == log.updatedAt?.formatISO("yyyy-MMMM-dd")){
                                     parent.history.add(log)
                                 }

@@ -27,7 +27,7 @@
 		<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="@string/check_in"
+				android:text="@string/full_check_in"
 				android:textSize="30sp"
 				android:textColor="@color/black"
 		/>
@@ -49,7 +49,7 @@
 		<Button
 				android:id="@+id/checkInBtn"
 				android:textSize="20sp"
-				android:text="@string/check_in"
+				android:text="@string/full_check_in"
 				android:layout_width="300dp"
 				android:layout_height="wrap_content"
 				android:layout_margin="10dp"
@@ -60,7 +60,7 @@
 		<Button
 				android:id="@+id/checkBetBtn"
 				android:textSize="20sp"
-				android:text="@string/check_out"
+				android:text="@string/full_check_out"
 				android:layout_width="300dp"
 				android:layout_height="wrap_content"
 				android:layout_margin="10dp"
@@ -72,7 +72,7 @@
 		<Button
 				android:id="@+id/checkOutBtn"
 				android:textSize="20sp"
-				android:text="@string/check_between"
+				android:text="@string/full_check_between"
 				android:layout_width="300dp"
 				android:layout_height="wrap_content"
 				android:layout_margin="10dp"

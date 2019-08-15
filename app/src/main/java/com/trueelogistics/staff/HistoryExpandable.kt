@@ -59,35 +59,36 @@ class HistoryExpandable(private val context: Context, private val list: ArrayLis
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             convertView = infalInflater.inflate(R.layout.item_history_child, null)
         }
-        val item = list[groupPosition].history[childPosition]
+        val historySizeOfPositionList = list[groupPosition].history.size
+        val item = list[groupPosition].history[ historySizeOfPositionList - childPosition -1 ]
         convertView?.typeCheckIn?.text = when (item.eventType) {
             CheckInTELType.CheckIn.value -> {
-                "ลงชื่อเข้างาน"
+                convertView?.context?.getString(R.string.full_check_in)
             }
             CheckInTELType.CheckBetween.value -> {
-                "ลงชื่อระหว่างวัน"
+                convertView?.context?.getString(R.string.full_check_between)
             }
             CheckInTELType.CheckOut.value -> {
-                "ลงชื่อออกงาน"
+                convertView?.context?.getString(R.string.full_check_out)
             }
             else -> {
-                "?????"
+                item.eventType
             }
         }
         convertView?.hubCheckIn?.text = item.locationName
         convertView?.timeCheckIn?.text = item.updatedAt?.formatISO("HH:mm")
         convertView?.type_scan?.text = when (item.checkinType) {
             "NORMAL" -> {
-                "Camera"
+                convertView?.context?.getString(R.string.camera_text)
             }
             "MANUAL" -> {
-                "Manual"
+                convertView?.context?.getString(R.string.manual_text)
             }
             "AUTO" -> {
-                "Auto Logout"
+                convertView?.context?.getString(R.string.auto_text)
             }
             else -> {
-                ""
+                item.checkinType
             }
         }
 

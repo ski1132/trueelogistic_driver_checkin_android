@@ -40,7 +40,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun getRetrofit(username : String , password : String){
-        val loadingDialog = ProgressDialog.show(this, "Checking Qr code", "please wait...", true, false)
         val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         var latitude: Double
         var longitude: Double
@@ -54,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
                         if (location?.isFromMockProvider == false) {
                             latitude = location.latitude
                             longitude = location.longitude
-                            val retrofit = RetrofitGenerater().build(true).create(LoginService::class.java)
+                            val retrofit = RetrofitGenerater().build(false).create(LoginService::class.java)
                             val call = retrofit.getData(username, password,latitude.toString(),longitude.toString())
                             call.enqueue(object : Callback<LoginRootModel> {
                                 override fun onFailure(call: Call<LoginRootModel>, t: Throwable) {
@@ -87,7 +86,6 @@ class LoginActivity : AppCompatActivity() {
                             })
 
                         } else {
-                            loadingDialog?.dismiss()
                             MockDialogFragment().show(supportFragmentManager, "show")
                             val intent = Intent(this, CheckInTEL::class.java)
                             intent.putExtras(
@@ -126,13 +124,13 @@ class LoginActivity : AppCompatActivity() {
                     200 -> {
                         val model : ProfileRootModel? = response.body()
                         CheckInTEL.userId = model?.data?.citizenId
-                        val firstName = model?.data?.firstName?:""
-                        val lastName = model?.data?.lastName?:""
+                        val firstName = model?.data?.firstname?:""
+                        val lastName = model?.data?.lastname?:""
                         Hawk.put("NAME", "$firstName $lastName")
                         Hawk.put("USERNAME", model?.data?.username)
                         finish()
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                        intent.putExtra("IMG_SRC",model?.data?.imgProfile)
+                        intent.putExtra("IMG_SRC",model?.data?.imgProfile )
                         startActivity(intent)
                     }
                     401 -> {
@@ -141,9 +139,7 @@ class LoginActivity : AppCompatActivity() {
                         wrong_login.text = wrongRole
                     }
                     else -> {
-                        Toast.makeText(this@LoginActivity, "Response = " +
-                                "${response.code()} , ${response.message()}"
-                            , Toast.LENGTH_SHORT).show()
+                        wrong_login.text = response.message()
                     }
                 }
 

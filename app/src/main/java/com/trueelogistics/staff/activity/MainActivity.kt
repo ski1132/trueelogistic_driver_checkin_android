@@ -4,28 +4,28 @@ import android.Manifest
 import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import com.orhanobut.hawk.Hawk
-import com.trueelogistics.staff.R
-import com.trueelogistics.staff.fragment.*
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main_menu_drawer.*
-import kotlinx.android.synthetic.main.activity_main_menu_drawer.view.*
-import android.graphics.BitmapFactory
-import android.location.Location
-import android.support.v4.content.ContextCompat
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.orhanobut.hawk.Hawk
 import com.trueelogistics.checkin.fragment.MockDialogFragment
+import com.trueelogistics.staff.R
+import com.trueelogistics.staff.fragment.*
 import com.trueelogistics.staff.model.LoginRootModel
 import com.trueelogistics.staff.service.LogoutService
 import com.trueelogistics.staff.service.RetrofitGenerater
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main_menu_drawer.*
+import kotlinx.android.synthetic.main.activity_main_menu_drawer.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,9 +40,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view.setNavigationItemSelectedListener(this)
         nav_view.getHeaderView(0).nameText.text = Hawk.get("NAME")
-        val bmImg = BitmapFactory.decodeFile(intent.getStringExtra("IMG_SRC"))
-        val testShow = intent.getStringExtra("IMG_SRC")
-//        nav_view.getHeaderView(0).imageUser.setImageBitmap(bmImg)
+        intent.getStringExtra("IMG_SRC")?.let {
+            Glide.with(this)
+                .load(it)
+                .into(nav_view.getHeaderView(0).imageUser)
+        }
+
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.frag_main, ScanQrFragment())

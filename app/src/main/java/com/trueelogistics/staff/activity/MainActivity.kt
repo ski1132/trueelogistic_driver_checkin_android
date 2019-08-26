@@ -1,6 +1,9 @@
 package com.trueelogistics.staff.activity
 
+import android.Manifest
+import android.app.ProgressDialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
@@ -13,6 +16,20 @@ import com.trueelogistics.staff.fragment.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main_menu_drawer.*
 import kotlinx.android.synthetic.main.activity_main_menu_drawer.view.*
+import android.graphics.BitmapFactory
+import android.location.Location
+import android.support.v4.content.ContextCompat
+import android.widget.Toast
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.trueelogistics.checkin.fragment.MockDialogFragment
+import com.trueelogistics.staff.model.LoginRootModel
+import com.trueelogistics.staff.service.LogoutService
+import com.trueelogistics.staff.service.RetrofitGenerater
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -23,15 +40,65 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view.setNavigationItemSelectedListener(this)
         nav_view.getHeaderView(0).nameText.text = Hawk.get("NAME")
+        val bmImg = BitmapFactory.decodeFile(intent.getStringExtra("IMG_SRC"))
+        val testShow = intent.getStringExtra("IMG_SRC")
+//        nav_view.getHeaderView(0).imageUser.setImageBitmap(bmImg)
+
         supportFragmentManager.beginTransaction()
             .replace(R.id.frag_main, ScanQrFragment())
             .commit()
 
         system_check_out.setOnClickListener {
-            Hawk.deleteAll()
-            finish()
-            intent = Intent(this,LoginActivity::class.java)
-            startActivity(intent)
+            logoutWithLatLong()
+        }
+    }
+
+    private fun logoutWithLatLong(){
+        val loadingDialog = ProgressDialog.show(this, "Logout Processing ", " Please wait...", true, false)
+        val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        var latitude: Double
+        var longitude: Double
+        if (ContextCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+            == PackageManager.PERMISSION_GRANTED
+        ) {
+            fusedLocationClient.lastLocation
+                ?.addOnSuccessListener { location: Location? ->
+                    if (location?.isFromMockProvider == false) {
+                        latitude = location.latitude
+                        longitude = location.longitude
+                        val retrofit = RetrofitGenerater().build(false).create(LogoutService::class.java)
+                        val call = retrofit.getData(Hawk.get("USERNAME"),latitude.toString() ,longitude.toString() )
+                        call.enqueue(object : Callback<LoginRootModel> {
+                            override fun onFailure(call: Call<LoginRootModel>, t: Throwable) {
+                                Toast.makeText(this@MainActivity, t.message?:" onFailure", Toast.LENGTH_SHORT).show()
+                            }
+
+                            override fun onResponse(call: Call<LoginRootModel>, response: Response<LoginRootModel>) {
+                                when {
+                                    response.code() == 200 -> {
+                                        Hawk.deleteAll()
+                                        finish()
+                                        intent = Intent(this@MainActivity, LoginActivity::class.java)
+                                        startActivity(intent)
+                                    }
+                                    else -> {
+                                        Toast.makeText(this@MainActivity, response.message(), Toast.LENGTH_SHORT).show()
+                                        response.errorBody()
+                                    }
+                                }
+                            }
+                        })
+
+                    } else {
+                        loadingDialog?.dismiss()
+                        MockDialogFragment().show(supportFragmentManager, "show")
+                    }
+                }
+        }
+        else{
+            Toast.makeText(this," Permission Location Denied", Toast.LENGTH_SHORT).show()
         }
     }
 

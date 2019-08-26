@@ -15,7 +15,8 @@ class RetrofitGenerater {
                 val newRequest = chain.request().newBuilder()
                 newRequest.addHeader("Content-Type", "application/json")
                 if(isRequestHeader == true) {
-                    newRequest.addHeader("Authorization", Hawk.get("TOKEN"))
+                    val token : String = Hawk.get("TOKEN")
+                    newRequest.addHeader("Authorization", token)
                 }
                 chain.proceed(newRequest.build())
             }

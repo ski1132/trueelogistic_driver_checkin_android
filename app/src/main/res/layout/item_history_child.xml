@@ -39,6 +39,7 @@
 					android:drawableStart="@drawable/ic_clock"
 					android:drawablePadding="10dp"
 					android:text="@string/example_time_text"
+					android:textColor="@color/black"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"/>
 			<TextView

@@ -54,4 +54,7 @@
 	<string name="camera_text"> Camera </string>
 	<string name="manual_text"> Manual </string>
 	<string name="auto_text"> Auto Checkout </string>
+	<string name="you_not_driver">คุณไม่ใช่ Driver</string>
+	<string name="wrong_username">ชื่อผู้ใช้ หรือรหัสผ่านไม่ถูกต้อง</string>
+	<string name="token_expire"> รหัสของคุณหมดอายุ \n กรุณาเข้าสู่ระบบอีกครั้ง </string>
 </resources>

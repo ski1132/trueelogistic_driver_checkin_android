@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     if (location?.isFromMockProvider == false) {
                         latitude = location.latitude
                         longitude = location.longitude
-                        val retrofit = RetrofitGenerater().build(false).create(LogoutService::class.java)
+                        val retrofit = RetrofitGenerater().build(true).create(LogoutService::class.java)
                         val call = retrofit.getData(Hawk.get("USERNAME"),latitude.toString() ,longitude.toString() )
                         call.enqueue(object : Callback<LoginRootModel> {
                             override fun onFailure(call: Call<LoginRootModel>, t: Throwable) {

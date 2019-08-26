@@ -33,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        checkToken()
+        checkTokenInHawk()
         confirmLogin.setOnClickListener {
             getRetrofit(username_input_layout.text.toString(),password_input_layout.text.toString())
         }
@@ -54,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
                         if (location?.isFromMockProvider == false) {
                             latitude = location.latitude
                             longitude = location.longitude
-                            val retrofit = RetrofitGenerater().build(false).create(LoginService::class.java)
+                            val retrofit = RetrofitGenerater().build(true).create(LoginService::class.java)
                             val call = retrofit.getData(username, password,latitude.toString(),longitude.toString())
                             call.enqueue(object : Callback<LoginRootModel> {
                                 override fun onFailure(call: Call<LoginRootModel>, t: Throwable) {
@@ -68,25 +68,19 @@ class LoginActivity : AppCompatActivity() {
                                                 if (it.role == "DRIVER"){
                                                     Hawk.put("TOKEN",it.token)
                                                     Hawk.put("RETOKEN",it.reToken)
-                                                    successLogin()
+                                                    tokenCheck()
                                                 } else{
-                                                    val wrongRole = "คุณไม่ใช่ Driver"
+                                                    val wrongRole = getString(R.string.you_not_driver)
                                                     wrong_login.text = wrongRole
                                                 }
                                             }
                                         }
                                         response.code() == 404 -> {
-                                            val wrongRole = "ชื่อผู้ใช้ หรือรหัสผ่านไม่ถูกต้อง"
-                                            wrong_login.text = wrongRole
-                                        }
-                                        response.code() == 500 ->{
-                                            val wrongRole = "กรุณากรอกชื่อผู้ใช้ และรหัสผ่านให้ครบ"
+                                            val wrongRole = getString(R.string.wrong_username)
                                             wrong_login.text = wrongRole
                                         }
                                         else -> {
-                                            wrong_login.text = response.errorBody().toString()
-                                            Toast.makeText(this@LoginActivity, response.errorBody().toString(), Toast.LENGTH_SHORT).show()
-                                            response.errorBody()
+                                            wrong_login.text = response.message()
                                         }
                                     }
                                 }
@@ -114,13 +108,13 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
-    private fun checkToken(){
+    private fun checkTokenInHawk(){
         if (Hawk.get<String>("TOKEN") != null){
-            successLogin()
+            tokenCheck()
         }
     }
 
-    fun successLogin(){
+    fun tokenCheck(){
         val retrofit = RetrofitGenerater().build(true).create(ProfileService::class.java)
         val call = retrofit.getData()
         call.enqueue(object : Callback<ProfileRootModel> {
@@ -141,8 +135,15 @@ class LoginActivity : AppCompatActivity() {
                         intent.putExtra("IMG_SRC",model?.data?.imgProfile)
                         startActivity(intent)
                     }
+                    401 -> {
+                        Hawk.deleteAll()
+                        val wrongRole = getString(R.string.token_expire)
+                        wrong_login.text = wrongRole
+                    }
                     else -> {
-                        Log.d(" Responce.Code == ",response.code().toString())
+                        Toast.makeText(this@LoginActivity, "Response = " +
+                                "${response.code()} , ${response.message()}"
+                            , Toast.LENGTH_SHORT).show()
                     }
                 }
 

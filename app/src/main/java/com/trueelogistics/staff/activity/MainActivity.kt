@@ -56,9 +56,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    private fun logoutWithLatLong(){
-        val loadingDialog = ProgressDialog.show(this, "Logout Processing ", " Please wait...", true, false)
-        val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+    private fun logoutWithLatLong() {
+        val loadingDialog =
+            ProgressDialog.show(this, "Logout Processing ", " Please wait...", true, false)
+        val fusedLocationClient: FusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(this)
         var latitude: Double
         var longitude: Double
         if (ContextCompat.checkSelfPermission(
@@ -71,23 +73,40 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     if (location?.isFromMockProvider == false) {
                         latitude = location.latitude
                         longitude = location.longitude
-                        val retrofit = RetrofitGenerater().build(true).create(LogoutService::class.java)
-                        val call = retrofit.getData(Hawk.get("USERNAME"),latitude.toString() ,longitude.toString() )
+                        val retrofit =
+                            RetrofitGenerater().build(true).create(LogoutService::class.java)
+                        val call = retrofit.getData(
+                            Hawk.get("USERNAME"),
+                            latitude.toString(),
+                            longitude.toString()
+                        )
                         call.enqueue(object : Callback<LoginRootModel> {
                             override fun onFailure(call: Call<LoginRootModel>, t: Throwable) {
-                                Toast.makeText(this@MainActivity, t.message?:" onFailure", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    t.message ?: " onFailure",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
 
-                            override fun onResponse(call: Call<LoginRootModel>, response: Response<LoginRootModel>) {
+                            override fun onResponse(
+                                call: Call<LoginRootModel>,
+                                response: Response<LoginRootModel>
+                            ) {
                                 when {
                                     response.code() == 200 -> {
                                         Hawk.deleteAll()
                                         finish()
-                                        intent = Intent(this@MainActivity, LoginActivity::class.java)
+                                        intent =
+                                            Intent(this@MainActivity, LoginActivity::class.java)
                                         startActivity(intent)
                                     }
                                     else -> {
-                                        Toast.makeText(this@MainActivity, response.message(), Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(
+                                            this@MainActivity,
+                                            response.message(),
+                                            Toast.LENGTH_SHORT
+                                        ).show()
                                         response.errorBody()
                                     }
                                 }
@@ -99,9 +118,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         MockDialogFragment().show(supportFragmentManager, "show")
                     }
                 }
-        }
-        else{
-            Toast.makeText(this," Permission Location Denied", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, " Permission Location Denied", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -110,7 +128,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {
-            if (supportFragmentManager.backStackEntryCount == 0){
+            if (supportFragmentManager.backStackEntryCount == 0) {
                 AlertDialog.Builder(this)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setTitle("Closing Application")
@@ -118,8 +136,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .setPositiveButton("Yes") { _, _ -> finish() }
                     .setNegativeButton("No", null)
                     .show()
-            }
-            else
+            } else
                 super.onBackPressed()
         }
     }
@@ -129,7 +146,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nameText.text = Hawk.get("NAME")
         when (item.itemId) {
             R.id.imageUser -> {
-                val intent = Intent(this,ProfileActivity::class.java)
+                val intent = Intent(this, ProfileActivity::class.java)
                 startActivity(intent)
             }
             R.id.scanQr -> {

@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -25,6 +24,7 @@ import com.trueelogistics.checkin.interfaces.ArrayListGenericCallback
 import com.trueelogistics.checkin.model.HubInDataModel
 import com.trueelogistics.staff.R
 import com.trueelogistics.staff.activity.MainActivity
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_map.*
 
 class MapFragment : Fragment(), OnMapReadyCallback {
@@ -37,10 +37,16 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
             override fun onResponse(dataModel: ArrayList<HubInDataModel>?) {
                 for (i in 0..(dataModel?.size?.minus(1) ?: 0)) {
-                    val latitude = dataModel?.get(i)?.locationPoint?.coordinates?.get(0)
-                    val longitude = dataModel?.get(i)?.locationPoint?.coordinates?.get(1)
-                    val work = LatLng(latitude?:0.0 , longitude?:0.0)
-                    googleMap?.addMarker(MarkerOptions().position(work).title(dataModel?.get(i)?.locationName))
+                    val latitude = dataModel?.get(i)?.latitude
+                    val longitude = dataModel?.get(i)?.longitude
+                    if (latitude == null && longitude == null) {
+                        MockDialogFragment().show(activity?.supportFragmentManager, "show")
+                        MainActivity().onNavigationItemSelected(nav_view.menu.getItem(R.id.scanQr))
+                    } else {
+                        val work = LatLng(latitude ?: 0.0, longitude ?: 0.0)
+                        googleMap?.addMarker(MarkerOptions().position(work).title(dataModel[i].locationName))
+                    }
+
                 }
             }
         })
@@ -66,10 +72,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
     }
 
-    fun makerLocationNow(googleMap: GoogleMap?){
-        var fusedLocationClient: FusedLocationProviderClient
+    private fun makerLocationNow(googleMap: GoogleMap?) {
         activity?.let { activity ->
-            fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
+            val fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
             if (ContextCompat.checkSelfPermission(
                     activity, Manifest.permission.ACCESS_COARSE_LOCATION
                 )

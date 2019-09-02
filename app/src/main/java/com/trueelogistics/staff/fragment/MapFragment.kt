@@ -29,10 +29,10 @@ import kotlinx.android.synthetic.main.fragment_map.*
 
 class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap?) {
-        // Add a marker in Sydney and move the camera 13.684842, 100.611471
+
         CheckInTEL.checkInTEL?.hubGenerater(object : ArrayListGenericCallback<HubInDataModel> {
             override fun onFailure(message: String?) {
-
+                Toast.makeText(activity, "Generate Hub.onFail : $message ", Toast.LENGTH_LONG).show()
             }
 
             override fun onResponse(dataModel: ArrayList<HubInDataModel>?) {
@@ -50,7 +50,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 }
             }
         })
-        makerLocationNow(googleMap)
+        makerCurrentLocation(googleMap)
 
     }
 
@@ -72,7 +72,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
     }
 
-    private fun makerLocationNow(googleMap: GoogleMap?) {
+    private fun makerCurrentLocation(googleMap: GoogleMap?) {
         activity?.let { activity ->
             val fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
             if (ContextCompat.checkSelfPermission(
@@ -83,14 +83,16 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 fusedLocationClient.lastLocation
                     ?.addOnSuccessListener { location: Location? ->
                         if (location?.isFromMockProvider == false) {
+                            googleMap?.uiSettings?.isZoomControlsEnabled = true
+                            googleMap?.isMyLocationEnabled = true
                             val langLong = LatLng(location.latitude, location.longitude)
-                            googleMap?.addMarker(MarkerOptions().position(langLong).title("Your Position"))
+                            googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(langLong, 12f))
                             googleMap?.moveCamera(CameraUpdateFactory.newLatLng(langLong))
                             googleMap?.animateCamera(
                                 CameraUpdateFactory.newCameraPosition(
                                     CameraPosition.builder()
                                         .target(langLong)
-                                        .zoom(13F) //zoom level 0 - 20
+                                        .zoom(15F) //zoom level 0 - 20
                                         .bearing(0F)
                                         .tilt(45F)
                                         .build()

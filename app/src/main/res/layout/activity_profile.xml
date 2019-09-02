@@ -6,8 +6,8 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		tools:context=".activity.ProfileActivity">
-	<LinearLayout
-			android:id="@+id/fragment_main"
+	<FrameLayout
+			android:id="@+id/fragment_profile"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:orientation="vertical"/>

@@ -45,12 +45,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 .load(it)
                 .into(nav_view.getHeaderView(0).imageUser)
         }
-
-
         supportFragmentManager.beginTransaction()
             .replace(R.id.frag_main, ScanQrFragment())
             .commit()
 
+        nav_view.getHeaderView(0).imageUser.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        }
         system_check_out.setOnClickListener {
             logoutWithLatLong()
         }
@@ -145,10 +147,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         nameText.text = Hawk.get("NAME")
         when (item.itemId) {
-            R.id.imageUser -> {
-                val intent = Intent(this, ProfileActivity::class.java)
-                startActivity(intent)
-            }
             R.id.scanQr -> {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.frag_main, ScanQrFragment())

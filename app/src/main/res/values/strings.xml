@@ -15,7 +15,6 @@
 	<string name="full_check_in">ลงชื่อเข้างาน</string>
 	<string name="full_check_between">ลงชื่อระหว่างวัน</string>
 	<string name="full_check_out">ลงชือออกงาน</string>
-	<string name="name_surname">name surname</string>
 	<string name="shake_fine">เขย่าเพื่อค้นหาคลัง</string>
 	<string name="nearby_fine">ค้นหาคลังรอบตัว</string>
 	<string name="history_check">ประวัติการเช็คอิน</string>
@@ -56,5 +55,6 @@
 	<string name="auto_text"> Auto Checkout </string>
 	<string name="you_not_driver">คุณไม่ใช่ Driver</string>
 	<string name="wrong_username">ชื่อผู้ใช้ หรือรหัสผ่านไม่ถูกต้อง</string>
+	<string name="name_surname"> ชื่อ - นามสกุล</string>
 	<string name="token_expire"> รหัสของคุณหมดอายุ \n กรุณาเข้าสู่ระบบอีกครั้ง </string>
 </resources>

@@ -8,7 +8,7 @@
 		android:orientation="vertical"
 		tools:context=".fragment.ProfileEditFragment">
 
-	<LinearLayout
+	<FrameLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:orientation="horizontal">
@@ -17,20 +17,20 @@
 				android:id="@+id/back_to_main_menu"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_gravity="center"
-				android:padding="10dp"
+				android:layout_gravity="start"
+				android:padding="15dp"
 				android:src="@drawable/ic_back"
 				tools:ignore="ContentDescription" />
 
 		<TextView
-				android:layout_width="0dp"
+				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				android:layout_weight="1"
+				android:layout_gravity="center"
 				android:gravity="center"
-				android:text="@string/user_profile"
+				android:text="@string/edit_user_profile"
 				android:textColor="@color/black"
-				android:textSize="20sp" />
-	</LinearLayout>
+				android:textSize="22sp"/>
+	</FrameLayout>
 
 	<FrameLayout
 			android:layout_width="100dp"
@@ -100,6 +100,12 @@
 				android:textColor="@color/black"
 				tools:ignore="Autofill" />
 	</android.support.design.widget.TextInputLayout>
+	<TextView
+			android:text="@string/pass_must_more_8"
+			android:textColor="@color/red"
+			android:layout_marginBottom="50dp"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"/>
 
 	<LinearLayout
 			android:gravity="center"
@@ -108,14 +114,15 @@
 
 		<Button
 				android:id="@+id/confirm_edit"
-				android:text="@string/confirm_text"
-				android:textSize="20sp"
-				android:textColor="@color/white"
-				android:background="@color/purple"
-				android:paddingStart="30dp"
-				android:paddingEnd="30dp"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:gravity="center" />
+				android:background="@color/gray"
+				android:enabled="false"
+				android:gravity="center"
+				android:paddingStart="40dp"
+				android:paddingEnd="40dp"
+				android:text="@string/confirm_text"
+				android:textColor="@color/white"
+				android:textSize="20sp" />
 	</LinearLayout>
 </LinearLayout>

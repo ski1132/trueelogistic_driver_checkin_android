@@ -44,6 +44,7 @@
 	<string name="to_text">ถึง</string>
 	<string name="show_location">แสดงตำแหน่งคลัง</string>
 	<string name="user_profile">ข้อมูลส่วนตัว</string>
+	<string name="edit_user_profile"> แก้ไขข้อมูลส่วนตัว</string>
 	<string name="edit">แก้ไข</string>
 	<string name="date_form">วัน / เดือน / ปีเกิด</string>
 	<string name="email">อีเมล</string>
@@ -57,4 +58,5 @@
 	<string name="wrong_username">ชื่อผู้ใช้ หรือรหัสผ่านไม่ถูกต้อง</string>
 	<string name="name_surname"> ชื่อ - นามสกุล</string>
 	<string name="token_expire"> รหัสของคุณหมดอายุ \n กรุณาเข้าสู่ระบบอีกครั้ง </string>
+	<string name="pass_must_more_8">*** รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร ***</string>
 </resources>

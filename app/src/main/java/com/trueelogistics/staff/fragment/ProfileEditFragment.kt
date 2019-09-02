@@ -9,13 +9,16 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.kotlinpermissions.KotlinPermissions
+import com.orhanobut.hawk.Hawk
 import com.trueelogistics.staff.R
 import com.trueelogistics.staff.activity.ProfileActivity
 import com.trueelogistics.staff.model.ProfileRootModel
@@ -46,6 +49,36 @@ class ProfileEditFragment : Fragment() {
         user_pic.setOnClickListener {
             imagePicking()
         }
+        back_to_main_menu.setOnClickListener {
+            activity?.onBackPressed()
+        }
+        pass_text.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(text: Editable?) {
+                if (text?.length == 8) {
+                    confirm_edit.isEnabled = true
+                    activity?.let {
+                        confirm_edit.setBackgroundColor( ContextCompat
+                            .getColor(it, R.color.purple))
+                    }
+                }
+                else{
+                    confirm_edit.isEnabled = false
+                    activity?.let {
+                        confirm_edit.setBackgroundColor( ContextCompat
+                            .getColor(it, R.color.gray))
+                    }
+                }
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+        })
         confirm_edit.setOnClickListener {
             sentEditData()
         }
@@ -104,6 +137,8 @@ class ProfileEditFragment : Fragment() {
             ) {
                 when (response.code()) {
                     200 -> {
+                        Hawk.put("NAME",name_surname.text.toString())
+                        Hawk.put("IMG_SRC",pathImg)
                         activity?.let {
                             Toast.makeText(it, " Edit Profile Success !!", Toast.LENGTH_SHORT)
                                 .show()

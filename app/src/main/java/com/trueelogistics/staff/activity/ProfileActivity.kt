@@ -1,10 +1,8 @@
 package com.trueelogistics.staff.activity
 
-import android.app.Activity
-import android.support.v7.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
-import com.bumptech.glide.Glide
+import android.support.v7.app.AppCompatActivity
 import com.trueelogistics.staff.R
 import com.trueelogistics.staff.fragment.ProfileShowFragment
 import com.trueelogistics.staff.model.ProfileRootModel
@@ -23,32 +21,46 @@ class ProfileActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_profile, ProfileShowFragment())
             .commit()
-
     }
 
-    fun getProfileData(  listenner : ProfileDataCallback){
+    override fun onBackPressed() {
+        val firstFragment = this.supportFragmentManager.fragments[0].javaClass
+        if (firstFragment == ProfileShowFragment::class.java ) {
+            val intent = Intent(this , MainActivity::class.java)
+            startActivity( intent )
+        }
+        else
+            super.onBackPressed()
+    }
+
+    fun getProfileData(listenner: ProfileDataCallback) {
         val retrofit = RetrofitGenerater().build(true).create(ProfileService::class.java)
         val call = retrofit.getData()
         call.enqueue(object : Callback<ProfileRootModel> {
             override fun onFailure(call: Call<ProfileRootModel>, t: Throwable) {
-                listenner.onFailureProfile( t.message ?: "ProfileData.onFailure ")
+                listenner.onFailureProfile(t.message ?: "ProfileData.onFailure ")
             }
-            override fun onResponse(call: Call<ProfileRootModel>, response: Response<ProfileRootModel>) {
-                when( response.code() ){
+
+            override fun onResponse(
+                call: Call<ProfileRootModel>,
+                response: Response<ProfileRootModel>
+            ) {
+                when (response.code()) {
                     200 -> {
-                        listenner.onResponceProfile( response.body())
+                        listenner.onResponceProfile(response.body())
 
                     }
                     else -> {
-                        listenner.onFailureProfile( response.message())
+                        listenner.onFailureProfile(response.message())
                     }
                 }
 
             }
         })
     }
-    interface ProfileDataCallback{
-        fun onResponceProfile( model : ProfileRootModel? )
-        fun onFailureProfile( message : String )
+
+    interface ProfileDataCallback {
+        fun onResponceProfile(model: ProfileRootModel?)
+        fun onFailureProfile(message: String)
     }
 }

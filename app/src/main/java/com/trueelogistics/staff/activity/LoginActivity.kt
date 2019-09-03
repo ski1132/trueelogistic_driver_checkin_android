@@ -127,10 +127,9 @@ class LoginActivity : AppCompatActivity() {
                         val firstName = model?.data?.firstname?:""
                         val lastName = model?.data?.lastname?:""
                         Hawk.put("NAME", "$firstName $lastName")
-                        Hawk.put("USERNAME", model?.data?.username)
+                        Hawk.put("IMG_SRC",model?.data?.imgProfile )
                         finish()
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                        intent.putExtra("IMG_SRC",model?.data?.imgProfile )
                         startActivity(intent)
                     }
                     401 -> {

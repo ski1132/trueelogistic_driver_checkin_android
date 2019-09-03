@@ -18,6 +18,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.orhanobut.hawk.Hawk
 import com.trueelogistics.checkin.fragment.MockDialogFragment
+import com.trueelogistics.checkin.handler.CheckInTEL
 import com.trueelogistics.staff.R
 import com.trueelogistics.staff.fragment.*
 import com.trueelogistics.staff.model.LoginRootModel
@@ -37,14 +38,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         nav_view.setNavigationItemSelectedListener(this)
-        nav_view.getHeaderView(0).nameText.text = Hawk.get("NAME")
-        intent.getStringExtra("IMG_SRC")?.let {
-            Glide.with(this)
-                .load(it)
-                .into(nav_view.getHeaderView(0).imageUser)
-        }
+        showDataUser()
         supportFragmentManager.beginTransaction()
             .replace(R.id.frag_main, ScanQrFragment())
             .commit()
@@ -56,6 +51,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         system_check_out.setOnClickListener {
             logoutWithLatLong()
         }
+    }
+
+    fun showDataUser(){
+        nav_view.getHeaderView(0).nameText.text = Hawk.get("NAME")
+        Glide.with(this)
+            .load(Hawk.get("IMG_SRC", ""))
+            .into(nav_view.getHeaderView(0).imageUser)
     }
 
     private fun logoutWithLatLong() {
@@ -78,7 +80,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         val retrofit =
                             RetrofitGenerater().build(true).create(LogoutService::class.java)
                         val call = retrofit.getData(
-                            Hawk.get("USERNAME"),
+                            CheckInTEL.userId.toString(),
                             latitude.toString(),
                             longitude.toString()
                         )
@@ -180,6 +182,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun onResume() {
+        showDataUser()
+        super.onResume()
     }
 
     fun actionToolbar() {

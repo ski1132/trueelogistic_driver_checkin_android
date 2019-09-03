@@ -137,6 +137,8 @@ class ProfileEditFragment : Fragment() {
             ) {
                 when (response.code()) {
                     200 -> {
+                        Hawk.delete("NAME")
+                        Hawk.delete("IMG_SRC")
                         Hawk.put("NAME",name_surname.text.toString())
                         Hawk.put("IMG_SRC",pathImg)
                         activity?.let {

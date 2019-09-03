@@ -24,10 +24,9 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val firstFragment = this.supportFragmentManager.fragments[0].javaClass
-        if (firstFragment == ProfileShowFragment::class.java ) {
-            val intent = Intent(this , MainActivity::class.java)
-            startActivity( intent )
+        val firstFragment = this.supportFragmentManager.backStackEntryCount
+        if (this.supportFragmentManager.backStackEntryCount == 0) {
+            finish()
         }
         else
             super.onBackPressed()

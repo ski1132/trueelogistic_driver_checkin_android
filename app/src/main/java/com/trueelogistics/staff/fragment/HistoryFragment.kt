@@ -37,9 +37,9 @@ class HistoryFragment : Fragment() {
             mainActivity.actionToolbar()
         }
         val retrofit = RetrofitGenerater().build().create(HistoryService::class.java)
-        val call = retrofit?.getData("{\"\$or\":["+ Gson().toJson( SearchCitizenModel(CheckInTEL.userId.toString()) ) +"]}" )
+        val call = retrofit.getData("{\"\$or\":["+ Gson().toJson( SearchCitizenModel(CheckInTEL.userId.toString()) ) +"]}" )
         Log.d("endpoint == ","{\"\$or\":["+ Gson().toJson( SearchCitizenModel(CheckInTEL.userId.toString()) ) +"]}")
-        call?.enqueue(object : Callback<HistoryRootModel> {
+        call.enqueue(object : Callback<HistoryRootModel> {
             override fun onFailure(call: Call<HistoryRootModel>, t: Throwable) {
                 Log.e(" onfail ",t.message.toString())
             }

@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    fun showDataUser(){
+    private fun showDataUser(){
         nav_view.getHeaderView(0).nameText.text = Hawk.get("NAME")
         Glide.with(this)
             .load(Hawk.get("IMG_SRC", ""))

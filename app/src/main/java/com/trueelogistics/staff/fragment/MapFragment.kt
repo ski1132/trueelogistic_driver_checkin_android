@@ -41,7 +41,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     val longitude = dataModel?.get(i)?.longitude
                     if (latitude == null && longitude == null) {
                         MockDialogFragment().show(activity?.supportFragmentManager, "show")
-                        MainActivity().onNavigationItemSelected(nav_view.menu.getItem(R.id.scanQr))
+//                        MainActivity().onNavigationItemSelected(nav_view.menu.getItem(R.id.scanQr))
                     } else {
                         val work = LatLng(latitude ?: 0.0, longitude ?: 0.0)
                         googleMap?.addMarker(MarkerOptions().position(work).title(dataModel[i].locationName))

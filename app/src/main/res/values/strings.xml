@@ -57,8 +57,11 @@
 	<string name="you_not_driver">คุณไม่ใช่ Driver</string>
 	<string name="wrong_username">ชื่อผู้ใช้ หรือรหัสผ่านไม่ถูกต้อง</string>
 	<string name="null_input"> กรุณากรอกชื่อ และรหัสผ่านให้ครบถ้วน</string>
+	<string name="phone_input"> *** เบอร์โทรศัพท์ต้องมี 10 หลัก ****</string>
+	<string name="data_input"> กรุณากรอกข้อมูลให้ครบถ้วน</string>
 	<string name="name_surname"> ชื่อ - นามสกุล</string>
 	<string name="token_expire"> รหัสของคุณหมดอายุ \n กรุณาเข้าสู่ระบบอีกครั้ง </string>
 	<string name="pass_must_more_8">*** รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร ***</string>
 	<string name="username_must_equal_13"> รหัสผู้ใช้งานต้องมี 13 ตัว</string>
+	<string name="show_full_name">%1$s %2$s </string>
 </resources>

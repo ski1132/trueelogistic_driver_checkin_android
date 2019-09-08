@@ -22,10 +22,10 @@ import com.trueelogistics.checkin.handler.CheckInTEL
 import com.trueelogistics.staff.R
 import com.trueelogistics.staff.fragment.*
 import com.trueelogistics.staff.model.LoginRootModel
+import com.trueelogistics.staff.model.ProfileRootModel
 import com.trueelogistics.staff.service.LogoutService
 import com.trueelogistics.staff.service.RetrofitGenerater
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main_menu_drawer.*
 import kotlinx.android.synthetic.main.activity_main_menu_drawer.view.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -53,11 +53,29 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    private fun showDataUser(){
-        nav_view.getHeaderView(0).nameText.text = Hawk.get("NAME")
-        Glide.with(this)
-            .load(Hawk.get("IMG_SRC", ""))
-            .into(nav_view.getHeaderView(0).imageUser)
+    private fun showDataUser() {
+        ProfileActivity().getProfileData(object : ProfileActivity.ProfileDataCallback {
+            override fun onResponceProfile(model: ProfileRootModel?) {
+                model?.data?.imgProfile?.let { img ->
+                    Glide.with(this@MainActivity)
+                        .load(img)
+                        .into(nav_view.getHeaderView(0).imageUser)
+                }
+                val firstName = model?.data?.firstname ?: ""
+                val lastName = model?.data?.lastname ?: ""
+                nav_view.getHeaderView(0).nameText.text =
+                    String.format(getString(R.string.show_full_name), firstName, lastName)
+            }
+
+            override fun onFailureProfile(message: String) {
+                Toast.makeText(
+                    this@MainActivity,
+                    "get Data onFailure : $message",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+        })
     }
 
     private fun logoutWithLatLong() {
@@ -147,7 +165,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
-        nameText.text = Hawk.get("NAME")
         when (item.itemId) {
             R.id.scanQr -> {
                 supportFragmentManager.beginTransaction()
@@ -174,11 +191,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .replace(R.id.frag_main, HistoryFragment())
                     .commit()
             }
-//            R.id.absent -> {
-//                supportFragmentManager.beginTransaction()
-//                    .replace(R.id.frag_main, AbsentFragment())
-//                    .commit()
-//            }
         }
         drawer_layout.closeDrawer(GravityCompat.START)
         return true

@@ -52,7 +52,6 @@ class ProfileShowFragment : Fragment() {
                             .into(user_pic)
                     }
                 }
-
                 val firstName = model?.data?.firstname?:""
                 val lastName = model?.data?.lastname?:""
                 name_surname.text =  Editable.Factory.getInstance()

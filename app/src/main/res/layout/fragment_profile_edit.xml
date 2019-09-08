@@ -83,6 +83,7 @@
 				android:hint="@string/number_phone"
 				android:inputType="phone"
 				android:textColor="@color/black"
+				android:maxLength="10"
 				tools:ignore="Autofill" />
 	</android.support.design.widget.TextInputLayout>
 
@@ -101,6 +102,7 @@
 				tools:ignore="Autofill" />
 	</android.support.design.widget.TextInputLayout>
 	<TextView
+			android:id="@+id/show_warning"
 			android:text="@string/pass_must_more_8"
 			android:textColor="@color/red"
 			android:layout_marginBottom="50dp"

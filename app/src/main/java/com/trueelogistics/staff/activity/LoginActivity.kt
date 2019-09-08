@@ -141,10 +141,6 @@ class LoginActivity : AppCompatActivity() {
                     200 -> {
                         val model : ProfileRootModel? = response.body()
                         CheckInTEL.userId = model?.data?.citizenId
-                        val firstName = model?.data?.firstname?:""
-                        val lastName = model?.data?.lastname?:""
-                        Hawk.put("NAME", "$firstName $lastName")
-                        Hawk.put("IMG_SRC",model?.data?.imgProfile )
                         finish()
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
                         startActivity(intent)

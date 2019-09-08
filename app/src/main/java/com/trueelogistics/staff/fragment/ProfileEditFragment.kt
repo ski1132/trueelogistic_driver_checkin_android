@@ -18,7 +18,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.kotlinpermissions.KotlinPermissions
-import com.orhanobut.hawk.Hawk
 import com.trueelogistics.staff.R
 import com.trueelogistics.staff.activity.ProfileActivity
 import com.trueelogistics.staff.model.ProfileRootModel
@@ -80,7 +79,13 @@ class ProfileEditFragment : Fragment() {
 
         })
         confirm_edit.setOnClickListener {
-            sentEditData()
+            if (name_surname.length() > 0 && phone.length() == 10)
+                sentEditData()
+            else if (phone.length() in 1..9)
+                show_warning.text = getString(R.string.phone_input)
+            else
+                show_warning.text = getString(R.string.data_input)
+
         }
     }
 
@@ -115,7 +120,6 @@ class ProfileEditFragment : Fragment() {
 
     private fun sentEditData() {
         val retrofit = RetrofitGenerater().build(false).create(ProfileEditService::class.java)
-        val text = name_surname.text.toString()
         val call = retrofit.getData(
             id = userId ?: "",
             imgProfile = pathImg ?:"",
@@ -137,8 +141,6 @@ class ProfileEditFragment : Fragment() {
             ) {
                 when (response.code()) {
                     200 -> {
-                        Hawk.put("NAME",name_surname.text.toString())
-                        Hawk.put("IMG_SRC",pathImg)
                         activity?.let {
                             Toast.makeText(it, " Edit Profile Success !!", Toast.LENGTH_SHORT)
                                 .show()

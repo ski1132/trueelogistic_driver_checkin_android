@@ -24,7 +24,6 @@ import com.trueelogistics.checkin.interfaces.ArrayListGenericCallback
 import com.trueelogistics.checkin.model.HubInDataModel
 import com.trueelogistics.staff.R
 import com.trueelogistics.staff.activity.MainActivity
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_map.*
 
 class MapFragment : Fragment(), OnMapReadyCallback {

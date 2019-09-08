@@ -1,13 +1,10 @@
 package com.trueelogistics.staff.fragment
 
-
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.trueelogistics.checkin.activity.NearByActivity
 import com.trueelogistics.checkin.handler.CheckInTEL
 import com.trueelogistics.checkin.interfaces.CheckInTELCallBack
 import com.trueelogistics.staff.R

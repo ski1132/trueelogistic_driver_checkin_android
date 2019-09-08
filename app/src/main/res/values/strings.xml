@@ -28,7 +28,7 @@
 	<string name="welcome">ยินดีต้อนรับ</string>
 	<string name="LoginForScanQr">เข้าสู่ระบบเพื่อแสกน QR code</string>
 	<string name="login">เข้าสู่ระบบ</string>
-	<string name="username">ชื่อผู้ใช้งาน</string>
+	<string name="username_login"> รหัสผู้ใช้งาน </string>
 	<string name="password">รหัสผ่าน</string>
 	<string name="scan_qr">แสกน QR Code</string>
 	<string name="date_text">วันที่</string>
@@ -56,7 +56,9 @@
 	<string name="auto_text"> Auto Checkout </string>
 	<string name="you_not_driver">คุณไม่ใช่ Driver</string>
 	<string name="wrong_username">ชื่อผู้ใช้ หรือรหัสผ่านไม่ถูกต้อง</string>
+	<string name="null_input"> กรุณากรอกชื่อ และรหัสผ่านให้ครบถ้วน</string>
 	<string name="name_surname"> ชื่อ - นามสกุล</string>
 	<string name="token_expire"> รหัสของคุณหมดอายุ \n กรุณาเข้าสู่ระบบอีกครั้ง </string>
 	<string name="pass_must_more_8">*** รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร ***</string>
+	<string name="username_must_equal_13"> รหัสผู้ใช้งานต้องมี 13 ตัว</string>
 </resources>

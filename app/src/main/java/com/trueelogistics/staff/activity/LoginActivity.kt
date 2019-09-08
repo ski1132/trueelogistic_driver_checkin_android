@@ -5,11 +5,10 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
-import android.util.Log
+import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -35,11 +34,21 @@ class LoginActivity : AppCompatActivity() {
 
         checkTokenInHawk()
         confirmLogin.setOnClickListener {
-            getRetrofit(username_input_layout.text.toString(),password_input_layout.text.toString())
+            val name = username_input_layout.text.toString()
+            val pass = password_input_layout.text.toString()
+            if ( username_input_layout.length() == 13 && pass != "")
+                getRetrofit(name,pass)
+            else if ( name.length < 13 )
+                wrong_login.text = getString( R.string.username_must_equal_13)
+            else
+                wrong_login.text = getString( R.string.null_input)
         }
     }
 
     private fun getRetrofit(username : String , password : String){
+        val loadingDialog =
+            ProgressDialog.show(this, "Login Processing  ", " Please wait..."
+                , false, true )
         val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         var latitude: Double
         var longitude: Double
@@ -58,8 +67,10 @@ class LoginActivity : AppCompatActivity() {
                             call.enqueue(object : Callback<LoginRootModel> {
                                 override fun onFailure(call: Call<LoginRootModel>, t: Throwable) {
                                     Toast.makeText(this@LoginActivity, "Fail to Login , ${t.message}", Toast.LENGTH_SHORT).show()
+                                    loadingDialog.dismiss()
                                 }
                                 override fun onResponse(call: Call<LoginRootModel>, response: Response<LoginRootModel>) {
+                                    loadingDialog.dismiss()
                                     when {
                                         response.code() == 200 -> {
                                             val logModel : LoginRootModel ?= response.body()
@@ -86,6 +97,7 @@ class LoginActivity : AppCompatActivity() {
                             })
 
                         } else {
+                            loadingDialog.dismiss()
                             MockDialogFragment().show(supportFragmentManager, "show")
                             val intent = Intent(this, CheckInTEL::class.java)
                             intent.putExtras(
@@ -113,13 +125,18 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun tokenCheck(){
+        val loadingDialog =
+            ProgressDialog.show(this, "Checking Token  ", " Please wait..."
+                , false, true )
         val retrofit = RetrofitGenerater().build(true).create(ProfileService::class.java)
         val call = retrofit.getData()
         call.enqueue(object : Callback<ProfileRootModel> {
             override fun onFailure(call: Call<ProfileRootModel>, t: Throwable) {
                 Toast.makeText(this@LoginActivity, "Fail to get Profile data , ${t.message}", Toast.LENGTH_SHORT).show()
+                loadingDialog.dismiss()
             }
             override fun onResponse(call: Call<ProfileRootModel>, response: Response<ProfileRootModel>) {
+                loadingDialog.dismiss()
                 when( response.code() ){
                     200 -> {
                         val model : ProfileRootModel? = response.body()

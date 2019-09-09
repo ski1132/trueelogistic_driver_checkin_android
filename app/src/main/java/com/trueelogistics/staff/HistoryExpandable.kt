@@ -91,7 +91,6 @@ class HistoryExpandable(private val context: Context, private val list: ArrayLis
                 item.checkinType
             }
         }
-
         return convertView
     }
 

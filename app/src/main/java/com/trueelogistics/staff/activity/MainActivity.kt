@@ -56,11 +56,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun showDataUser() {
         ProfileActivity().getProfileData(object : ProfileActivity.ProfileDataCallback {
             override fun onResponceProfile(model: ProfileRootModel?) {
-                model?.data?.imgProfile?.let { img ->
+               if(model?.data?.imgProfile?.isEmpty() == false){
                     Glide.with(this@MainActivity)
-                        .load(img)
+                        .load(model.data.imgProfile)
                         .into(nav_view.getHeaderView(0).imageUser)
                 }
+                else {
+                   Glide.with(this@MainActivity)
+                       .load(R.mipmap.pic_default_user)
+                       .into(nav_view.getHeaderView(0).imageUser)
+               }
                 val firstName = model?.data?.firstname ?: ""
                 val lastName = model?.data?.lastname ?: ""
                 nav_view.getHeaderView(0).nameText.text =

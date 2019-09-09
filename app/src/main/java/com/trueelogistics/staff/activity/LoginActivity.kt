@@ -36,110 +36,136 @@ class LoginActivity : AppCompatActivity() {
         confirmLogin.setOnClickListener {
             val name = username_input_layout.text.toString()
             val pass = password_input_layout.text.toString()
-            if ( username_input_layout.length() == 13 && pass != "")
-                getRetrofit(name,pass)
-            else if ( name.length < 13 )
-                wrong_login.text = getString( R.string.username_must_equal_13)
+            if (username_input_layout.length() == 13 && pass != "")
+                getRetrofit(name, pass)
+            else if (name.length < 13)
+                wrong_login.text = getString(R.string.username_must_equal_13)
             else
-                wrong_login.text = getString( R.string.null_input)
+                wrong_login.text = getString(R.string.null_input)
         }
     }
 
-    private fun getRetrofit(username : String , password : String){
+    private fun getRetrofit(username: String, password: String) {
         val loadingDialog =
-            ProgressDialog.show(this, "Login Processing  ", " Please wait..."
-                , false, true )
-        val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+            ProgressDialog.show(
+                this, "Login Processing  ", " Please wait..."
+                , false, true
+            )
+        val fusedLocationClient: FusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(this)
         var latitude: Double
         var longitude: Double
         if (ContextCompat.checkSelfPermission(
-                    this, Manifest.permission.ACCESS_COARSE_LOCATION
-                )
-                == PackageManager.PERMISSION_GRANTED
-            ) {
-                fusedLocationClient.lastLocation
-                    ?.addOnSuccessListener { location: Location? ->
-                        if (location?.isFromMockProvider == false) {
-                            latitude = location.latitude
-                            longitude = location.longitude
-                            val retrofit = RetrofitGenerater().build(false).create(LoginService::class.java)
-                            val call = retrofit.getData(username, password,latitude.toString(),longitude.toString())
-                            call.enqueue(object : Callback<LoginRootModel> {
-                                override fun onFailure(call: Call<LoginRootModel>, t: Throwable) {
-                                    Toast.makeText(this@LoginActivity, "Fail to Login , ${t.message}", Toast.LENGTH_SHORT).show()
-                                    loadingDialog.dismiss()
-                                }
-                                override fun onResponse(call: Call<LoginRootModel>, response: Response<LoginRootModel>) {
-                                    loadingDialog.dismiss()
-                                    when {
-                                        response.code() == 200 -> {
-                                            val logModel : LoginRootModel ?= response.body()
-                                            logModel?.data?.let{
-                                                if (it.role == "DRIVER"){
-                                                    Hawk.put("TOKEN",it.token)
-                                                    Hawk.put("RETOKEN",it.reToken)
-                                                    tokenCheck()
-                                                } else{
-                                                    val wrongRole = getString(R.string.you_not_driver)
-                                                    wrong_login.text = wrongRole
-                                                }
+                this, Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+            == PackageManager.PERMISSION_GRANTED
+        ) {
+            fusedLocationClient.lastLocation
+                ?.addOnSuccessListener { location: Location? ->
+                    if (location?.isFromMockProvider == false) {
+                        latitude = location.latitude
+                        longitude = location.longitude
+                        val retrofit =
+                            RetrofitGenerater().build(false).create(LoginService::class.java)
+                        val call = retrofit.getData(
+                            username,
+                            password,
+                            latitude.toString(),
+                            longitude.toString()
+                        )
+                        call.enqueue(object : Callback<LoginRootModel> {
+                            override fun onFailure(call: Call<LoginRootModel>, t: Throwable) {
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    "Fail to Login , ${t.message}",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                loadingDialog.dismiss()
+                            }
+
+                            override fun onResponse(
+                                call: Call<LoginRootModel>,
+                                response: Response<LoginRootModel>
+                            ) {
+                                loadingDialog.dismiss()
+                                when {
+                                    response.code() == 200 -> {
+                                        val logModel: LoginRootModel? = response.body()
+                                        logModel?.data?.let {
+                                            if (it.role == "DRIVER") {
+                                                Hawk.put("TOKEN", it.token)
+                                                Hawk.put("RETOKEN", it.reToken)
+                                                tokenCheck()
+                                            } else {
+                                                val wrongRole = getString(R.string.you_not_driver)
+                                                wrong_login.text = wrongRole
                                             }
                                         }
-                                        response.code() == 404 -> {
-                                            val wrongRole = getString(R.string.wrong_username)
-                                            wrong_login.text = wrongRole
-                                        }
-                                        else -> {
-                                            wrong_login.text = response.message()
-                                        }
+                                    }
+                                    response.code() == 404 -> {
+                                        val wrongRole = getString(R.string.wrong_username)
+                                        wrong_login.text = wrongRole
+                                    }
+                                    else -> {
+                                        wrong_login.text = response.message()
                                     }
                                 }
-                            })
+                            }
+                        })
 
-                        } else {
-                            loadingDialog.dismiss()
-                            MockDialogFragment().show(supportFragmentManager, "show")
-                            val intent = Intent(this, CheckInTEL::class.java)
-                            intent.putExtras(
-                                Bundle().apply {
-                                    putString("error", "GPS is Mock !!")
-                                }
-                            )
-                        }
+                    } else {
+                        loadingDialog.dismiss()
+                        MockDialogFragment().show(supportFragmentManager, "show")
+                        val intent = Intent(this, CheckInTEL::class.java)
+                        intent.putExtras(
+                            Bundle().apply {
+                                putString("error", "GPS is Mock !!")
+                            }
+                        )
                     }
-            }
-            else{
-                val intent = Intent(this, CheckInTEL::class.java)
-                intent.putExtras(
-                    Bundle().apply {
-                        putString("error", "Permission GPS Denied!!")
-                    }
-                )
-            }
+                }
+        } else {
+            val intent = Intent(this, CheckInTEL::class.java)
+            intent.putExtras(
+                Bundle().apply {
+                    putString("error", "Permission GPS Denied!!")
+                }
+            )
+        }
     }
 
-    private fun checkTokenInHawk(){
-        if (Hawk.get<String>("TOKEN") != null){
+    private fun checkTokenInHawk() {
+        if (Hawk.get<String>("TOKEN") != null) {
             tokenCheck()
         }
     }
 
-    fun tokenCheck(){
+    fun tokenCheck() {
         val loadingDialog =
-            ProgressDialog.show(this, "Checking Token  ", " Please wait..."
-                , false, true )
+            ProgressDialog.show(
+                this, "Checking Token  ", " Please wait..."
+                , false, true
+            )
         val retrofit = RetrofitGenerater().build(true).create(ProfileService::class.java)
         val call = retrofit.getData()
         call.enqueue(object : Callback<ProfileRootModel> {
             override fun onFailure(call: Call<ProfileRootModel>, t: Throwable) {
-                Toast.makeText(this@LoginActivity, "Fail to get Profile data , ${t.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@LoginActivity,
+                    "Fail to get Profile data , ${t.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
                 loadingDialog.dismiss()
             }
-            override fun onResponse(call: Call<ProfileRootModel>, response: Response<ProfileRootModel>) {
+
+            override fun onResponse(
+                call: Call<ProfileRootModel>,
+                response: Response<ProfileRootModel>
+            ) {
                 loadingDialog.dismiss()
-                when( response.code() ){
+                when (response.code()) {
                     200 -> {
-                        val model : ProfileRootModel? = response.body()
+                        val model: ProfileRootModel? = response.body()
                         CheckInTEL.userId = model?.data?.citizenId
                         finish()
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)

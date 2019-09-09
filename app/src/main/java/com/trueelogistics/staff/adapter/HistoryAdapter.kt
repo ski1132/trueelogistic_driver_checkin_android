@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.trueelogistics.checkin.enums.CheckInTELType
 import com.trueelogistics.staff.R
 import com.trueelogistics.staff.enum.EnumHistory
 import com.trueelogistics.staff.model.BaseHistoryModel
@@ -70,11 +71,30 @@ class HistoryAdapter(val list: ArrayList<BaseHistoryModel> = arrayListOf()) :
             val hubName = itemView.hubCheckIn
             val timeCheck = itemView.timeCheckIn
             val typeScan = itemView.type_scan
+            val iconType = itemView.iconTypeCheckIn
 
             typeCheck.text = historyModel.eventType
             hubName.text = historyModel.hubName
             timeCheck.text = historyModel.timeCheckIn
             typeScan.text = historyModel.checkInType
+            when(historyModel.eventType){
+                CheckInTELType.CheckIn.value -> {
+                    typeCheck.text = itemView.context.getString(R.string.full_checkin_text)
+                    iconType.setImageResource(R.drawable.ic_check_in)
+                }
+                CheckInTELType.CheckBetween.value -> {
+                    typeCheck.text = itemView.context.getString(R.string.full_check_between_text)
+                    iconType.setImageResource(R.drawable.ic_check_between)
+                }
+                CheckInTELType.CheckOut.value -> {
+                    typeCheck.text = itemView.context.getString(R.string.full_checkout_text)
+                    iconType.setImageResource(R.drawable.ic_check_out)
+                }
+                else -> {
+                    historyModel.eventType
+                    iconType.setImageResource(R.drawable.ic_checkin_gray)
+                }
+            }
         }
     }
 }

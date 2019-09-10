@@ -28,7 +28,7 @@
 				android:layout_height="wrap_content"/>
 		<TextView
 				android:id="@+id/hubCheckIn"
-				android:layout_margin="7dp"
+				android:layout_margin="5dp"
 				android:text="@string/hub_name_example"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"/>

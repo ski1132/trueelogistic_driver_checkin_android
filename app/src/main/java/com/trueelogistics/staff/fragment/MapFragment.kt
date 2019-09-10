@@ -31,7 +31,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         CheckInTEL.checkInTEL?.hubGenerater(object : ArrayListGenericCallback<HubInDataModel> {
             override fun onFailure(message: String?) {
-                Toast.makeText(activity, "Generate Hub.onFail : $message ", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, "Generate Hub.onFail : $message ", Toast.LENGTH_LONG)
+                    .show()
             }
 
             override fun onResponse(dataModel: ArrayList<HubInDataModel>?) {
@@ -85,7 +86,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                             googleMap?.uiSettings?.isZoomControlsEnabled = true
                             googleMap?.isMyLocationEnabled = true
                             val langLong = LatLng(location.latitude, location.longitude)
-                            googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(langLong, 12f))
+                            googleMap?.animateCamera(
+                                CameraUpdateFactory.newLatLngZoom(
+                                    langLong,
+                                    12f
+                                )
+                            )
                             googleMap?.moveCamera(CameraUpdateFactory.newLatLng(langLong))
                             googleMap?.animateCamera(
                                 CameraUpdateFactory.newCameraPosition(

@@ -46,13 +46,13 @@ class ScanQrFragment : Fragment() {
         date.text = String.format(this.getString(R.string.date_checkin), day, nDay, mouth)
         activity?.let { activity ->
             checkInBtn.setOnClickListener {
-                openScanQr(activity, CheckInTELType.CheckIn.value,false)
+                openScanQr(activity, CheckInTELType.CheckIn.value, false)
             }
             checkBetBtn.setOnClickListener {
-                openScanQr(activity, CheckInTELType.CheckBetween.value,false)
+                openScanQr(activity, CheckInTELType.CheckBetween.value, false)
             }
             checkOutBtn.setOnClickListener {
-                openScanQr(activity, CheckInTELType.CheckOut.value,false)
+                openScanQr(activity, CheckInTELType.CheckOut.value, false)
             }
         }
     }
@@ -61,7 +61,8 @@ class ScanQrFragment : Fragment() {
         historyRecycle.adapter = adapter
         activity?.let {
             historyRecycle?.layoutManager = LinearLayoutManager(it)
-            CheckInTEL.checkInTEL?.getHistory(object : ArrayListGenericCallback<HistoryInDataModel> {
+            CheckInTEL.checkInTEL?.getHistory(object :
+                ArrayListGenericCallback<HistoryInDataModel> {
                 override fun onFailure(message: String?) {
 
                 }
@@ -76,19 +77,27 @@ class ScanQrFragment : Fragment() {
         }
     }
 
-    private fun openScanQr(context: Context, type: String ,disableBack : Boolean) {
+    private fun openScanQr(context: Context, type: String, disableBack: Boolean) {
         activity?.let {
-            CheckInTEL.checkInTEL?.openScanQRCode(it, type, disableBack, object : CheckInTELCallBack {
-                override fun onCancel() {
-                }
+            CheckInTEL.checkInTEL?.openScanQRCode(
+                it,
+                type,
+                disableBack,
+                object : CheckInTELCallBack {
+                    override fun onCancel() {
+                    }
 
-                override fun onCheckInFailure(message: String) {
-                    Toast.makeText(context, " ScanQr.onCheckFail = $message ", Toast.LENGTH_SHORT).show()
-                }
+                    override fun onCheckInFailure(message: String) {
+                        Toast.makeText(
+                            context,
+                            " ScanQr.onCheckFail = $message ",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
 
-                override fun onCheckInSuccess(result: String) {
-                }
-            })
+                    override fun onCheckInSuccess(result: String) {
+                    }
+                })
         }
     }
 
@@ -102,11 +111,12 @@ class ScanQrFragment : Fragment() {
     private fun checkButton() {
         CheckInTEL.checkInTEL?.getLastCheckInHistory(object : TypeCallback {
             override fun onResponse(type: String?, today: Boolean) {
-                buttonEnable(type?:"")
+                buttonEnable(type ?: "", today)
             }
 
             override fun onFailure(message: String?) {
-                Toast.makeText(context, " ScanQr.onCheckFail = $message ", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, " ScanQr.onCheckFail = $message ", Toast.LENGTH_SHORT)
+                    .show()
                 checkInBtn.visibility = View.GONE
                 checkBetBtn.visibility = View.GONE
                 checkOutBtn.visibility = View.GONE
@@ -116,7 +126,7 @@ class ScanQrFragment : Fragment() {
         })
     }
 
-    private fun buttonEnable( type : String){
+    private fun buttonEnable(type: String, today: Boolean) {
         if (type == CheckInTELType.CheckIn.value || type == CheckInTELType.CheckBetween.value) {
             checkFirstInDay = false
             checkInBtn.visibility = View.GONE
@@ -125,17 +135,23 @@ class ScanQrFragment : Fragment() {
             pic_checkin.visibility = View.GONE
             layoutRecycle.visibility = View.VISIBLE
         } else if (type == CheckInTELType.CheckOut.value) {
-            if (checkFirstInDay) {
+            if (checkFirstInDay && !today) {
                 activity?.let {
-                    openScanQr(it, CheckInTELType.CheckIn.value,true)
+                    openScanQr(it, CheckInTELType.CheckIn.value, true)
                 }
                 checkFirstInDay = false
             }
             checkInBtn.visibility = View.VISIBLE
             checkBetBtn.visibility = View.GONE
             checkOutBtn.visibility = View.GONE
-            pic_checkin.visibility = View.VISIBLE
-            layoutRecycle.visibility = View.GONE
+            if (today) {
+                pic_checkin.visibility = View.GONE
+                layoutRecycle.visibility = View.VISIBLE
+            } else {
+                pic_checkin.visibility = View.VISIBLE
+                layoutRecycle.visibility = View.GONE
+            }
+
 
         } else {
             checkFirstInDay = false

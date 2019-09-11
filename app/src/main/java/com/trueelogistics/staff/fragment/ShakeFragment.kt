@@ -1,14 +1,15 @@
 package com.trueelogistics.staff.fragment
 
-
-import android.annotation.SuppressLint
-import android.content.Intent
+import android.app.Activity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.trueelogistics.checkin.activity.ShakeActivity
+import android.widget.Toast
+import com.github.tbouron.shakedetector.library.ShakeDetector
+import com.trueelogistics.checkin.handler.CheckInTEL
+import com.trueelogistics.checkin.interfaces.CheckInTELCallBack
 import com.trueelogistics.staff.R
 import com.trueelogistics.staff.activity.MainActivity
 import kotlinx.android.synthetic.main.fragment_near_by.toolbar
@@ -24,7 +25,6 @@ class ShakeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_shake, container, false)
     }
 
-    @SuppressLint("MissingPermission", "SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -32,9 +32,33 @@ class ShakeFragment : Fragment() {
         toolbar.setOnClickListener {
             mainActivity.actionToolbar()
         }
-        shake_phone_fine.setOnClickListener {
-            val intent = Intent(activity, ShakeActivity::class.java)
-            this.startActivity(intent)
+        ShakeDetector.start()
+        activity?.let { fragActivity ->
+                ShakeDetector.create(fragActivity) {
+                    shakeFunction(fragActivity)
+                    ShakeDetector.stop()
+            }
+            shake_phone_fine.setOnClickListener {
+                shakeFunction(fragActivity)
+            }
         }
+
+    }
+
+    private fun shakeFunction(activity: Activity) {
+        CheckInTEL.checkInTEL?.openShake(activity, object : CheckInTELCallBack {
+            override fun onCheckInSuccess(result: String) {
+                ShakeDetector.start()
+            }
+
+            override fun onCheckInFailure(message: String) {
+                Toast.makeText(context, " Shake.onFail : $message ", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onCancel() {
+                ShakeDetector.start()
+            }
+
+        })
     }
 }

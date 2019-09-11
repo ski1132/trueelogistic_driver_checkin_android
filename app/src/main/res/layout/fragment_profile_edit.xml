@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:tools="http://schemas.android.com/tools"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:layout_margin="20dp"
@@ -29,7 +29,7 @@
 				android:gravity="center"
 				android:text="@string/edit_user_profile"
 				android:textColor="@color/black"
-				android:textSize="22sp"/>
+				android:textSize="22sp" />
 	</FrameLayout>
 
 	<FrameLayout
@@ -37,14 +37,16 @@
 			android:layout_height="100dp"
 			android:layout_gravity="center_horizontal"
 			android:layout_margin="20dp">
+
 		<com.mikhaellopez.circularimageview.CircularImageView
 				android:id="@+id/user_pic"
-				android:src="@mipmap/pic_default_user"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				app:civ_border_width="4dp"
 				android:scaleType="centerCrop"
-				tools:ignore="ContentDescription"/>
+				android:src="@mipmap/pic_default_user"
+				app:civ_border_width="4dp"
+				tools:ignore="ContentDescription" />
+
 		<ImageView
 				android:layout_width="30dp"
 				android:layout_height="30dp"
@@ -82,8 +84,8 @@
 				android:layout_height="wrap_content"
 				android:hint="@string/number_phone"
 				android:inputType="phone"
-				android:textColor="@color/black"
 				android:maxLength="10"
+				android:textColor="@color/black"
 				tools:ignore="Autofill" />
 	</android.support.design.widget.TextInputLayout>
 
@@ -101,18 +103,19 @@
 				android:textColor="@color/black"
 				tools:ignore="Autofill" />
 	</android.support.design.widget.TextInputLayout>
+
 	<TextView
 			android:id="@+id/show_warning"
-			android:text="@string/pass_must_more_8"
-			android:textColor="@color/red"
-			android:layout_marginBottom="50dp"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"/>
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="50dp"
+			android:text="@string/pass_must_more_8"
+			android:textColor="@color/red" />
 
 	<LinearLayout
-			android:gravity="center"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
+			android:layout_height="wrap_content"
+			android:gravity="center">
 
 		<Button
 				android:id="@+id/confirm_edit"

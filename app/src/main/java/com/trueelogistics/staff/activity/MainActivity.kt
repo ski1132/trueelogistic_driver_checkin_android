@@ -31,7 +31,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +48,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             startActivity(intent)
         }
         system_check_out.setOnClickListener {
-            logoutWithLatLong()
+            AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Do you confirm to logout ?")
+                .setPositiveButton("Yes") { _, _ -> logoutWithLatLong() }
+                .setNegativeButton("No", null)
+                .show()
         }
     }
 
@@ -159,7 +163,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 AlertDialog.Builder(this)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setTitle("Closing Application")
-                    .setMessage("Are you sure you want to close ?")
+                    .setMessage("Do you confirm to signing out ?")
                     .setPositiveButton("Yes") { _, _ -> finish() }
                     .setNegativeButton("No", null)
                     .show()

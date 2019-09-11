@@ -24,7 +24,6 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val firstFragment = this.supportFragmentManager.backStackEntryCount
         if (this.supportFragmentManager.backStackEntryCount == 0) {
             finish()
         }

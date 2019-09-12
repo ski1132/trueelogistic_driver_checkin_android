@@ -1,6 +1,5 @@
 package com.trueelogistics.staff.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.trueelogistics.staff.R
@@ -26,8 +25,7 @@ class ProfileActivity : AppCompatActivity() {
     override fun onBackPressed() {
         if (this.supportFragmentManager.backStackEntryCount == 0) {
             finish()
-        }
-        else
+        } else
             super.onBackPressed()
     }
 

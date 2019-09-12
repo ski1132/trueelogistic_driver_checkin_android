@@ -134,8 +134,8 @@ class ScanQrFragment : Fragment() {
             checkOutBtn.visibility = View.VISIBLE
             pic_checkin.visibility = View.GONE
             layoutRecycle.visibility = View.VISIBLE
-        } else if (type == CheckInTELType.CheckOut.value) {
-            if (checkFirstInDay && !today) {
+        } else if (type == CheckInTELType.CheckOut.value || type == CheckInTELType.CheckOutOverTime.value) {
+            if (checkFirstInDay && !today && type != CheckInTELType.CheckOutOverTime.value) {
                 activity?.let {
                     openScanQr(it, CheckInTELType.CheckIn.value, true)
                 }

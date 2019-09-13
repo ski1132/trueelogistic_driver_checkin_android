@@ -93,8 +93,7 @@ class LoginActivity : AppCompatActivity() {
                                         val logModel: LoginRootModel? = response.body()
                                         logModel?.data?.let {
                                             if (it.role == "DRIVER") {
-                                                Hawk.put("TOKEN", it.token)
-                                                Hawk.put("RETOKEN", it.reToken)
+                                                Hawk.put("TOKENPROFILE", it.token)
                                                 tokenCheck()
                                             } else {
                                                 val wrongRole = getString(R.string.you_not_driver)
@@ -136,7 +135,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkTokenInHawk() {
-        if (Hawk.get<String>("TOKEN") != null) {
+        val token = Hawk.get<String>("TOKENPROFILE")
+        if (Hawk.get<String>("TOKENPROFILE") != null) {
             tokenCheck()
         }
     }

@@ -113,6 +113,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         )
                         call.enqueue(object : Callback<LoginRootModel> {
                             override fun onFailure(call: Call<LoginRootModel>, t: Throwable) {
+                                loadingDialog?.dismiss()
                                 Toast.makeText(
                                     this@MainActivity,
                                     t.message ?: " onFailure",
@@ -124,6 +125,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                                 call: Call<LoginRootModel>,
                                 response: Response<LoginRootModel>
                             ) {
+                                loadingDialog?.dismiss()
                                 when {
                                     response.code() == 200 -> {
                                         Hawk.deleteAll()
@@ -150,6 +152,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     }
                 }
         } else {
+            loadingDialog?.dismiss()
             Toast.makeText(this, " Permission Location Denied", Toast.LENGTH_SHORT).show()
         }
     }

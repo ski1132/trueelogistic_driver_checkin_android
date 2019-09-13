@@ -125,6 +125,7 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
         } else {
+            loadingDialog.dismiss()
             val intent = Intent(this, CheckInTEL::class.java)
             intent.putExtras(
                 Bundle().apply {

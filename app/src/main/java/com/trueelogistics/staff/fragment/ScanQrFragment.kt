@@ -107,7 +107,7 @@ class ScanQrFragment : Fragment() {
         checkButton()
     }
 
-    var checkFirstInDay = true
+    private var checkFirstInDay = true
     private fun checkButton() {
         CheckInTEL.checkInTEL?.getLastCheckInHistory(object : TypeCallback {
             override fun onResponse(type: String?, today: Boolean) {

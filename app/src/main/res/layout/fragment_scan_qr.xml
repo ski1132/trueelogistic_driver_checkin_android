@@ -44,7 +44,9 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:src="@drawable/phone_main"
-				android:padding="20dp" tools:ignore="ContentDescription"/>
+				android:visibility="gone"
+				android:padding="20dp"
+				tools:ignore="ContentDescription"/>
 		<android.support.constraint.ConstraintLayout
 				android:id="@+id/layoutRecycle"
 				android:layout_marginStart="15dp"
@@ -58,6 +60,7 @@
 					tools:ignore="ContentDescription"
 					android:layout_marginEnd="5dp"
 					android:layout_marginStart="30dp"
+					android:scaleType="fitXY"
 					app:layout_constraintStart_toStartOf="parent"/>
 			<android.support.v7.widget.RecyclerView
 					android:id="@+id/historyRecycle"

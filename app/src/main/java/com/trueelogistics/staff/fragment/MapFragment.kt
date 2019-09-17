@@ -86,12 +86,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                             googleMap?.uiSettings?.isZoomControlsEnabled = true
                             googleMap?.isMyLocationEnabled = true
                             val langLong = LatLng(location.latitude, location.longitude)
-                            googleMap?.animateCamera(
-                                CameraUpdateFactory.newLatLngZoom(
-                                    langLong,
-                                    12f
-                                )
-                            )
                             googleMap?.moveCamera(CameraUpdateFactory.newLatLng(langLong))
                             googleMap?.animateCamera(
                                 CameraUpdateFactory.newCameraPosition(

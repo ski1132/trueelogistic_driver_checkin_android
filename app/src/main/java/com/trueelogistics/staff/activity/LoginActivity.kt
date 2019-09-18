@@ -6,9 +6,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -38,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
             val pass = password_input_layout.text.toString()
             if (username_input_layout.length() == 13 && pass != "")
                 getRetrofit(name, pass)
-            else if (name.length < 13)
+            else if (name.length in 1..12)
                 wrong_login.text = getString(R.string.username_must_equal_13)
             else
                 wrong_login.text = getString(R.string.null_input)

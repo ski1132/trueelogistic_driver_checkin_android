@@ -1,7 +1,7 @@
 package com.trueelogistics.staff.activity
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.trueelogistics.staff.R
 import com.trueelogistics.staff.fragment.ProfileShowFragment
 import com.trueelogistics.staff.model.ProfileRootModel

@@ -2,22 +2,19 @@ package com.trueelogistics.staff.fragment
 
 import android.Manifest
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.kotlinpermissions.KotlinPermissions
+import com.theartofdev.edmodo.cropper.CropImage
 import com.trueelogistics.staff.R
 import com.trueelogistics.staff.activity.ProfileActivity
 import com.trueelogistics.staff.model.ProfileRootModel
@@ -27,8 +24,6 @@ import kotlinx.android.synthetic.main.fragment_profile_edit.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.ByteArrayOutputStream
-import java.io.File
 
 class ProfileEditFragment : Fragment() {
 
@@ -38,7 +33,6 @@ class ProfileEditFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile_edit, container, false)
     }
 
@@ -166,8 +160,8 @@ class ProfileEditFragment : Fragment() {
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.CAMERA
                 ).onAccepted {
-                    val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                    startActivityForResult(intent, 203)
+                    CropImage.activity()
+                        .start(activity,this)
                 }.onDenied {
                     Toast.makeText(
                         activity, "Permission Denied",
@@ -180,15 +174,13 @@ class ProfileEditFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == 203) {  //CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE
-            val photo = data?.extras?.get("data") as Bitmap
+        if (requestCode == 203) {
             if (resultCode == Activity.RESULT_OK) {
+                val result = CropImage.getActivityResult(data)
                 activity?.let {
-                    val tempUri = getImageUri(it, photo)
-                    pathImg = getPath(tempUri)
-                    val uriImage = File(pathImg ?: "")
+                    pathImg = result.uri.toString()
                     Glide.with(it)
-                        .load(uriImage)
+                        .load(result.uri)
                         .into(user_pic)
                 }
 
@@ -200,24 +192,5 @@ class ProfileEditFragment : Fragment() {
                 ).show()
             }
         }
-    }
-
-    private fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
-        val bytes = ByteArrayOutputStream()
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path =
-            MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
-        return Uri.parse(path)
-    }
-
-    private fun getPath(uri: Uri): String? {
-        val projection = arrayOf(MediaStore.Images.Media.DATA)
-        val cursor =
-            context?.contentResolver?.query(uri, projection, null, null, null) ?: return null
-        val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-        cursor.moveToFirst()
-        val s = cursor.getString(columnIndex)
-        cursor.close()
-        return s
     }
 }

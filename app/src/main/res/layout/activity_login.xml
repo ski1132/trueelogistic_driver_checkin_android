@@ -26,7 +26,7 @@
 			android:layout_height="wrap_content"
 			android:src="@drawable/ic_login"
 			tools:ignore="ContentDescription"/>
-	<android.support.design.widget.TextInputLayout
+	<com.google.android.material.textfield.TextInputLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content">
 		<EditText
@@ -37,8 +37,8 @@
 				android:inputType="number"
 				android:maxLength="13"
 				tools:ignore="Autofill" />
-	</android.support.design.widget.TextInputLayout>
-	<android.support.design.widget.TextInputLayout
+	</com.google.android.material.textfield.TextInputLayout>
+	<com.google.android.material.textfield.TextInputLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content">
 		<EditText
@@ -48,7 +48,7 @@
 				android:layout_height="wrap_content"
 				android:hint="@string/password"
 				tools:ignore="Autofill"/>
-	</android.support.design.widget.TextInputLayout>
+	</com.google.android.material.textfield.TextInputLayout>
 	<TextView
 			android:id="@+id/wrong_login"
 			android:textColor="@color/red"

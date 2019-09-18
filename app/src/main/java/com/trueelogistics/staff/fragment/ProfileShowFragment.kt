@@ -1,23 +1,17 @@
 package com.trueelogistics.staff.fragment
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-
 import com.trueelogistics.staff.R
 import com.trueelogistics.staff.activity.ProfileActivity
 import com.trueelogistics.staff.model.ProfileRootModel
-import com.trueelogistics.staff.service.ProfileService
-import com.trueelogistics.staff.service.RetrofitGenerater
 import kotlinx.android.synthetic.main.fragment_profile_show.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class ProfileShowFragment : Fragment() {
 
@@ -36,25 +30,25 @@ class ProfileShowFragment : Fragment() {
         }
         edit_profile.setOnClickListener {
             activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.fragment_profile,ProfileEditFragment())
+                ?.replace(R.id.fragment_profile, ProfileEditFragment())
                 ?.addToBackStack(null)?.commit()
         }
         getProfileData()
     }
 
-    private fun getProfileData(){
-        ProfileActivity().getProfileData( object : ProfileActivity.ProfileDataCallback{
+    private fun getProfileData() {
+        ProfileActivity().getProfileData(object : ProfileActivity.ProfileDataCallback {
             override fun onResponceProfile(model: ProfileRootModel?) {
-                model?.data?.imgProfile?.let {img ->
+                model?.data?.imgProfile?.let { img ->
                     activity?.let {
                         Glide.with(it)
                             .load(img)
                             .into(user_pic)
                     }
                 }
-                val firstName = model?.data?.firstname?:""
-                val lastName = model?.data?.lastname?:""
-                name_surname.text =  Editable.Factory.getInstance()
+                val firstName = model?.data?.firstname ?: ""
+                val lastName = model?.data?.lastname ?: ""
+                name_surname.text = Editable.Factory.getInstance()
                     .newEditable("$firstName $lastName")
                 phone.text = Editable.Factory.getInstance()
                     .newEditable(model?.data?.phone)
@@ -63,8 +57,8 @@ class ProfileShowFragment : Fragment() {
             }
 
             override fun onFailureProfile(message: String) {
-                activity?.let{
-                    Toast.makeText(it , "get Data onFailure : $message", Toast.LENGTH_SHORT).show()
+                activity?.let {
+                    Toast.makeText(it, "get Data onFailure : $message", Toast.LENGTH_SHORT).show()
                 }
             }
 

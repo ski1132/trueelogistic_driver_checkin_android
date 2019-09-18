@@ -59,7 +59,7 @@
 				android:layout_height="30dp"
 				tools:ignore="ContentDescription"/>
 	</FrameLayout>
-	<android.support.design.widget.TextInputLayout
+	<com.google.android.material.textfield.TextInputLayout
 			android:layout_margin="10dp"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content">
@@ -72,8 +72,8 @@
 				android:hint="@string/name_surname"
 				android:inputType="textShortMessage"
 				tools:ignore="Autofill" />
-	</android.support.design.widget.TextInputLayout>
-	<android.support.design.widget.TextInputLayout
+	</com.google.android.material.textfield.TextInputLayout>
+	<com.google.android.material.textfield.TextInputLayout
 			android:layout_margin="10dp"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content">
@@ -86,8 +86,8 @@
 				android:hint="@string/number_phone"
 				android:inputType="phone"
 				tools:ignore="Autofill" />
-	</android.support.design.widget.TextInputLayout>
-	<android.support.design.widget.TextInputLayout
+	</com.google.android.material.textfield.TextInputLayout>
+	<com.google.android.material.textfield.TextInputLayout
 			android:layout_margin="10dp"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content">
@@ -100,5 +100,5 @@
 				android:hint="@string/password"
 				android:inputType="textShortMessage"
 				tools:ignore="Autofill" />
-	</android.support.design.widget.TextInputLayout>
+	</com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>

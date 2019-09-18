@@ -51,14 +51,12 @@
 				android:layout_width="30dp"
 				android:layout_height="30dp"
 				android:layout_gravity="end|bottom"
-				android:outlineAmbientShadowColor="@color/black"
-				android:outlineSpotShadowColor="@color/black"
 				android:padding="-20dp"
 				android:src="@mipmap/pic_camera"
 				tools:ignore="ContentDescription" />
 	</FrameLayout>
 
-	<android.support.design.widget.TextInputLayout
+	<com.google.android.material.textfield.TextInputLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_margin="10dp">
@@ -71,9 +69,9 @@
 				android:inputType="textShortMessage"
 				android:textColor="@color/black"
 				tools:ignore="Autofill" />
-	</android.support.design.widget.TextInputLayout>
+	</com.google.android.material.textfield.TextInputLayout>
 
-	<android.support.design.widget.TextInputLayout
+	<com.google.android.material.textfield.TextInputLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_margin="10dp">
@@ -87,9 +85,9 @@
 				android:maxLength="10"
 				android:textColor="@color/black"
 				tools:ignore="Autofill" />
-	</android.support.design.widget.TextInputLayout>
+	</com.google.android.material.textfield.TextInputLayout>
 
-	<android.support.design.widget.TextInputLayout
+	<com.google.android.material.textfield.TextInputLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_margin="10dp">
@@ -99,10 +97,10 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:hint="@string/password"
-				android:inputType="textShortMessage"
+				android:inputType="textPassword"
 				android:textColor="@color/black"
 				tools:ignore="Autofill" />
-	</android.support.design.widget.TextInputLayout>
+	</com.google.android.material.textfield.TextInputLayout>
 
 	<TextView
 			android:id="@+id/show_warning"

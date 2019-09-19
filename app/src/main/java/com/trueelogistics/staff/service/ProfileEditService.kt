@@ -9,7 +9,7 @@ interface ProfileEditService {
     @PUT("check-in/v1/admin/users/{id}")
     fun getData(
         @Path("id") id: String ?= "",
-        @Field("imgProfile") imgProfile: String,
+        @Field("imgProfile") imgProfile: String ?= null,
         @Field("firstname") firstname: String,
         @Field("phone") phone: String,
         @Field("password") password: String

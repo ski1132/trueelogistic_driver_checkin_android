@@ -137,7 +137,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                                     else -> {
                                         Toast.makeText(
                                             this@MainActivity,
-                                            response.message(),
+                                            "${response.code()} : ${response.message()}",
                                             Toast.LENGTH_SHORT
                                         ).show()
                                         response.errorBody()

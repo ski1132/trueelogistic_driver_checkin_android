@@ -29,6 +29,8 @@
 				android:id="@+id/show_error"
 				android:visibility="gone"
 				android:textColor="@color/red"
+				android:textSize="30sp"
+				android:gravity="center"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"/>
 		<androidx.swiperefreshlayout.widget.SwipeRefreshLayout

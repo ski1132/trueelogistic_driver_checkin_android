@@ -38,6 +38,11 @@ class ScreenLoginActivity : AppCompatActivity() {
         time?.cancel()
     }
 
+    override fun onResume() {
+        super.onResume()
+        time?.start()
+    }
+
     private fun countTimer(){
         time = object : CountDownTimer(3000, 500) { // 1 second to onTick & 1 minit to onFinish
             override fun onTick(millisUntilFinished: Long) {

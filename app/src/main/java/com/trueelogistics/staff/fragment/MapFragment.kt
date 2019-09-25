@@ -76,7 +76,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         activity?.let { activity ->
             val fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
             if (ContextCompat.checkSelfPermission(
-                    activity, Manifest.permission.ACCESS_COARSE_LOCATION
+                    activity, Manifest.permission.ACCESS_FINE_LOCATION
                 )
                 == PackageManager.PERMISSION_GRANTED
             ) {

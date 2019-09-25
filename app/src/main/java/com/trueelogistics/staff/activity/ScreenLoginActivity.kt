@@ -19,9 +19,10 @@ class ScreenLoginActivity : AppCompatActivity() {
         KotlinPermissions.with(this)
             .permissions(
                 Manifest.permission.CAMERA,
+                Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ).onAccepted {
-                if (it.size == 2)
+                if (it.size == 3)
                     countTimer()
             }.onDenied {
                 finish()

@@ -24,7 +24,7 @@ import com.trueelogistics.staff.fragment.*
 import com.trueelogistics.staff.model.LoginRootModel
 import com.trueelogistics.staff.model.ProfileRootModel
 import com.trueelogistics.staff.service.LogoutService
-import com.trueelogistics.staff.service.RetrofitGenerater
+import com.trueelogistics.staff.service.RetrofitTokenGenerater
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main_menu_drawer.view.*
 import retrofit2.Call
@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         latitude = location.latitude
                         longitude = location.longitude
                         val retrofit =
-                            RetrofitGenerater().build(true).create(LogoutService::class.java)
+                            RetrofitTokenGenerater().build(true).create(LogoutService::class.java)
                         val call = retrofit.getData(
                             CheckInTEL.userId.toString(),
                             latitude.toString(),

@@ -18,6 +18,7 @@ import com.trueelogistics.staff.R
 import com.trueelogistics.staff.activity.MainActivity
 import com.trueelogistics.staff.adapter.HistoryAdapter
 import com.trueelogistics.staff.extension.convertBaseHistory
+import com.trueelogistics.staff.service.RetrofitTokenGenerater
 import kotlinx.android.synthetic.main.fragment_history.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -75,7 +76,9 @@ class HistoryFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         if (availableGetHistory) {
             availableGetHistory = false
             page++
-            val retrofit = RetrofitGenerater().build().create(HistoryService::class.java)
+            val retrofit = RetrofitTokenGenerater()
+                .build(true)
+                .create(HistoryService::class.java)
             val call = retrofit.getData(
                 "{\"\$or\":[" + Gson().toJson
                     (SearchCitizenModel(CheckInTEL.userId.toString())) + "]}",

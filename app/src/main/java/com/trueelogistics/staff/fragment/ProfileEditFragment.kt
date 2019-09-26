@@ -21,7 +21,7 @@ import com.trueelogistics.staff.R
 import com.trueelogistics.staff.activity.ProfileActivity
 import com.trueelogistics.staff.model.ProfileRootModel
 import com.trueelogistics.staff.service.ProfileEditService
-import com.trueelogistics.staff.service.RetrofitGenerater
+import com.trueelogistics.staff.service.RetrofitTokenGenerater
 import com.trueelogistics.staff.service.UploadImageService
 import kotlinx.android.synthetic.main.fragment_profile_edit.*
 import okhttp3.MediaType
@@ -164,7 +164,7 @@ class ProfileEditFragment : Fragment() {
         val requestFile = RequestBody.create(MediaType.parse("image/png"), file)
         val body = MultipartBody.Part.createFormData("files", pathImg?.name, requestFile)
 
-        val retrofit = RetrofitGenerater().build(false).create(UploadImageService::class.java)
+        val retrofit = RetrofitTokenGenerater().build(false).create(UploadImageService::class.java)
         val call = retrofit.getData(body)
         call.enqueue(object : Callback<LoadImageDataModel> {
             override fun onFailure(call: Call<LoadImageDataModel>, t: Throwable?) {
@@ -193,7 +193,7 @@ class ProfileEditFragment : Fragment() {
     }
 
     private fun sentEditData(sourceImage: String?) {
-        val retrofit = RetrofitGenerater().build(false).create(ProfileEditService::class.java)
+        val retrofit = RetrofitTokenGenerater().build(false).create(ProfileEditService::class.java)
         val call = retrofit.getData(
             id = userId ?: "",
             imgProfile = sourceImage,

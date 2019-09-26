@@ -6,7 +6,7 @@ import com.trueelogistics.staff.R
 import com.trueelogistics.staff.fragment.ProfileShowFragment
 import com.trueelogistics.staff.model.ProfileRootModel
 import com.trueelogistics.staff.service.ProfileService
-import com.trueelogistics.staff.service.RetrofitGenerater
+import com.trueelogistics.staff.service.RetrofitTokenGenerater
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,7 +30,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     fun getProfileData(listenner: ProfileDataCallback) {
-        val retrofit = RetrofitGenerater().build(true).create(ProfileService::class.java)
+        val retrofit = RetrofitTokenGenerater().build(true).create(ProfileService::class.java)
         val call = retrofit.getData()
         call.enqueue(object : Callback<ProfileRootModel> {
             override fun onFailure(call: Call<ProfileRootModel>, t: Throwable) {

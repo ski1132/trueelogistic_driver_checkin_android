@@ -32,7 +32,6 @@ class ShakeFragment : Fragment() {
         toolbar.setOnClickListener {
             mainActivity.actionToolbar()
         }
-        ShakeDetector.start()
         activity?.let { fragActivity ->
                 ShakeDetector.create(fragActivity) {
                     shakeFunction(fragActivity)
@@ -60,5 +59,15 @@ class ShakeFragment : Fragment() {
             }
 
         })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        ShakeDetector.stop()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        ShakeDetector.start()
     }
 }

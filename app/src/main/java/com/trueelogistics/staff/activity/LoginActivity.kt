@@ -20,7 +20,7 @@ import com.trueelogistics.staff.model.LoginRootModel
 import com.trueelogistics.staff.model.ProfileRootModel
 import com.trueelogistics.staff.service.LoginService
 import com.trueelogistics.staff.service.ProfileService
-import com.trueelogistics.staff.service.RetrofitGenerater
+import com.trueelogistics.staff.service.RetrofitTokenGenerater
 import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -66,7 +66,7 @@ class LoginActivity : AppCompatActivity() {
                         latitude = location.latitude
                         longitude = location.longitude
                         val retrofit =
-                            RetrofitGenerater().build(false).create(LoginService::class.java)
+                            RetrofitTokenGenerater().build(false).create(LoginService::class.java)
                         val call = retrofit.getData(
                             username,
                             password,
@@ -147,7 +147,7 @@ class LoginActivity : AppCompatActivity() {
                 this, "Checking Token  ", " Please wait..."
                 , false, true
             )
-        val retrofit = RetrofitGenerater().build(true).create(ProfileService::class.java)
+        val retrofit = RetrofitTokenGenerater().build(true).create(ProfileService::class.java)
         val call = retrofit.getData()
         call.enqueue(object : Callback<ProfileRootModel> {
             override fun onFailure(call: Call<ProfileRootModel>, t: Throwable) {

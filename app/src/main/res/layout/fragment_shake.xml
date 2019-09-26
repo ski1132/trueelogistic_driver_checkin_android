@@ -43,7 +43,7 @@
 				android:textSize="15sp"/>
 		<Button
 				android:id="@+id/shake_phone_fine"
-				android:text="@string/fine_phone"
+				android:text="@string/fine_location"
 				android:textColor="@color/white"
 				android:textSize="20sp"
 				android:background="@color/purple"
@@ -56,7 +56,7 @@
 				android:layout_marginTop="30dp"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="@string/near_by_fine"
+				android:text="@string/fine_location_shake"
 				android:textSize="15sp"/>
 
 	</LinearLayout>

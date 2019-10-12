@@ -1,5 +1,6 @@
 package com.trueelogistics.staff.fragment
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.text.Editable
 import android.view.LayoutInflater
@@ -37,8 +38,14 @@ class ProfileShowFragment : Fragment() {
     }
 
     private fun getProfileData() {
+        val loadingDialog =
+            ProgressDialog.show(
+                context, "Profile loading  ", " Please wait..."
+                , false, false
+            )
         ProfileActivity().getProfileData(object : ProfileActivity.ProfileDataCallback {
             override fun onResponceProfile(model: ProfileRootModel?) {
+                loadingDialog.dismiss()
                 model?.data?.imgProfile?.let { img ->
                     activity?.let {
                         Glide.with(it)
@@ -57,6 +64,7 @@ class ProfileShowFragment : Fragment() {
             }
 
             override fun onFailureProfile(message: String) {
+                loadingDialog.dismiss()
                 activity?.let {
                     Toast.makeText(it, "get Data onFailure : $message", Toast.LENGTH_SHORT).show()
                 }

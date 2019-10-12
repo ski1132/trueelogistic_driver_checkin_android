@@ -34,7 +34,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.github.devit-tel:check-in-sdk-android:alpha-0.0.1'
+    implementation 'com.github.ski1132:trueelogistic_library_checkin:alpha-0.0.5'
     //noinspection GradleCompatible
     implementation 'androidx.appcompat:appcompat:1.0.0'
     //noinspection GradleCompatible

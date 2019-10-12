@@ -30,6 +30,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     fun getProfileData(listenner: ProfileDataCallback) {
+
         val retrofit = RetrofitTokenGenerater().build(true).create(ProfileService::class.java)
         val call = retrofit.getData()
         call.enqueue(object : Callback<ProfileRootModel> {

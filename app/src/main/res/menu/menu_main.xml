@@ -7,13 +7,13 @@
 			  android:checked="true"
 			  android:title="@string/scan_qr"/>
 
+		<item android:id="@+id/nearbyFine"
+				android:icon="@mipmap/ic_nearby"
+				android:title="@string/nearby_fine"/>
+
 		<item android:id="@+id/shakeFine"
 			  android:icon="@mipmap/ic_shake"
 			  android:title="@string/shake_fine"/>
-
-		<item android:id="@+id/nearbyFine"
-			  android:icon="@mipmap/ic_nearby"
-			  android:title="@string/nearby_fine"/>
 
 		<item android:id="@+id/showMap"
 			  android:icon="@mipmap/ic_map"

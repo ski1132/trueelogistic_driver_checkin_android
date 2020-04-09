@@ -31,7 +31,10 @@
 			android:supportsRtl="true"
 			android:theme="@style/AppTheme"
 			tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-		<activity android:name=".activity.Test2Activity"></activity>
+		<activity
+				android:name=".activity.Test1Activity"
+				android:label="@string/title_activity_test1"
+				android:theme="@style/AppTheme.NoActionBar"></activity>
 		<!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -45,7 +48,7 @@
 
 		<activity
 				android:name=".activity.ProfileActivity"
-				android:launchMode="singleTask" />
+				android:launchMode="singleTask"></activity>
 		<activity
 				android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
 				android:theme="@style/Base.Theme.AppCompat" />
@@ -90,7 +93,7 @@
 		<activity
 				android:name=".activity.MainActivity"
 				android:launchMode="singleTask"
-				android:screenOrientation="fullSensor" />
+				android:screenOrientation="fullSensor"/>
 	</application>
 
 </manifest>

@@ -1,26 +1,35 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/purple</item>
-        <item name="colorPrimaryDark">@color/black</item>
-        <item name="colorAccent">@color/purple</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">false</item> <!-- true == set navigation transparent -->
-        <item name="android:actionBarStyle">@style/ThemeActionBar</item>
-        <item name="android:windowActionBarOverlay">true</item>
-        <!-- Support library compatibility -->
-        <item name="actionBarStyle">@style/ThemeActionBar</item>
-        <item name="windowActionBarOverlay">true</item>
-    </style>
-    <style name="ThemeActionBar" parent="Widget.AppCompat.Light.ActionBar.Solid">
-        <item name="android:background"> @null </item>
-        <!-- Support library compatibility -->
-        <item name="background">@null</item>
-        <item name="android:displayOptions">showHome|useLogo</item>
-        <item name="displayOptions">showHome|useLogo</item>
+	<!-- Base application theme. -->	<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+	<item name="colorPrimary">@color/purple</item>
+	<item name="colorPrimaryDark">@color/black</item>
+	<item name="colorAccent">@color/purple</item>
+	<item name="android:windowActionBar">false</item>
+	<item name="android:windowNoTitle">true</item>
+	<item name="android:windowTranslucentStatus">false</item>
+	<item name="android:windowTranslucentNavigation">false</item> <!-- true == set navigation transparent -->
+	<item name="android:actionBarStyle">@style/ThemeActionBar</item>
+	<item name="android:windowActionBarOverlay">true</item>
+	<!-- Support library compatibility -->
+	<item name="actionBarStyle">@style/ThemeActionBar</item>
+	<item name="windowActionBarOverlay">true</item>
+</style>
 
-    </style>
+	<style name="ThemeActionBar" parent="Widget.AppCompat.Light.ActionBar.Solid">
+		<item name="android:background">@null</item>
+		<!-- Support library compatibility -->
+		<item name="background">@null</item>
+		<item name="android:displayOptions">showHome|useLogo</item>
+		<item name="displayOptions">showHome|useLogo</item>
+
+	</style>
+
+	<style name="AppTheme.NoActionBar">
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+	</style>
+
+	<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+	<style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

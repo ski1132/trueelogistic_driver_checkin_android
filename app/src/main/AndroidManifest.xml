@@ -80,11 +80,7 @@
 				android:value="SATBUDWEXFZH2J3K5N6P7R9SATCVDWEYGZH2K4M5N7Q8R9TBUCVEXFYGZJ" />
 
 		<activity android:name=".activity.ScreenLoginActivity">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
 
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
 		</activity>
 		<activity
 				android:name=".activity.LoginActivity"
@@ -93,7 +89,13 @@
 		<activity
 				android:name=".activity.MainActivity"
 				android:launchMode="singleTask"
-				android:screenOrientation="fullSensor"/>
+				android:screenOrientation="fullSensor">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
 	</application>
 
 </manifest>

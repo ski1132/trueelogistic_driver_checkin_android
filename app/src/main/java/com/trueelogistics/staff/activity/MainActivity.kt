@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         supportFragmentManager.beginTransaction()
             .replace(R.id.frag_main, ScanQrFragment())
             .commit()
-
         nav_view.getHeaderView(0).imageUser.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
@@ -50,7 +49,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         system_check_out.setOnClickListener {
             AlertDialog.Builder(this)
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle("Do you confirm to logout ?")
+                .setTitle("confirm to logout ?")
                 .setPositiveButton("Yes") { _, _ -> logoutWithLatLong() }
                 .setNegativeButton("No", null)
                 .show()
